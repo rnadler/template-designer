@@ -1,0 +1,41 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Template Size</div>
+  <div class="panel-body">
+    <button class="btn btn-default dropdown-toggle" type="button" id="rowCount" data-toggle="dropdown">
+      Rows
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="rowCount">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-repeat="n in [] | range:4">{{n + 1}}</a></li>
+    </ul>
+    <button class="btn btn-default dropdown-toggle" type="button" id="colCount" data-toggle="dropdown">
+      Columns
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="colCount">
+      <li role="presentation"><a role="menuitem" tabindex="-1" href="#" ng-repeat="n in [] | range:4">{{n + 1}}</a></li>
+    </ul>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">Action View</div>
+  <div class="panel-body">
+    <table class="table">
+      <tr ng-repeat="row in [] | range:4">
+        <td ng-repeat="col in [] | range:4">
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="cell{{row}}{{col}}"
+                    data-toggle="dropdown">
+              cell r:{{row}} c:{{col}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="#"
+                                         ng-repeat="group in groups">{{group}}</a></li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
