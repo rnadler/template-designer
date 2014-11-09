@@ -1,3 +1,5 @@
+'use strict';
+
 // Range filters
 angular.module('rangeFilters', [])
   .filter('range', function() {

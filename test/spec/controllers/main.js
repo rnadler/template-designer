@@ -16,7 +16,9 @@ describe('Controller: MainCtrl', function () {
     });
   }));
 
-  it('should attach a list of groups to the scope', function () {
+  it('should attach a list of groups and default grid size to the scope', function () {
     expect(scope.groups.length).toBe(7);
+    expect(scope.rows).toBe(4);
+    expect(scope.columns).toBe(4);
   });
 });

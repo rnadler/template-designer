@@ -18,4 +18,12 @@ angular.module('templateDesignerApp')
       '30daysAtRisk',
       'InCompliance'
     ];
+    $scope.setRows = function(n) {
+      $scope.rows = n;
+    };
+    $scope.setColumns = function(n) {
+      $scope.columns = n;
+    };
+    $scope.setRows(4);
+    $scope.setColumns(4);
   });

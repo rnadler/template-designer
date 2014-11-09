@@ -8,8 +8,8 @@ describe('filters: range', function() {
 
     it('should return array of range size',
       inject(function(rangeFilter) {
-        expect(rangeFilter(4).length).toBe(4);
-        expect(rangeFilter(10).length).toBe(10);
+        expect(rangeFilter([], 4).length).toBe(4);
+        expect(rangeFilter([], 10).length).toBe(10);
       }));
   });
 });
