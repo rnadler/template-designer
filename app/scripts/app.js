@@ -5,7 +5,7 @@ var Grid = function(colunms) {
   this.cells = {};
 };
 Grid.prototype.ordinal = function(row, col) {
-  return (col * this.columns) + row;
+  return (row * this.columns) + col;
 };
 Grid.prototype.set = function(row, col, val) {
   this.cells[this.ordinal(row, col)] = val;
