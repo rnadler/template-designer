@@ -1,17 +1,8 @@
 'use strict';
+
 var templates = [
-  {
-    'name': 'template-4x4',
-    'rows': 4,
-    'columns': 4,
-    'cells': []
-  },
-  {
-    'name': 'template-3x3',
-    'rows': 3,
-    'columns': 3,
-    'cells': []
-  }
+  new Template('template-4x4', 4, 4),
+  new Template('template-3x3', 3, 3)
 ];
 
 var groups = [
@@ -47,7 +38,7 @@ angular.module('templateDesignerApp')
       $scope.template.rows = n;
     };
     $scope.setColumns = function(n) {
-      $scope.template.columns = n;
+      $scope.template.setColumns(n);
     };
 
     $scope.addTemplate = function() {
@@ -58,10 +49,7 @@ angular.module('templateDesignerApp')
       //
       //modalInstance.result.then(function (templateName) {
       //  if (templateName !== '' && templateName !== 'cancel') {
-      //    $scope.templates.push({
-      //      'name': templateName,
-      //      'rows': $scope.maxRows, 'columns': $scope.maxColumns, 'cells': []
-      //    });
+      //    $scope.templates.push(new Template(templateName, $scope.maxRows, $scope.maxColumns));
       //  }
       //});
     };
