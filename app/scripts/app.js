@@ -8,7 +8,7 @@
  *
  * Main module of the application.
  */
-var myApp = angular.module('templateDesignerApp', [
+angular.module('templateDesignerApp', [
     'rangeFilters',
     'ngAnimate',
     'ngCookies',
@@ -16,6 +16,7 @@ var myApp = angular.module('templateDesignerApp', [
     'ngRoute',
     'ngSanitize',
     'ngTouch'
+  //,'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider
