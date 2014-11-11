@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="addTemplate.html">
   <div class="modal-header">
-    <h3 class="modal-title">Add Template</h3>
+    <h4 class="modal-title">Enter New Template Name:</h4>
   </div>
   <div class="modal-body">
     <input type="text" ng-model="templateName" class="form-control" placeholder="Template Name">
@@ -15,7 +15,7 @@
   <div class="panel-heading">Template</div>
   <div class="panel-body">
     <div class="dropdown">
-      <button class="btn btn-default dropdown-toggle" type="button" id="template" data-toggle="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="template">
         {{template.name}}
         <span class="caret"></span>
       </button>
@@ -36,7 +36,7 @@
       <tr>
         <td>
           <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="rowCount" data-toggle="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="rowCount">
               Rows: {{template.rows}}
               <span class="caret"></span>
             </button>
@@ -49,7 +49,7 @@
         </td>
         <td>
           <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="colCount" data-toggle="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="colCount">
               Columns: {{template.columns()}}
               <span class="caret"></span>
             </button>
@@ -71,8 +71,7 @@
       <tr ng-repeat="row in [] | range:template.rows">
         <td ng-repeat="col in [] | range:template.columns()">
           <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="cell{{row}}{{col}}"
-                    data-toggle="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="cell{{row}}{{col}}">
               {{template.grid.get(row, col)}}
               <span class="caret"></span>
             </button>

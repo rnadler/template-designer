@@ -17,8 +17,8 @@ angular.module('templateDesignerApp', [
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
-  //,'ui.bootstrap'
+    'ngTouch',
+    'ui.bootstrap'
   ])
   .config(function ($routeProvider) {
     $routeProvider

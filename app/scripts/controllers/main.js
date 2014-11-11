@@ -8,7 +8,7 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, Templates, Groups /*, $modal */) {
+  .controller('MainCtrl', function ($scope, Templates, Groups, $modal) {
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -26,16 +26,18 @@ angular.module('templateDesignerApp')
     };
 
     $scope.addTemplate = function() {
-      //var modalInstance = $modal.open({
-      //  templateUrl: 'addTemplate.html',
-      //  controller: 'AddTemplateCtrl'
-      //});
-      //
-      //modalInstance.result.then(function (templateName) {
-      //  if (templateName !== '' && templateName !== 'cancel') {
-      //    $scope.templates.push(new Template(templateName, $scope.maxRows, $scope.maxColumns));
-      //  }
-      //});
+      var modalInstance = $modal.open({
+        templateUrl: 'addTemplate.html',
+        controller: 'AddTemplateCtrl',
+        size: 'sm'
+      });
+
+      modalInstance.result.then(function (templateName) {
+        if (templateName !== '' && templateName !== 'cancel') {
+          Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns);
+          $scope.setTemplate($scope.templates[$scope.templates.length - 1]);
+        }
+      });
     };
 
     $scope.setTemplate($scope.templates[0]);

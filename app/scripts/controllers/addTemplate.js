@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('templateDesignerApp').controller('AddTemplateCtrl', function ($scope, $modalInstance, templateName) {
+angular.module('templateDesignerApp').controller('AddTemplateCtrl', function ($scope, $modalInstance) {
 
-  $scope.templateName = templateName;
+  $scope.templateName = '';
 
   $scope.ok = function () {
     $modalInstance.close($scope.templateName);

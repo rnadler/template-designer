@@ -47,7 +47,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
   this.getTemplates = function () {
       return templates;
   };
-  this.addTemplate = function(template) {
-    templates.push(template);
+  this.addTemplate = function(templateName, rows, columns) {
+    templates.push(new Template(templateName, rows, columns));
   };
 });
