@@ -2,7 +2,7 @@
 
 angular.module('GroupsService', []).service('Groups', function () {
   var groups = [
-    'None',
+    blank,
     '7daysAllPatients',
     '30daysAllPatients',
     '90daysAllPatients',

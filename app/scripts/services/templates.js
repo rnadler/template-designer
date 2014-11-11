@@ -1,5 +1,7 @@
 'use strict';
 
+var blank = '--- Blank ---';
+
 function Grid(columns) {
   this.columns = columns;
   this.cells = {};
@@ -16,7 +18,7 @@ Grid.prototype = {
 
   get: function (row, col) {
     var rv = this.cells[this.ordinal(row, col)];
-    return rv === undefined ? 'None' : rv;
+      return rv === undefined ? blank : rv;
   }
 };
 
