@@ -1,32 +1,5 @@
 'use strict';
 
-var Grid = function(colunms) {
-  this.columns = colunms;
-  this.cells = {};
-};
-Grid.prototype.ordinal = function(row, col) {
-  return (row * this.columns) + col;
-};
-Grid.prototype.set = function(row, col, val) {
-  this.cells[this.ordinal(row, col)] = val;
-};
-Grid.prototype.get = function(row, col) {
-  var rv = this.cells[this.ordinal(row, col)];
-  return rv === undefined ? 'None': rv;
-};
-
-var Template = function(name, rows, columns) {
-  this.name = name;
-  this.rows = rows;
-  this.grid = new Grid(columns);
-};
-Template.prototype.columns = function() {
-  return this.grid.columns;
-};
-Template.prototype.setColumns = function(columns) {
-  this.grid.columns = columns;
-};
-
 /**
  * @ngdoc overview
  * @name templateDesignerApp
@@ -36,6 +9,8 @@ Template.prototype.setColumns = function(columns) {
  * Main module of the application.
  */
 angular.module('templateDesignerApp', [
+    'TemplatesService',
+    'GroupsService',
     'rangeFilters',
     'ngAnimate',
     'ngCookies',
