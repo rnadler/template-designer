@@ -18,127 +18,134 @@
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
   </div>
 </script>
+  
+<tabset>
+  <tab heading="Templates">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Templates [{{templates.length}}]</div>
+      <div class="panel-body">
+        <table class="table-condensed">
+          <tr>
+            <td>
+              <div ng-show="templates.length > 0">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="template">
+                    {{template.name}}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="template">
+                    <li role="presentation"><a role="menuitem" tabindex="-1"
+                                               ng-click="setTemplate(t)" ng-repeat="t in templates">{{t.name}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div ng-show="templates.length > 0">
+                <button class="glyphicon glyphicon-remove" tooltip="Delete {{template.name}} template."
+                        ng-click="removeTemplate(template)"></button>
+              </div>
+            </td>
+            <td>
+              <button class="glyphicon glyphicon-plus" tooltip="Add a template." ng-click="addTemplate()"></button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Grid Size</div>
+      <div class="panel-body">
+        <table class="table-condensed">
+          <tr>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="rowCount">
+                  Rows: {{template.rows}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="rowCount">
+                  <li role="presentation"><a role="menuitem" tabindex="-1"
+                                             ng-click="setRows(n + 1)" ng-repeat="n in [] | range:maxRows">{{n + 1}}</a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+            <td>
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="colCount">
+                  Columns: {{template.columns()}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="colCount">
+                  <li role="presentation"><a role="menuitem" tabindex="-1"
+                                             ng-click="setColumns(n + 1)" ng-repeat="n in [] | range:maxColumns">{{n +
+                    1}}</a>
+                  </li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Action View</div>
+      <div class="panel-body">
+        <table class="table-condensed">
+          <tr ng-repeat="row in [] | range:template.rows">
+            <td ng-repeat="col in [] | range:template.columns()">
+              <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle" type="button" id="cell{{row}}{{col}}">
+                  {{template.grid.get(row, col)}}
+                  <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
+                  <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="template.grid.set(row, col, group)"
+                                             ng-repeat="group in groups">{{group}}</a></li>
+                </ul>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </tab>
+  <tab heading="Rule Groups">
+    <div class="panel panel-primary">
+      <div class="panel-heading">Rule Groups [{{groups.length}}]</div>
+      <div class="panel-body">
+        <table class="table-condensed">
+          <tr>
+            <td>
+              <div ng-show="groups.length > 0">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle" type="button" id="group">
+                    {{group}}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="group">
+                    <li role="presentation"><a role="menuitem" tabindex="-1"
+                                               ng-click="setGroup(g)" ng-repeat="g in groups">{{g}}</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </td>
+            <td>
+              <div ng-show="groups.length > 0">
+                <button class="glyphicon glyphicon-remove" tooltip="Delete {{group}} group."
+                        ng-click="removeGroup(group)"></button>
+              </div>
+            </td>
+            <td>
+              <button class="glyphicon glyphicon-plus" tooltip="Add a rule group." ng-click="addGroup()"></button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </tab>
+</tabset>
 
-<div class="panel panel-primary">
-  <div class="panel-heading">Templates [{{templates.length}}]</div>
-  <div class="panel-body">
-    <table class="table-condensed">
-      <tr>
-        <td>
-          <div ng-show="templates.length > 0">
-            <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="template">
-                {{template.name}}
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="template">
-                <li role="presentation"><a role="menuitem" tabindex="-1"
-                                           ng-click="setTemplate(t)" ng-repeat="t in templates">{{t.name}}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div ng-show="templates.length > 0">
-            <button class="glyphicon glyphicon-remove" tooltip="Delete {{template.name}} template."
-                  ng-click="removeTemplate(template)"></button>
-          </div>
-        </td>
-        <td>
-          <button class="glyphicon glyphicon-plus" tooltip="Add a template." ng-click="addTemplate()"></button>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Grid Size</div>
-  <div class="panel-body">
-    <table class="table-condensed">
-      <tr>
-        <td>
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="rowCount">
-              Rows: {{template.rows}}
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="rowCount">
-              <li role="presentation"><a role="menuitem" tabindex="-1"
-                                         ng-click="setRows(n + 1)" ng-repeat="n in [] | range:maxRows">{{n + 1}}</a>
-              </li>
-            </ul>
-          </div>
-        </td>
-        <td>
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="colCount">
-              Columns: {{template.columns()}}
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="colCount">
-              <li role="presentation"><a role="menuitem" tabindex="-1"
-                                         ng-click="setColumns(n + 1)" ng-repeat="n in [] | range:maxColumns">{{n + 1}}</a>
-              </li>
-            </ul>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-<div class="panel panel-default">
-  <div class="panel-heading">Action View</div>
-  <div class="panel-body">
-    <table class="table-condensed">
-      <tr ng-repeat="row in [] | range:template.rows">
-        <td ng-repeat="col in [] | range:template.columns()">
-          <div class="dropdown">
-            <button class="btn btn-default dropdown-toggle" type="button" id="cell{{row}}{{col}}">
-              {{template.grid.get(row, col)}}
-              <span class="caret"></span>
-            </button>
-            <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
-              <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="template.grid.set(row, col, group)"
-                                         ng-repeat="group in groups">{{group}}</a></li>
-            </ul>
-          </div>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
-
-<div class="panel panel-primary">
-  <div class="panel-heading">Rule Groups [{{groups.length}}]</div>
-  <div class="panel-body">
-    <table class="table-condensed">
-      <tr>
-        <td>
-          <div ng-show="groups.length > 0">
-            <div class="dropdown">
-              <button class="btn btn-default dropdown-toggle" type="button" id="group">
-                {{group}}
-                <span class="caret"></span>
-              </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="group">
-                <li role="presentation"><a role="menuitem" tabindex="-1"
-                                           ng-click="setGroup(g)" ng-repeat="g in groups">{{g}}</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </td>
-        <td>
-          <div ng-show="groups.length > 0">
-            <button class="glyphicon glyphicon-remove" tooltip="Delete {{group}} group."
-                    ng-click="removeGroup(group)"></button>
-          </div>
-        </td>
-        <td>
-          <button class="glyphicon glyphicon-plus" tooltip="Add a rule group." ng-click="addGroup()"></button>
-        </td>
-      </tr>
-    </table>
-  </div>
-</div>
