@@ -14,6 +14,10 @@ angular.module('templateDesignerApp')
     $scope.templates = Templates.getTemplates();
     $scope.groups = Groups.getGroups();
 
+    $scope.setGroup = function(group) {
+      $scope.group = group;
+    };
+
     $scope.setTemplate = function(template) {
       $scope.template = template;
     };
@@ -25,15 +29,22 @@ angular.module('templateDesignerApp')
       $scope.template.setColumns(n);
     };
 
+    // ----------- Template management ---------------
+
     $scope.addTemplate = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'addTemplate.html',
-        controller: 'AddTemplateCtrl',
-        size: 'sm'
+        templateUrl: 'getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          type: function () {
+            return 'Template';
+          }
+        }
       });
 
       modalInstance.result.then(function (templateName) {
-        if (templateName !== '' && templateName !== 'cancel') {
+        if (templateName !== '') {
           Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns);
           $scope.setTemplate($scope.templates[$scope.templates.length - 1]);
         }
@@ -64,8 +75,57 @@ angular.module('templateDesignerApp')
           $scope.setTemplate($scope.templates[index]);
         }
       });
-
     };
+
+    // ----------- Rule Group management ---------------
+
+    $scope.addGroup = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          type: function () {
+            return 'Rule Group';
+          }
+        }
+      });
+
+      modalInstance.result.then(function (group) {
+        if (group !== '') {
+          Groups.addGroup(group);
+          $scope.setGroup($scope.groups[$scope.groups.length - 1]);
+        }
+      });
+    };
+
+    $scope.removeGroup = function(group) {
+      var modalInstance = $modal.open({
+        templateUrl: 'actionConfirm.html',
+        controller: 'ActionConfirmCtrl',
+        resolve: {
+          message: function () {
+            return 'Are you sure you want to delete the ' + group + ' rule group?';
+          },
+          action: function() {
+            return 'Yes, Delete';
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var index = Groups.removeGroup(group);
+        if (index > -1) {
+          var last = $scope.groups.length - 1;
+          if (index > last) {
+            index = last;
+          }
+          $scope.setGroup($scope.groups[index]);
+        }
+      });
+    };
+
     $scope.setTemplate($scope.templates[0]);
+    $scope.setGroup($scope.groups[0]);
 
   });

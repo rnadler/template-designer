@@ -18,4 +18,14 @@ angular.module('GroupsService', []).service('Groups', function () {
   this.addGroup = function(group) {
     groups.push(group);
   };
+  this.addGroup = function(group) {
+    groups.push(group);
+  };
+  this.removeGroup = function(group) {
+    var index = groups.indexOf(group);
+    if (index > -1) {
+      groups.splice(index, 1);
+    }
+    return index;
+  };
 });
