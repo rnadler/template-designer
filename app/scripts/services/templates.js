@@ -50,4 +50,11 @@ angular.module('TemplatesService', []).service('Templates', function () {
   this.addTemplate = function(templateName, rows, columns) {
     templates.push(new Template(templateName, rows, columns));
   };
+  this.removeTemplate = function(template) {
+    var index = templates.indexOf(template);
+    if (index > -1) {
+      templates.splice(index, 1);
+    }
+    return index;
+  };
 });

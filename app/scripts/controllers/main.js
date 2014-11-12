@@ -40,6 +40,32 @@ angular.module('templateDesignerApp')
       });
     };
 
+    $scope.removeTemplate = function(template) {
+      var modalInstance = $modal.open({
+        templateUrl: 'actionConfirm.html',
+        controller: 'ActionConfirmCtrl',
+        resolve: {
+          message: function () {
+            return 'Are you sure you want to delete the ' + template.name + ' template?';
+          },
+          action: function() {
+            return 'Yes, Delete';
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var index = Templates.removeTemplate(template);
+        if (index > -1) {
+            var last = $scope.templates.length - 1;
+            if (index > last) {
+              index = last;
+            }
+          $scope.setTemplate($scope.templates[index]);
+        }
+      });
+
+    };
     $scope.setTemplate($scope.templates[0]);
 
   });
