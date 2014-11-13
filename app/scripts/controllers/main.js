@@ -54,23 +54,44 @@ angular.module('templateDesignerApp')
 
     // ----------- Template management ---------------
 
+    $scope.editTemplate = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Edit Template Name';
+          },
+          defaultName: function () {
+            return $scope.template.name;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (templateName) {
+        $scope.template.name = templateName;
+      });
+    };
+
     $scope.addTemplate = function() {
       var modalInstance = $modal.open({
         templateUrl: 'getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
-          type: function () {
-            return 'Template';
+          message: function () {
+            return 'Enter New Template Name';
+          },
+          defaultName: function () {
+            return '';
           }
         }
       });
 
       modalInstance.result.then(function (templateName) {
-        if (templateName !== '') {
           Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns);
           $scope.setTemplate($scope.templates[$scope.templates.length - 1]);
-        }
       });
     };
 
@@ -102,23 +123,47 @@ angular.module('templateDesignerApp')
 
     // ----------- Rule Group management ---------------
 
+    $scope.editGroup = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Edit Rule Group Name';
+          },
+          defaultName: function () {
+            return $scope.group;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (group) {
+        var index = Groups.changeGroup($scope.group, group);
+        if (index > -1) {
+          $scope.group = group;
+        }
+      });
+    };
+
     $scope.addGroup = function() {
       var modalInstance = $modal.open({
         templateUrl: 'getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
-          type: function () {
-            return 'Rule Group';
+          message: function () {
+            return 'Enter New Rule Group Name';
+          },
+          defaultName: function () {
+            return '';
           }
         }
       });
 
       modalInstance.result.then(function (group) {
-        if (group !== '') {
           Groups.addGroup(group);
           $scope.setGroup($scope.groups[$scope.groups.length - 1]);
-        }
       });
     };
 

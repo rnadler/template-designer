@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('templateDesignerApp').controller('GetNameDialogCtrl', function ($scope, $modalInstance, type) {
+angular.module('templateDesignerApp').controller('GetNameDialogCtrl', function ($scope, $modalInstance, message, defaultName) {
 
-  $scope.enteredName = '';
-  $scope.type = type;
+  $scope.enteredName = defaultName;
+  $scope.message = message;
 
   $scope.ok = function () {
     $modalInstance.close($scope.enteredName);

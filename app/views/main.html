@@ -1,6 +1,6 @@
 <script type="text/ng-template" id="getNameDialog.html">
   <div class="modal-body">
-    <strong>Enter New {{type}} Name:</strong>
+    <strong>{{message}}:</strong>
     <input type="text" ng-model="enteredName" class="form-control" placeholder="{{type}} Name">
   </div>
   <div class="modal-footer">
@@ -62,6 +62,12 @@
                     </li>
                   </ul>
                 </div>
+              </div>
+            </td>
+            <td>
+              <div ng-show="templates.length > 0">
+                <button class="glyphicon glyphicon-pencil" tooltip="Edit {{template.name}} template."
+                        ng-click="editTemplate()"></button>
               </div>
             </td>
             <td>
@@ -157,6 +163,12 @@
                     </li>
                   </ul>
                 </div>
+              </div>
+            </td>
+            <td>
+              <div ng-show="groups.length > 0">
+                <button class="glyphicon glyphicon-pencil" tooltip="Edit {{group}} rule group."
+                        ng-click="editGroup()"></button>
               </div>
             </td>
             <td>

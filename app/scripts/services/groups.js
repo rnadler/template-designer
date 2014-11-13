@@ -21,6 +21,13 @@ angular.module('GroupsService', []).service('Groups', function () {
   this.addGroup = function(group) {
     groups.push(group);
   };
+  this.changeGroup = function(oldGroup, newGroup) {
+    var index = groups.indexOf(oldGroup);
+    if (index > -1) {
+      groups[index] = newGroup;
+    }
+    return index;
+  };
   this.removeGroup = function(group) {
     var index = groups.indexOf(group);
     if (index > -1) {
