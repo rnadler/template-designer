@@ -2,6 +2,11 @@
 
 var blank = '--- Blank ---';
 
+function Cell(name, color) {
+  this.name = name;
+  this.color = color;
+}
+
 function Grid(columns) {
   this.columns = columns;
   this.cells = {};
@@ -12,13 +17,17 @@ Grid.prototype = {
     return (row * this.columns) + col;
   },
 
-  set: function (row, col, val) {
-    this.cells[this.ordinal(row, col)] = val;
+  setCell: function (row, col, name, color) {
+    this.cells[this.ordinal(row, col)] = new Cell(name, color);
   },
 
-  get: function (row, col) {
-    var rv = this.cells[this.ordinal(row, col)];
-      return rv === undefined ? blank : rv;
+  getCell: function (row, col) {
+    var ordinal = this.ordinal(row, col);
+    var rv = this.cells[ordinal];
+    if (rv === undefined) {
+      this.cells[ordinal] = rv = new Cell(blank, '#ffffff');
+    }
+    return rv;
   }
 };
 

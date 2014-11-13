@@ -25,8 +25,9 @@ describe('Controller: MainCtrl', function () {
     expect(scope.template.columns()).toBe(4);
   });
   it('should attach a template grid to the scope', function () {
-    expect(scope.template.grid.get(2,2)).toBe('--- Blank ---');
-    scope.template.grid.set(2,2,'grid22');
-    expect(scope.template.grid.get(2,2)).toBe('grid22');
+    expect(scope.getCell(2,2).name).toBe('--- Blank ---');
+    expect(scope.getCell(2,2).color).toBe('#ffffff');
+    scope.setCellName(2,2,'grid22');
+    expect(scope.getCell(2,2).name).toBe('grid22');
   });
 });
