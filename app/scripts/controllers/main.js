@@ -1,5 +1,24 @@
 'use strict';
 
+var colors = [
+  {name: 'Aqua', color: '#00FFFF'},
+  {name: 'Black', color: '#000000'},
+  {name: 'Blue', color: '#0000FF'},
+  {name: 'Fuchsia', color: '#FF00FF'},
+  {name: 'Gray', color: '#808080'},
+  {name: 'Green', color: '#008000'},
+  {name: 'Lime', color: '#00FF00'},
+  {name: 'Maroon', color: '#800000'},
+  {name: 'Navy', color: '#000080'},
+  {name: 'Olive', color: '#808000'},
+  {name: 'Purple', color: '#800080'},
+  {name: 'Red', color: '#FF0000'},
+  {name: 'Silver', color: '#C0C0C0'},
+  {name: 'Teal', color: '#008080'},
+  {name: 'White', color: '#FFFFFF'},
+  {name: 'Yellow', color: '#FFFF00'}
+];
+
 /**
  * @ngdoc function
  * @name templateDesignerApp.controller:MainCtrl
@@ -13,6 +32,14 @@ angular.module('templateDesignerApp')
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
     $scope.groups = Groups.getGroups();
+
+    // Color grid
+    $scope.colors = colors;
+    $scope.color_columns = 4;
+    $scope.color_rows = colors.length/$scope.color_columns;
+    $scope.getColor = function (row, col) {
+      return $scope.colors[(row * $scope.color_columns) + col];
+    };
 
     $scope.setGroup = function(group) {
       $scope.group = group;

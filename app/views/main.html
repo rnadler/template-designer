@@ -18,7 +18,7 @@
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
   </div>
 </script>
-  
+
 <tabset>
   <tab heading="Templates">
     <div class="panel panel-primary">
@@ -146,6 +146,20 @@
         </table>
       </div>
     </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">Colors</div>
+      <div class="panel-body">
+        <table class="table">
+          <tr ng-repeat="col in [] | range:color_columns">
+              <td ng-repeat="row in [] | range:color_rows">
+                <div ng-style="{'background': getColor(row, col).color}" >
+               {{getColor(row, col).name}}
+                </div>
+              </td>
+          </tr>
+        </table>
+        </div>
+      </div>
   </tab>
 </tabset>
 
