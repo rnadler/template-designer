@@ -1,0 +1,21 @@
+<div class="modal-body">
+  <strong>Select color for {{type}}:</strong>
+
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table class="table-condensed">
+        <tr ng-repeat="col in [] | range:colorColumns">
+          <td ng-repeat="row in [] | range:colorRows">
+            <button class="btn btn-default dropdown-toggle" type="button" id="color{{row}}{{col}}"
+                    ng-style="{'background': getColor(row, col).color}" ng-click="ok(getColor(row, col).color)">
+              {{getColor(row, col).name}}
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+  </div>
+</div>

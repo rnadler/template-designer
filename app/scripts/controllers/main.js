@@ -38,7 +38,7 @@ angular.module('templateDesignerApp')
     };
     $scope.selectColor = function(row, col) {
       var modalInstance = $modal.open({
-        templateUrl: 'colorPicker.html',
+        templateUrl: 'views/templates/colorPicker.html',
         controller: 'ColorPickerCtrl',
         resolve: {
           type: function () {
@@ -56,7 +56,7 @@ angular.module('templateDesignerApp')
 
     $scope.editTemplate = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'getNameDialog.html',
+        templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
@@ -76,7 +76,7 @@ angular.module('templateDesignerApp')
 
     $scope.addTemplate = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'getNameDialog.html',
+        templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
@@ -97,7 +97,7 @@ angular.module('templateDesignerApp')
 
     $scope.removeTemplate = function(template) {
       var modalInstance = $modal.open({
-        templateUrl: 'actionConfirm.html',
+        templateUrl: 'views/templates/actionConfirm.html',
         controller: 'ActionConfirmCtrl',
         resolve: {
           message: function () {
@@ -125,7 +125,7 @@ angular.module('templateDesignerApp')
 
     $scope.editGroup = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'getNameDialog.html',
+        templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
@@ -148,7 +148,7 @@ angular.module('templateDesignerApp')
 
     $scope.addGroup = function() {
       var modalInstance = $modal.open({
-        templateUrl: 'getNameDialog.html',
+        templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
@@ -169,7 +169,7 @@ angular.module('templateDesignerApp')
 
     $scope.removeGroup = function(group) {
       var modalInstance = $modal.open({
-        templateUrl: 'actionConfirm.html',
+        templateUrl: 'views/templates/actionConfirm.html',
         controller: 'ActionConfirmCtrl',
         resolve: {
           message: function () {
