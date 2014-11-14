@@ -30,6 +30,10 @@ angular.module('templateDesignerApp')
     };
 
     // ------------ Cell management
+
+    $scope.cellWidth = function() {
+      return 100/$scope.template.grid.columns + '%';
+    };
     $scope.getCell = function(row, col) {
         return $scope.template.grid.getCell(row, col);
     };
@@ -61,7 +65,7 @@ angular.module('templateDesignerApp')
         size: 'sm',
         resolve: {
           message: function () {
-            return 'Edit Template Name';
+            return 'Rename Template Name';
           },
           defaultName: function () {
             return $scope.template.name;
@@ -130,7 +134,7 @@ angular.module('templateDesignerApp')
         size: 'sm',
         resolve: {
           message: function () {
-            return 'Edit Rule Group Name';
+            return 'Rename Rule Group Name';
           },
           defaultName: function () {
             return $scope.group;

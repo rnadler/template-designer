@@ -3,13 +3,13 @@
 
   <div class="panel panel-default">
     <div class="panel-body">
-      <table class="table-condensed">
+      <table class="table table-bordered">
         <tr ng-repeat="col in [] | range:colorColumns">
           <td ng-repeat="row in [] | range:colorRows">
-            <button class="btn btn-default dropdown-toggle" type="button" id="color{{row}}{{col}}"
-                    ng-style="{'background': getColor(row, col).color}" ng-click="ok(getColor(row, col).color)">
-              {{getColor(row, col).name}}
-            </button>
+              <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="color{{row}}{{col}}"
+                      ng-style="{'background': getColor(row, col).color}" ng-click="ok(getColor(row, col).color)">
+                {{getColor(row, col).name}}
+              </button>
           </td>
         </tr>
       </table>

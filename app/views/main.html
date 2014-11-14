@@ -1,8 +1,9 @@
-
 <tabset>
   <tab heading="Templates">
     <div class="panel panel-primary">
-      <div class="panel-heading">Templates [{{templates.length}}]</div>
+      <div class="panel-heading">
+        <h3 class="panel-title">Templates [{{templates.length}}]</h3>
+      </div>
       <div class="panel-body">
         <table class="table-condensed">
           <tr>
@@ -23,7 +24,7 @@
             </td>
             <td>
               <div ng-show="templates.length > 0">
-                <button class="glyphicon glyphicon-pencil" tooltip="Edit {{template.name}} template."
+                <button class="glyphicon glyphicon-pencil" tooltip="Rename {{template.name}} template."
                         ng-click="editTemplate()"></button>
               </div>
             </td>
@@ -40,9 +41,13 @@
         </table>
       </div>
     </div>
-    <div class="panel panel-default">
-      <div class="panel-heading">Grid Size</div>
-      <div class="panel-body">
+
+    <accordion close-others="oneAtATime">
+      <accordion-group heading="" is-open="status.open">
+        <accordion-heading>
+          Grid Size<i class="pull-right glyphicon"
+                      ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
         <table class="table-condensed">
           <tr>
             <td>
@@ -74,26 +79,29 @@
             </td>
           </tr>
         </table>
-      </div>
-    </div>
+      </accordion-group>
+    </accordion>
     <div class="panel panel-default">
-      <div class="panel-heading">Action View</div>
+      <div class="panel-heading">
+        <h3 class="panel-title">Action View</h3>
+      </div>
       <div class="panel-body">
-        <table class="table-condensed">
+        <table class="table table-bordered">
           <tr ng-repeat="row in [] | range:template.rows">
-            <td ng-repeat="col in [] | range:template.columns()">
-              <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle" type="button" id="cell{{row}}{{col}}"
-                        ng-style="{'background': getCell(row, col).color}">
-                  {{getCell(row, col).name}}
-                  <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
-                  <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="setCellName(row, col, group)"
-                                             ng-repeat="group in groups">{{group}}</a></li>
-                  <li role="presentation" class="divider"></li>
-                  <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="selectColor(row, col)">Select Color</a></li>
-                </ul>
+            <td ng-repeat="col in [] | range:template.columns()" ng-style="{'width': cellWidth()}">
+              <div class="btn-group-vertical btnwrap" role="group">
+                <div class="dropdown">
+                  <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="cell{{row}}{{col}}">
+                    {{getCell(row, col).name}}
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="setCellName(row, col, group)"
+                                               ng-repeat="group in groups">{{group}}</a></li>
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-default" ng-style="{'background': getCell(row, col).color}"
+                        ng-click="selectColor(row, col)"></button>
               </div>
             </td>
           </tr>
@@ -103,7 +111,9 @@
   </tab>
   <tab heading="Rule Groups">
     <div class="panel panel-primary">
-      <div class="panel-heading">Rule Groups [{{groups.length}}]</div>
+      <div class="panel-heading">
+        <h3 class="panel-title">Rule Groups [{{groups.length}}]</h3>
+      </div>
       <div class="panel-body">
         <table class="table-condensed">
           <tr>
@@ -124,7 +134,7 @@
             </td>
             <td>
               <div ng-show="groups.length > 0">
-                <button class="glyphicon glyphicon-pencil" tooltip="Edit {{group}} rule group."
+                <button class="glyphicon glyphicon-pencil" tooltip="Rename {{group}} rule group."
                         ng-click="editGroup()"></button>
               </div>
             </td>
