@@ -1,0 +1,38 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table-condensed">
+      <tr>
+        <td>
+          <div ng-show="groups.length > 0">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="group">
+                {{group}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="group">
+                <li role="presentation"><a role="menuitem" tabindex="-1"
+                                           ng-click="setGroup(g)" ng-repeat="g in groups">{{g}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </td>
+        <td>
+          <div ng-show="groups.length > 0">
+            <button class="glyphicon glyphicon-pencil" tooltip="Rename {{group}} rule group."
+                    ng-click="editGroup()"></button>
+          </div>
+        </td>
+        <td>
+          <div ng-show="groups.length > 0">
+            <button class="glyphicon glyphicon-remove" tooltip="Delete {{group}} rule group."
+                    ng-click="removeGroup(group)"></button>
+          </div>
+        </td>
+        <td>
+          <button class="glyphicon glyphicon-plus" tooltip="Add a rule group." ng-click="addGroup()"></button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

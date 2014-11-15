@@ -1,0 +1,22 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table-condensed">
+      <tr>
+        <td>
+          <button class="btn btn-default" ng-click="writeJson()" tooltip="Save current work as a JSON project file.">
+            <span class="glyphicon glyphicon-arrow-down"></span>
+            Save Project JSON
+          </button>
+        </td>
+        <td>
+          <button class="btn btn-default" ng-click="selectFile()" tooltip="Load a JSON project file.">
+            <span class="glyphicon glyphicon-arrow-up"></span>
+            Load Project JSON
+          </button>
+          <input ng-model="projectJson" onchange="angular.element(this).scope().readJson(this)"
+                 style="display:none" id="jsonfile" type="file" accept=".json"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
