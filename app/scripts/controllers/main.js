@@ -8,7 +8,8 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, Templates, Groups, $modal) {
+  .controller('MainCtrl', function ($scope, $window, Templates, Groups, $modal) {
+    $scope.project = '';
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -29,16 +30,53 @@ angular.module('templateDesignerApp')
       $scope.template.setColumns(n);
     };
 
-    // ------------ Cell management
+    // ------------- Project management -----------
+
+    $scope.writeJson = function() {
+      var myWindow = $window.open('application/json', '_blank'),
+          aggregate = {
+              groups: $scope.groups,
+              templates: $scope.templates
+      };
+      myWindow.document.write(JSON.stringify(aggregate, null, '\t'));
+    };
+
+    $scope.selectFile = function()
+    {
+      $("#jsonfile").click();
+    }
+    $scope.readJson = function(element) {
+      if ($window.File && $window.FileList && $window.FileReader) {
+        var jsonfile = element.files[0];
+        var reader = new $window.FileReader();
+        reader.onload = function (e) {
+          var aggregate = JSON.parse(e.target.result);
+          $scope.$apply(function () {
+            $scope.groups = Groups.setGroups(aggregate.groups);
+            $scope.templates = Templates.setTemplates(aggregate.templates);
+            $scope.reset();
+            $scope.project = jsonfile.name;
+          });
+        };
+        reader.readAsText(jsonfile);
+      } else {
+        alert("Your browser does not support the File API!");
+      }
+    };
+
+    // ------------ Cell management ---------------
 
     $scope.cellWidth = function() {
-      return 100/$scope.template.grid.columns + '%';
+      return 100/$scope.template.getColumns() + '%';
     };
     $scope.getCell = function(row, col) {
         return $scope.template.grid.getCell(row, col);
     };
     $scope.setCellName = function(row, col, name) {
-      $scope.template.grid.getCell(row, col).name = name;
+      $scope.template.grid.setCell(row, col, name, $scope.getCell(row, col).color);
+    };
+    $scope.setCellColor = function(row, col, color) {
+      $scope.template.grid.setCell(row, col, $scope.getCell(row, col).name, color);
     };
     $scope.selectColor = function(row, col) {
       var modalInstance = $modal.open({
@@ -46,13 +84,13 @@ angular.module('templateDesignerApp')
         controller: 'ColorPickerCtrl',
         resolve: {
           type: function () {
-            return $scope.template.grid.getCell(row, col).name;
+            return $scope.getCell(row, col).name;
           }
         }
       });
 
       modalInstance.result.then(function (color) {
-        $scope.template.grid.getCell(row, col).color = color;
+        $scope.setCellColor(row, col, color);
       });
     };
 
@@ -197,7 +235,11 @@ angular.module('templateDesignerApp')
       });
     };
 
-    $scope.setTemplate($scope.templates[0]);
-    $scope.setGroup($scope.groups[0]);
+    $scope.reset = function() {
+      $scope.setTemplate($scope.templates[0]);
+      $scope.setGroup($scope.groups[0]);
+    };
+
+    $scope.reset();
 
   });

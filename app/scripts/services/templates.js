@@ -6,6 +6,7 @@ function Cell(name, color) {
   this.name = name;
   this.color = color;
 }
+var blankCell = new Cell(blank, '#ffffff');
 
 function Grid(columns) {
   this.columns = columns;
@@ -22,12 +23,8 @@ Grid.prototype = {
   },
 
   getCell: function (row, col) {
-    var ordinal = this.ordinal(row, col);
-    var rv = this.cells[ordinal];
-    if (rv === undefined) {
-      this.cells[ordinal] = rv = new Cell(blank, '#ffffff');
-    }
-    return rv;
+    var rv = this.cells[this.ordinal(row, col)];
+    return (rv === undefined) ? blankCell : rv;
   }
 };
 
@@ -38,7 +35,7 @@ function Template(name, rows, columns) {
 }
 Template.prototype = {
 
-  columns: function () {
+  getColumns: function () {
     return this.grid.columns;
   },
 
@@ -55,6 +52,22 @@ angular.module('TemplatesService', []).service('Templates', function () {
   ];
   this.getTemplates = function () {
       return templates;
+  };
+  this.setTemplates = function (templates) {
+    // The JSON version of the Template object needs to be reconstituted.
+    // There's probably a better way to do this, but this works for now...
+    this.templates = [];
+    for (var t in templates) {
+      var temp = templates[t];
+      var grid = temp.grid;
+        var nt = new Template(temp.name, temp.rows, grid.columns);
+      for (var c in grid.cells) {
+        var cell = grid.cells[c];
+        nt.grid.cells[c] = new Cell(cell.name, cell.color);
+      }
+      this.templates.push(nt);
+    }
+    return this.templates;
   };
   this.addTemplate = function(templateName, rows, columns) {
     templates.push(new Template(templateName, rows, columns));

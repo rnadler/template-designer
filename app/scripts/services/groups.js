@@ -15,6 +15,9 @@ angular.module('GroupsService', []).service('Groups', function () {
   this.getGroups = function () {
       return groups;
   };
+  this.setGroups = function (groups) {
+    return this.groups = groups;
+  };
   this.addGroup = function(group) {
     groups.push(group);
   };

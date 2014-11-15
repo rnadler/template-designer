@@ -1,9 +1,36 @@
 <tabset>
-  <tab heading="Templates">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Templates [{{templates.length}}]</h3>
+  <tab>
+    <tab-heading>
+      <strong>Project [{{project}}]</strong>
+    </tab-heading>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <table class="table-condensed">
+          <tr>
+            <td>
+              <button class="btn btn-default" ng-click="writeJson()" tooltip="Save current work as a JSON project file.">
+                <span class="glyphicon glyphicon-arrow-down"></span>
+                Save Project JSON
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-default" ng-click="selectFile()" tooltip="Load a JSON project file.">
+                <span class="glyphicon glyphicon-arrow-up"></span>
+                Load Project JSON
+              </button>
+              <input ng-model="projectJson" onchange="angular.element(this).scope().readJson(this)"
+                     style="display:none" id="jsonfile" type="file" accept=".json"/>
+            </td>
+          </tr>
+        </table>
       </div>
+    </div>
+  </tab>
+  <tab>
+    <tab-heading>
+      <strong>Templates [{{templates.length}}]</strong>
+    </tab-heading>
+    <div class="panel panel-default">
       <div class="panel-body">
         <table class="table-condensed">
           <tr>
@@ -41,7 +68,6 @@
         </table>
       </div>
     </div>
-
     <accordion close-others="oneAtATime">
       <accordion-group heading="" is-open="status.open">
         <accordion-heading>
@@ -66,7 +92,7 @@
             <td>
               <div class="dropdown">
                 <button class="btn btn-default dropdown-toggle" type="button" id="colCount">
-                  Columns: {{template.columns()}}
+                  Columns: {{template.getColumns()}}
                   <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="colCount">
@@ -88,7 +114,7 @@
       <div class="panel-body">
         <table class="table table-bordered">
           <tr ng-repeat="row in [] | range:template.rows">
-            <td ng-repeat="col in [] | range:template.columns()" ng-style="{'width': cellWidth()}">
+            <td ng-repeat="col in [] | range:template.getColumns()" ng-style="{'width': cellWidth()}">
               <div class="btn-group-vertical btnwrap" role="group">
                 <div class="dropdown">
                   <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="cell{{row}}{{col}}">
@@ -109,11 +135,11 @@
       </div>
     </div>
   </tab>
-  <tab heading="Rule Groups">
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">Rule Groups [{{groups.length}}]</h3>
-      </div>
+  <tab>
+    <tab-heading>
+      <strong>Rule Groups [{{groups.length}}]</strong>
+    </tab-heading>
+    <div class="panel panel-default">
       <div class="panel-body">
         <table class="table-condensed">
           <tr>

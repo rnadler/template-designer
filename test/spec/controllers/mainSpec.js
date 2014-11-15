@@ -22,7 +22,7 @@ describe('Controller: MainCtrl', function () {
   it('should attach default template to the scope', function () {
     expect(scope.template.name).toContain('template');
     expect(scope.template.rows).toBe(4);
-    expect(scope.template.columns()).toBe(4);
+    expect(scope.template.getColumns()).toBe(4);
   });
   it('should attach a template grid to the scope', function () {
     expect(scope.getCell(2,2).name).toBe('--- Blank ---');
