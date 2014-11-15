@@ -10,7 +10,7 @@
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal) {
     $scope.project = '';
-    $scope.projectLoadHide = true;
+    $scope.projectLoadSuccessAlert = true;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -38,37 +38,43 @@ angular.module('templateDesignerApp')
               groups: $scope.groups,
               templates: $scope.templates
       };
-      var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: "text/plain;charset=utf-8"});
+      var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, projectName + '.json');
       $scope.project = projectName;
     };
 
     $scope.selectFile = function()
     {
-      $("#jsonfile").click();
-    }
+      console.log('selectFile -- about to open load dialog');
+      $('#jsonfile').click();
+    };
     $scope.readJson = function(element) {
+      if (!element || !element.files || !element.files[0]) {
+        console.log('readJson -- no file to read.');
+        return;
+      }
+      console.log('readJson -- about to load ' + element.files[0].name);
       if ($window.File && $window.FileList && $window.FileReader) {
-        var jsonfile = element.files[0];
-        var reader = new $window.FileReader();
+        var jsonfile = element.files[0],
+            reader = new $window.FileReader();
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
-         // $scope.$apply(function () {
+          $scope.$apply(function () {
             $scope.groups = Groups.setGroups(aggregate.groups);
             $scope.templates = Templates.setTemplates(aggregate.templates);
             $scope.project = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
-            console.log($scope.project);
-            $scope.projectLoadHide = false;
+            console.log('readJson -- loaded ' + $scope.project);
+            $scope.projectLoadSuccessAlert = false;
             $timeout(function() {
-              $scope.projectLoadHide = true;
+              $scope.projectLoadSuccessAlert = true;
             }, 5000);
             $scope.reset();
-            $scope.$apply();
-          //});
+          });
+          $('#jsonfile').val('');
         };
         reader.readAsText(jsonfile);
       } else {
-        alert("Your browser does not support the File API!");
+        alert('Your browser does not support the File API!');
       }
     };
 
