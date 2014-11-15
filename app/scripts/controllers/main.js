@@ -8,8 +8,9 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, Templates, Groups, $modal) {
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal) {
     $scope.project = '';
+    $scope.projectLoadHide = true;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -32,13 +33,14 @@ angular.module('templateDesignerApp')
 
     // ------------- Project management -----------
 
-    $scope.writeJson = function() {
-      var myWindow = $window.open('application/json', '_blank'),
-          aggregate = {
+    $scope.writeJson = function(projectName) {
+      var aggregate = {
               groups: $scope.groups,
               templates: $scope.templates
       };
-      myWindow.document.write(JSON.stringify(aggregate, null, '\t'));
+      var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: "text/plain;charset=utf-8"});
+      saveAs(blob, projectName + '.json');
+      $scope.project = projectName;
     };
 
     $scope.selectFile = function()
@@ -51,12 +53,18 @@ angular.module('templateDesignerApp')
         var reader = new $window.FileReader();
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
-          $scope.$apply(function () {
+         // $scope.$apply(function () {
             $scope.groups = Groups.setGroups(aggregate.groups);
             $scope.templates = Templates.setTemplates(aggregate.templates);
+            $scope.project = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+            console.log($scope.project);
+            $scope.projectLoadHide = false;
+            $timeout(function() {
+              $scope.projectLoadHide = true;
+            }, 5000);
             $scope.reset();
-            $scope.project = jsonfile.name;
-          });
+            $scope.$apply();
+          //});
         };
         reader.readAsText(jsonfile);
       } else {
