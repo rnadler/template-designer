@@ -1,0 +1,43 @@
+#
+# Building and running a Template Manager server Docker container (base contianer is coreos/apache)
+
+# ------------ Update container web contents --------------
+# Rebuid site distribution directory (update internal version)
+$ cd /home/bob/Projects/boxdemo/project/template-designer
+$ grunt --force
+
+# Start image and update web content 
+$ sudo docker run -v /home/bob/Projects/boxdemo/project/template-designer:/template-manager -t -i rnadler/template-manager:v1 /bin/bash
+root@cbae2041f326:/# rm -rf /var/www/*
+root@cbae2041f326:/# cp -R /template-manager/dist/* /var/www/
+root@cbae2041f326:/# exit
+
+# Commit the changes (increment version)
+$ sudo docker commit cbae2041f326 rnadler/template-manager:v2
+
+# Run new version: http://localhost:9001
+$ sudo docker run -d -p 9001:80 rnadler/template-manager:v2 /usr/sbin/apache2ctl -D FOREGROUND
+# Test on http://localhost:9001
+
+# Stop the server
+$ sudo docker ps  (get running container name)
+$ sudo docker stop <container-name>
+
+# Push new version to Docker repository
+$ sudo docker push rnadler/template-manager:v2
+
+#------------------------------------------------------
+
+
+# --------------- Run server on any Docker machine  -------------------------
+
+# Install docker: https://docs.docker.com/installation/
+
+# Instead of 9001, use 80 or 8080 if you want to provide external access to the application.
+$ sudo docker run -d -p 9001:80 rnadler/template-manager /usr/sbin/apache2ctl -D FOREGROUND
+# Run application on http://localhost:9001
+
+# Stop the server
+$ sudo docker ps  (get running container name)
+$ sudo docker stop <container-name>
+#------------------------------------------------------
