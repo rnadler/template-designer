@@ -9,7 +9,6 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal) {
-    $scope.templateDesignerVersion = '0.0.2-alpha';
     $scope.project = '';
     $scope.projectLoadSuccessAlert = true;
     $scope.maxRows = 4;

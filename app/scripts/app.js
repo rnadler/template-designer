@@ -29,6 +29,9 @@ angular.module('templateDesignerApp', [
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .controller('IndexCtrl', function($scope) {
+      $scope.templateDesignerVersion = '0.0.3-alpha';
   });
 
 
