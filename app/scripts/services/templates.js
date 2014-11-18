@@ -53,21 +53,21 @@ angular.module('TemplatesService', []).service('Templates', function () {
   this.getTemplates = function () {
       return templates;
   };
-  this.setTemplates = function (templates) {
-    // The JSON version of the Template object needs to be reconstituted.
+  this.setTemplates = function (tmplts) {
+    // The JSON version of the Template object needs to be reconstituted to include the prototypes.
     // There's probably a better way to do this, but this works for now...
-    this.templates = [];
-    for (var t in templates) {
-      var temp = templates[t];
+    templates = [];
+    for (var t in tmplts) {
+      var temp = tmplts[t];
       var grid = temp.grid;
         var nt = new Template(temp.name, temp.rows, grid.columns);
       for (var c in grid.cells) {
         var cell = grid.cells[c];
         nt.grid.cells[c] = new Cell(cell.name, cell.color);
       }
-      this.templates.push(nt);
+      templates.push(nt);
     }
-    return this.templates;
+    return templates;
   };
   this.addTemplate = function(templateName, rows, columns) {
     templates.push(new Template(templateName, rows, columns));
