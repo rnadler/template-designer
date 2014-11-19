@@ -60,7 +60,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
     for (var t in tmplts) {
       var temp = tmplts[t];
       var grid = temp.grid;
-        var nt = new Template(temp.name, temp.rows, grid.columns);
+      var nt = new Template(temp.name, temp.rows, grid.columns);
       for (var c in grid.cells) {
         var cell = grid.cells[c];
         nt.grid.cells[c] = new Cell(cell.name, cell.color);
@@ -79,4 +79,17 @@ angular.module('TemplatesService', []).service('Templates', function () {
     }
     return index;
   };
+  // Update cells with group name changes
+  this.updateGroupName = function(oldGroup, newGroup) {
+    for (var t in templates) {
+      var temp = templates[t];
+      var grid = temp.grid;
+      for (var c in grid.cells) {
+        var cell = grid.cells[c];
+        if (cell.name == oldGroup) {
+          cell.name = newGroup == '' ? blank : newGroup;
+        }
+      }
+    }
+  }
 });

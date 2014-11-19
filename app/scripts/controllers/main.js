@@ -210,6 +210,7 @@ angular.module('templateDesignerApp')
       modalInstance.result.then(function (group) {
         var index = Groups.changeGroup($scope.group, group);
         if (index > -1) {
+          Templates.updateGroupName($scope.group, group);
           $scope.group = group;
         } else {
           $scope.showGroupAlert();
@@ -255,6 +256,7 @@ angular.module('templateDesignerApp')
       modalInstance.result.then(function () {
         var index = Groups.removeGroup(group);
         if (index > -1) {
+          Templates.updateGroupName(group, '');
           var last = $scope.groups.length - 1;
           if (index > last) {
             index = last;
