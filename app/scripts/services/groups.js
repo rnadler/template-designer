@@ -25,6 +25,9 @@ angular.module('GroupsService', []).service('Groups', function () {
     groups.push(group);
   };
   this.changeGroup = function(oldGroup, newGroup) {
+    if (oldGroup == blank) {
+      return -1;
+    }
     var index = groups.indexOf(oldGroup);
     if (index > -1) {
       groups[index] = newGroup;
@@ -32,6 +35,9 @@ angular.module('GroupsService', []).service('Groups', function () {
     return index;
   };
   this.removeGroup = function(group) {
+    if (group == blank) {
+      return -1;
+    }
     var index = groups.indexOf(group);
     if (index > -1) {
       groups.splice(index, 1);

@@ -14,6 +14,7 @@ angular.module('templateDesignerApp')
     };
     $scope.projectLoadSuccessAlert = false;
     $scope.projectSaveSuccessAlert = false;
+    $scope.groupAlert = false;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -185,7 +186,12 @@ angular.module('templateDesignerApp')
     };
 
     // ----------- Rule Group management ---------------
-
+    $scope.showGroupAlert = function() {
+      $scope.groupAlert = true;
+      $timeout(function() {
+        $scope.groupAlert = false;
+      }, 5000);
+    };
     $scope.editGroup = function() {
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
@@ -205,6 +211,8 @@ angular.module('templateDesignerApp')
         var index = Groups.changeGroup($scope.group, group);
         if (index > -1) {
           $scope.group = group;
+        } else {
+          $scope.showGroupAlert();
         }
       });
     };
@@ -252,6 +260,8 @@ angular.module('templateDesignerApp')
             index = last;
           }
           $scope.setGroup($scope.groups[index]);
+        } else {
+          $scope.showGroupAlert();
         }
       });
     };
