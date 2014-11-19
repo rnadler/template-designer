@@ -1,18 +1,18 @@
-<alert type="success" close="projectLoadSuccessAlert = false" ng-hide="projectLoadSuccessAlert == false">Sucessfully loaded project {{project}}!</alert>
-<alert type="success" close="projectSaveSuccessAlert = false" ng-hide="projectSaveSuccessAlert == false">Sucessfully saved project {{project}}!</alert>
+<alert type="success" close="projectLoadSuccessAlert = false" ng-hide="projectLoadSuccessAlert == false">Sucessfully loaded project {{projectData.name}}!</alert>
+<alert type="success" close="projectSaveSuccessAlert = false" ng-hide="projectSaveSuccessAlert == false">Sucessfully saved project {{projectData.name}}!</alert>
 <div class="panel panel-default">
   <div class="panel-body">
     <table class="table-condensed">
       <tr>
         <td>
-          <button class="btn btn-default" ng-click="writeJson(project)" tooltip="Save current work as a JSON project file."
-                  ng-disabled="project.length == 0">
+          <button class="btn btn-default" ng-click="writeJson(projectData.name)" tooltip="Save current work as a JSON project file."
+                  ng-disabled="projectData.name.length == 0">
             <span class="glyphicon glyphicon-arrow-down"></span>
             Save Project JSON
           </button>
         </td>
         <td>
-          <input type="text" ng-model="$parent.project" class="form-control" placeholder="Project Name" ng-trim="true">
+          <input type="text" ng-model="projectData.name" class="form-control" placeholder="Project Name" ng-trim="true">
         <td>.json
         </td>
       </tr>
@@ -22,7 +22,7 @@
             <span class="glyphicon glyphicon-arrow-up"></span>
             Load Project JSON
           </button>
-          <input ng-model="projectLoaded" onchange="angular.element(this).scope().readJson(this)"
+          <input onchange="angular.element(this).scope().readJson(this)"
                  style="display:none" id="jsonfile" type="file" accept=".json"/>
         </td>
       </tr>

@@ -9,7 +9,9 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal) {
-    $scope.project = '';
+    $scope.projectData = {
+      name: ''
+    };
     $scope.projectLoadSuccessAlert = false;
     $scope.projectSaveSuccessAlert = false;
     $scope.maxRows = 4;
@@ -41,7 +43,7 @@ angular.module('templateDesignerApp')
       };
       var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, projectName + '.json');
-      $scope.project = projectName;
+      $scope.projectData.name = projectName;
       $scope.projectSaveSuccessAlert = true;
       $timeout(function() {
         $scope.projectSaveSuccessAlert = false;
@@ -67,7 +69,7 @@ angular.module('templateDesignerApp')
           $scope.$apply(function () {
             $scope.groups = Groups.setGroups(aggregate.groups);
             $scope.templates = Templates.setTemplates(aggregate.templates);
-            $scope.project = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+            $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
             console.log('readJson -- loaded ' + $scope.project);
             $scope.projectLoadSuccessAlert = true;
             $timeout(function() {
