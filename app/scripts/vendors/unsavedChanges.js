@@ -12,7 +12,7 @@
       oListenableCollection = {};
       fnLocationListener = null;
       this.fnAttachListener = function($scope, sSlug, mListenableObject) {
-        if ($route.current.scope && $scope.$id !== $route.current.scope.$id) {
+        if ($route.current && $route.current.scope && $scope.$id !== $route.current.scope.$id) {
           return;
         }
         oListenableCollection[sSlug] = {};
