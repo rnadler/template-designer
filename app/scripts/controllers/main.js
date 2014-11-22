@@ -15,6 +15,7 @@ angular.module('templateDesignerApp')
     $scope.projectLoadSuccessAlert = {enabled: false};
     $scope.projectSaveSuccessAlert = {enabled: false};
     $scope.groupAlert = {enabled: false};
+    $scope.projectChangesPendingAlert = {enabled: false};
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -54,6 +55,10 @@ angular.module('templateDesignerApp')
 
     $scope.selectFile = function()
     {
+      if ($scope.changesArePending()) {
+        $scope.showAlert($scope.projectChangesPendingAlert);
+        return;
+      }
       $('#jsonfile').click();
     };
     $scope.readJson = function(element) {
@@ -249,6 +254,12 @@ angular.module('templateDesignerApp')
           $scope.showAlert($scope.groupAlert);
         }
       });
+    };
+
+    $scope.changesArePending = function() {
+      return unsavedChanges.fnHasChanges('group-changes') ||
+             unsavedChanges.fnHasChanges('template-changes') ||
+             unsavedChanges.fnHasChanges('project-changes');
     };
 
     $scope.reset = function() {
