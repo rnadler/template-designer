@@ -8,7 +8,7 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal) {
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges) {
     $scope.projectData = {
       name: ''
     };
@@ -49,6 +49,7 @@ angular.module('templateDesignerApp')
       saveAs(blob, projectName + '.json');
       $scope.projectData.name = projectName;
       $scope.showAlert($scope.projectSaveSuccessAlert);
+      $scope.reset();
     };
 
     $scope.selectFile = function()
@@ -251,6 +252,10 @@ angular.module('templateDesignerApp')
     };
 
     $scope.reset = function() {
+      unsavedChanges.fnDetachListeners();
+      unsavedChanges.fnAttachListener($scope, 'group-changes', $scope.groups);
+      unsavedChanges.fnAttachListener($scope, 'template-changes', $scope.templates);
+      unsavedChanges.fnAttachListener($scope, 'project-changes', $scope.projectData);
       $scope.setTemplate($scope.templates[0]);
     };
 

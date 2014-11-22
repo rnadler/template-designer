@@ -12,6 +12,7 @@ angular.module('templateDesignerApp', [
     'TemplatesService',
     'GroupsService',
     'rangeFilters',
+    'mosSvcs.unsavedChanges',
     'ngAnimate',
     'ngCookies',
     'ngResource',
