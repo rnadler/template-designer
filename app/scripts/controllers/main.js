@@ -20,10 +20,6 @@ angular.module('templateDesignerApp')
     $scope.templates = Templates.getTemplates();
     $scope.groups = Groups.getGroups();
 
-    $scope.setGroup = function(group) {
-      $scope.group = group;
-    };
-
     $scope.setTemplate = function(template) {
       $scope.template = template;
     };
@@ -53,15 +49,12 @@ angular.module('templateDesignerApp')
 
     $scope.selectFile = function()
     {
-      console.log('selectFile -- about to open load dialog');
       $('#jsonfile').click();
     };
     $scope.readJson = function(element) {
       if (!element || !element.files || !element.files[0]) {
-        console.log('readJson -- no file to read.');
         return;
       }
-      console.log('readJson -- about to load ' + element.files[0].name);
       if ($window.File && $window.FileList && $window.FileReader) {
         var jsonfile = element.files[0],
             reader = new $window.FileReader();
@@ -71,7 +64,6 @@ angular.module('templateDesignerApp')
             $scope.groups = Groups.setGroups(aggregate.groups);
             $scope.templates = Templates.setTemplates(aggregate.templates);
             $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
-            console.log('readJson -- loaded ' + $scope.project);
             $scope.projectLoadSuccessAlert = true;
             $timeout(function() {
               $scope.projectLoadSuccessAlert = false;
@@ -192,7 +184,8 @@ angular.module('templateDesignerApp')
         $scope.groupAlert = false;
       }, 5000);
     };
-    $scope.editGroup = function() {
+    $scope.editGroup = function(group) {
+      var oldGroup = group;
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
@@ -202,16 +195,15 @@ angular.module('templateDesignerApp')
             return 'Rename Rule Group Name';
           },
           defaultName: function () {
-            return $scope.group;
+            return group;
           }
         }
       });
 
       modalInstance.result.then(function (group) {
-        var index = Groups.changeGroup($scope.group, group);
+        var index = Groups.changeGroup(oldGroup, group);
         if (index > -1) {
-          Templates.updateGroupName($scope.group, group);
-          $scope.group = group;
+          Templates.updateGroupName(oldGroup, group);
         } else {
           $scope.showGroupAlert();
         }
@@ -235,7 +227,6 @@ angular.module('templateDesignerApp')
 
       modalInstance.result.then(function (group) {
           Groups.addGroup(group);
-          $scope.setGroup($scope.groups[$scope.groups.length - 1]);
       });
     };
 
@@ -257,11 +248,6 @@ angular.module('templateDesignerApp')
         var index = Groups.removeGroup(group);
         if (index > -1) {
           Templates.updateGroupName(group, '');
-          var last = $scope.groups.length - 1;
-          if (index > last) {
-            index = last;
-          }
-          $scope.setGroup($scope.groups[index]);
         } else {
           $scope.showGroupAlert();
         }
@@ -270,7 +256,6 @@ angular.module('templateDesignerApp')
 
     $scope.reset = function() {
       $scope.setTemplate($scope.templates[0]);
-      $scope.setGroup($scope.groups[0]);
     };
 
     $scope.reset();
