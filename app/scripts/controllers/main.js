@@ -12,9 +12,9 @@ angular.module('templateDesignerApp')
     $scope.projectData = {
       name: ''
     };
-    $scope.projectLoadSuccessAlert = false;
-    $scope.projectSaveSuccessAlert = false;
-    $scope.groupAlert = false;
+    $scope.projectLoadSuccessAlert = {enabled: false};
+    $scope.projectSaveSuccessAlert = {enabled: false};
+    $scope.groupAlert = {enabled: false};
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -31,6 +31,13 @@ angular.module('templateDesignerApp')
       $scope.template.setColumns(n);
     };
 
+    $scope.showAlert = function(alert) {
+      alert.enabled = true;
+      $timeout(function() {
+        alert.enabled = false;
+      }, 5000);
+    };
+
     // ------------- Project management -----------
 
     $scope.writeJson = function(projectName) {
@@ -41,10 +48,7 @@ angular.module('templateDesignerApp')
       var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, projectName + '.json');
       $scope.projectData.name = projectName;
-      $scope.projectSaveSuccessAlert = true;
-      $timeout(function() {
-        $scope.projectSaveSuccessAlert = false;
-      }, 5000);
+      $scope.showAlert($scope.projectSaveSuccessAlert);
     };
 
     $scope.selectFile = function()
@@ -64,10 +68,7 @@ angular.module('templateDesignerApp')
             $scope.groups = Groups.setGroups(aggregate.groups);
             $scope.templates = Templates.setTemplates(aggregate.templates);
             $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
-            $scope.projectLoadSuccessAlert = true;
-            $timeout(function() {
-              $scope.projectLoadSuccessAlert = false;
-            }, 5000);
+            $scope.showAlert($scope.projectLoadSuccessAlert);
             $scope.reset();
           });
           $('#jsonfile').val('');
@@ -178,12 +179,7 @@ angular.module('templateDesignerApp')
     };
 
     // ----------- Rule Group management ---------------
-    $scope.showGroupAlert = function() {
-      $scope.groupAlert = true;
-      $timeout(function() {
-        $scope.groupAlert = false;
-      }, 5000);
-    };
+
     $scope.editGroup = function(group) {
       var oldGroup = group;
       var modalInstance = $modal.open({
@@ -205,7 +201,7 @@ angular.module('templateDesignerApp')
         if (index > -1) {
           Templates.updateGroupName(oldGroup, group);
         } else {
-          $scope.showGroupAlert();
+          $scope.showAlert($scope.groupAlert);
         }
       });
     };
@@ -249,7 +245,7 @@ angular.module('templateDesignerApp')
         if (index > -1) {
           Templates.updateGroupName(group, '');
         } else {
-          $scope.showGroupAlert();
+          $scope.showAlert($scope.groupAlert);
         }
       });
     };
