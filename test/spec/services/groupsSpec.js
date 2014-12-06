@@ -17,6 +17,14 @@ describe('services: groups', function() {
         Groups.addGroup('xxxx');
         expect(Groups.getGroups().length).toBe(8);
         expect(Groups.getGroups()[7]).toBe('xxxx');
+        // Set groups
+        Groups.setGroups(['xxx','yyy'], true);
+        expect(Groups.getGroups().length).toBe(3); // adds Blank
+        expect(Groups.getGroups()[0]).toBe('--- Blank ---');
+        Groups.setGroups(['aaa','bbb', 'yyy'], false);
+        expect(Groups.getGroups().length).toBe(5);
+        Groups.setGroups(['xxx','yyy','--- Blank ---'], true);
+        expect(Groups.getGroups()[0]).toBe('--- Blank ---'); // Blank always on top
       }));
   });
 });

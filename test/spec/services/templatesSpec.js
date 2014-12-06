@@ -20,20 +20,29 @@ describe('services: templates', function() {
         // Remove a template
         expect(Templates.removeTemplate(template)).toBe(3);
         expect(Templates.getTemplates().length).toBe(3);
-        expect(Templates.removeTemplate(new Template('yyy', 2, 2))).toBe(-1);
+        expect(Templates.removeTemplate(new Template('yyy', 2, 2))).toBe(-1); // jshint ignore:line
         // Test UpdateGroupName remove
-        var template_grid = Templates.getTemplates()[0].grid;
-        template_grid.setCell(0,0,'cell00','#000000');
-        expect(template_grid.getCell(0,0).name).toBe('cell00');
-        expect(template_grid.getCell(0,0).color).toBe('#000000');
+        var templateGrid = Templates.getTemplates()[0].grid;
+        templateGrid.setCell(0,0,'cell00','#000000');
+        expect(templateGrid.getCell(0,0).name).toBe('cell00');
+        expect(templateGrid.getCell(0,0).color).toBe('#000000');
         Templates.updateGroupName('cell00', '');
-        expect(template_grid.getCell(0,0).name).toBe('--- Blank ---');
-        expect(template_grid.getCell(0,0).color).toBe('#000000'); // color unchanged
+        expect(templateGrid.getCell(0,0).name).toBe('--- Blank ---');
+        expect(templateGrid.getCell(0,0).color).toBe('#000000'); // color unchanged
         // Test UpdateGroupName rename
-        template_grid.setCell(2,2,'cell22','');
-        expect(template_grid.getCell(2,2).name).toBe('cell22');
+        templateGrid.setCell(2,2,'cell22','');
+        expect(templateGrid.getCell(2,2).name).toBe('cell22');
         Templates.updateGroupName('cell22', 'xxxcell22xxx');
-        expect(template_grid.getCell(2,2).name).toBe('xxxcell22xxx');
+        expect(templateGrid.getCell(2,2).name).toBe('xxxcell22xxx');
+        // Set Template
+        var templateJson = JSON.stringify(Templates.getTemplates(), null, '\t');
+        Templates.removeTemplate(Templates.getTemplates()[1]);
+        expect(Templates.getTemplates().length).toBe(2);
+        Templates.setTemplates(JSON.parse(templateJson), true);
+        expect(Templates.getTemplates().length).toBe(3);
+        Templates.getTemplates()[1].name = Templates.getTemplates()[1].name + '-xxx'; // rename
+        Templates.setTemplates(JSON.parse(templateJson), false);
+        expect(Templates.getTemplates().length).toBe(4);
       }));
   });
 });

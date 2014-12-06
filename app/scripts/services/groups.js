@@ -3,12 +3,12 @@
 angular.module('GroupsService', []).service('Groups', function () {
   var groups = [
     blank,  // jshint ignore:line
-    '7daysAllPatients',
-    '30daysAllPatients',
-    '90daysAllPatients',
+    '7DaysAllPatients',
+    '30DaysAllPatients',
+    '90DaysAllPatients',
     'NoData',
-    '7daysAtRisk',
-    '30daysAtRisk',
+    '7DaysAtRisk',
+    '30DaysAtRisk',
     'InCompliance'
   ];
   this.hasGroup = function(group) {
@@ -17,8 +17,25 @@ angular.module('GroupsService', []).service('Groups', function () {
   this.getGroups = function () {
       return groups;
   };
-  this.setGroups = function (grps) {
-    groups = grps;
+  // Make sure Blank always exists and is at the top of the list
+  this.normalizeBlank = function() {
+    // remove existing
+    var index = groups.indexOf(blank); // jshint ignore:line
+    if (index > -1) {
+      groups.splice(index, 1);
+    }
+    // Add to top of the list
+    groups.unshift(blank); // jshint ignore:line
+  };
+  this.setGroups = function (grps, replace) {
+    if (replace) {
+      groups = grps;
+    } else {
+      for (var i = 0; i < grps.length; i++) {
+        this.addGroup(grps[i]);
+      }
+    }
+    this.normalizeBlank();
     return groups;
   };
   this.addGroup = function(group) {

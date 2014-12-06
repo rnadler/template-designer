@@ -54,15 +54,19 @@ angular.module('templateDesignerApp')
       $scope.reset();
     };
 
-    $scope.selectFile = function()
+    $scope.addFile = function()
+    {
+      $('#addJsonfile').click(); // jshint ignore:line
+    };
+    $scope.loadFile = function()
     {
       if ($scope.changesArePending()) {
         $scope.showAlert($scope.projectChangesPendingAlert);
         return;
       }
-      $('#jsonfile').click(); // jshint ignore:line
+      $('#loadJsonfile').click(); // jshint ignore:line
     };
-    $scope.readJson = function(element) {
+    $scope.readJson = function(element, replace) {
       if (!element || !element.files || !element.files[0]) {
         return;
       }
@@ -72,13 +76,14 @@ angular.module('templateDesignerApp')
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
           $scope.$apply(function () {
-            $scope.groups = Groups.setGroups(aggregate.groups);
-            $scope.templates = Templates.setTemplates(aggregate.templates);
-            $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+            $scope.groups = Groups.setGroups(aggregate.groups, replace);
+            $scope.templates = Templates.setTemplates(aggregate.templates, replace);
+            if (replace) {
+              $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+              $scope.reset();
+            }
             $scope.showAlert($scope.projectLoadSuccessAlert);
-            $scope.reset();
           });
-          $('#jsonfile').val(''); // jshint ignore:line
         };
         reader.readAsText(jsonfile);
       } else {

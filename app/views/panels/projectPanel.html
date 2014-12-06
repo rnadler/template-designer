@@ -19,12 +19,20 @@
       </tr>
       <tr>
         <td>
-          <button class="btn btn-default" ng-click="selectFile()" tooltip="Load a JSON project file.">
+          <button class="btn btn-default" ng-click="loadFile()" tooltip="Load a JSON project file.">
             <span class="glyphicon glyphicon-arrow-up"></span>
             Load Project JSON
           </button>
-          <input onchange="angular.element(this).scope().readJson(this)"
-                 style="display:none" id="jsonfile" type="file" accept=".json"/>
+          <input onchange="angular.element(this).scope().readJson(this, true)"
+                 style="display:none" id="loadJsonfile" type="file" accept=".json"/>
+        </td>
+        <td>
+          <button class="btn btn-default" ng-click="addFile()" tooltip="Add JSON file content to current project.">
+            <span class="glyphicon glyphicon-arrow-up"></span>
+            Add Project JSON
+          </button>
+          <input onchange="angular.element(this).scope().readJson(this, false)"
+                 style="display:none" id="addJsonfile" type="file" accept=".json"/>
         </td>
       </tr>
     </table>

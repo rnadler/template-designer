@@ -61,19 +61,33 @@ angular.module('TemplatesService', []).service('Templates', function () {
   this.getTemplates = function () {
       return templates;
   };
-  this.setTemplates = function (tmplts) {
+  this.createTemplate = function(temp) {
     // The JSON version of the Template object needs to be reconstituted to include the prototypes.
     // There's probably a better way to do this, but this works for now...
-    templates = [];
-    for (var t in tmplts) {
-      var temp = tmplts[t];
-      var grid = temp.grid;
-      var nt = new Template(temp.name, temp.rows, grid.columns);
-      for (var c in grid.cells) {
-        var cell = grid.cells[c];
-        nt.grid.cells[c] = new Cell(cell.name, cell.color);
+    var c,
+        grid = temp.grid,
+        nt = new Template(temp.name, temp.rows, grid.columns);
+    for (c in grid.cells) {
+      var cell = grid.cells[c];
+      nt.grid.cells[c] = new Cell(cell.name, cell.color);
+    }
+    return nt;
+  };
+  this.setTemplates = function (tmplts, replace) {
+    var t;
+    if (replace) {
+      templates = [];
+      for (t in tmplts) {
+        templates.push(this.createTemplate(tmplts[t]));
       }
-      templates.push(nt);
+    } else {
+      for (t in tmplts) {
+        var temp = tmplts[t];
+        if (!this.hasTemplate(temp.name)) {
+          templates.push(this.createTemplate(temp));
+        }
+      }
+
     }
     return templates;
   };
