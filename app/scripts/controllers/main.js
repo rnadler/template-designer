@@ -15,6 +15,7 @@ angular.module('templateDesignerApp')
     $scope.projectLoadSuccessAlert = {enabled: false};
     $scope.projectSaveSuccessAlert = {enabled: false};
     $scope.groupAlert = {enabled: false};
+    $scope.templateAlert = {enabled: false};
     $scope.projectChangesPendingAlert = {enabled: false};
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
@@ -47,7 +48,7 @@ angular.module('templateDesignerApp')
               templates: $scope.templates
       };
       var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: 'text/plain;charset=utf-8'});
-      saveAs(blob, projectName + '.json');
+      saveAs(blob, projectName + '.json'); // jshint ignore:line
       $scope.projectData.name = projectName;
       $scope.showAlert($scope.projectSaveSuccessAlert);
       $scope.reset();
@@ -59,7 +60,7 @@ angular.module('templateDesignerApp')
         $scope.showAlert($scope.projectChangesPendingAlert);
         return;
       }
-      $('#jsonfile').click();
+      $('#jsonfile').click(); // jshint ignore:line
     };
     $scope.readJson = function(element) {
       if (!element || !element.files || !element.files[0]) {
@@ -77,11 +78,11 @@ angular.module('templateDesignerApp')
             $scope.showAlert($scope.projectLoadSuccessAlert);
             $scope.reset();
           });
-          $('#jsonfile').val('');
+          $('#jsonfile').val(''); // jshint ignore:line
         };
         reader.readAsText(jsonfile);
       } else {
-        alert('Your browser does not support the File API!');
+        alert('Your browser does not support the File API!'); // jshint ignore:line
       }
     };
 
@@ -133,6 +134,10 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (templateName) {
+        if (Templates.hasTemplate(templateName)) {
+          $scope.showAlert($scope.templateAlert);
+          return;
+        }
         $scope.template.name = templateName;
       });
     };
@@ -153,7 +158,10 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (templateName) {
-          Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns);
+          if (Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns) === -1) {
+            $scope.showAlert($scope.templateAlert);
+            return;
+          }
           $scope.setTemplate($scope.templates[$scope.templates.length - 1]);
       });
     };
@@ -228,7 +236,9 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (group) {
-          Groups.addGroup(group);
+          if (Groups.addGroup(group) === -1) {
+            $scope.showAlert($scope.groupAlert);
+          }
       });
     };
 

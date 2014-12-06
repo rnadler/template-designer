@@ -2,7 +2,7 @@
 
 angular.module('GroupsService', []).service('Groups', function () {
   var groups = [
-    blank,
+    blank,  // jshint ignore:line
     '7daysAllPatients',
     '30daysAllPatients',
     '90daysAllPatients',
@@ -11,21 +11,21 @@ angular.module('GroupsService', []).service('Groups', function () {
     '30daysAtRisk',
     'InCompliance'
   ];
-
+  this.hasGroup = function(group) {
+    return groups.indexOf(group) > -1;
+  };
   this.getGroups = function () {
       return groups;
   };
   this.setGroups = function (grps) {
-    return groups = grps;
+    groups = grps;
+    return groups;
   };
   this.addGroup = function(group) {
-    groups.push(group);
-  };
-  this.addGroup = function(group) {
-    groups.push(group);
+    return this.hasGroup(group) ? -1 : groups.push(group);
   };
   this.changeGroup = function(oldGroup, newGroup) {
-    if (oldGroup == blank) {
+    if (oldGroup === blank || this.hasGroup(newGroup)) { // jshint ignore:line
       return -1;
     }
     var index = groups.indexOf(oldGroup);
@@ -35,7 +35,7 @@ angular.module('GroupsService', []).service('Groups', function () {
     return index;
   };
   this.removeGroup = function(group) {
-    if (group == blank) {
+    if (group === blank) { // jshint ignore:line
       return -1;
     }
     var index = groups.indexOf(group);

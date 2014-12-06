@@ -50,6 +50,14 @@ angular.module('TemplatesService', []).service('Templates', function () {
     new Template('template-3x3', 3, 3),
     new Template('template-2x2', 2, 2)
   ];
+  this.hasTemplate = function(name) {
+    for(var i = 0; i < templates.length; i++) {
+      if(templates[i].name === name) {
+        return true;
+      }
+    }
+    return false;
+  };
   this.getTemplates = function () {
       return templates;
   };
@@ -70,7 +78,10 @@ angular.module('TemplatesService', []).service('Templates', function () {
     return templates;
   };
   this.addTemplate = function(templateName, rows, columns) {
-    templates.push(new Template(templateName, rows, columns));
+    if (this.hasTemplate(templateName)) {
+      return -1;
+    }
+    return templates.push(new Template(templateName, rows, columns));
   };
   this.removeTemplate = function(template) {
     var index = templates.indexOf(template);
@@ -86,10 +97,10 @@ angular.module('TemplatesService', []).service('Templates', function () {
       var grid = temp.grid;
       for (var c in grid.cells) {
         var cell = grid.cells[c];
-        if (cell.name == oldGroup) {
-          cell.name = newGroup == '' ? blank : newGroup;
+        if (cell.name === oldGroup) {
+          cell.name = newGroup === '' ? blank : newGroup;
         }
       }
     }
-  }
+  };
 });
