@@ -2,19 +2,19 @@
 
 <tabset>
   <tab>
-    <tab-heading>
+    <tab-heading id="project">
       <strong>Project [{{projectData.name}}]</strong>
     </tab-heading>
    <div ng-include src="'views/panels/projectPanel.html'"></div>
   </tab>
   <tab>
-    <tab-heading>
+    <tab-heading id="groups">
       <strong>Rule Groups [{{groups.length}}]</strong>
     </tab-heading>
     <div ng-include src="'views/panels/groupsPanel.html'"></div>
   </tab>
   <tab>
-    <tab-heading>
+    <tab-heading id="templates">
       <strong>Templates [{{templates.length}}]</strong>
     </tab-heading>
     <div ng-include src="'views/panels/templatesPanel.html'"></div>
