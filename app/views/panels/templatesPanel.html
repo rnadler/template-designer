@@ -87,12 +87,12 @@
           <div class="btn-group-vertical btnwrap" role="group">
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="cell{{row}}{{col}}">
-                {{getCell(row, col).name}}
+                {{getCellGroup(row, col).desc}}
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
-                <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="setCellName(row, col, group)"
-                                           ng-repeat="group in groups">{{group}}</a></li>
+                <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="setCellName(row, col, group.name)"
+                                           ng-repeat="group in groups">{{group.desc}}</a></li>
               </ul>
             </div>
             <button type="button" class="btn btn-default" ng-style="{'background': getCell(row, col).color}"

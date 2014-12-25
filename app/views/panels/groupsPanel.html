@@ -8,14 +8,25 @@
       </button>
     </div>
     <table class="table-condensed table-bordered list-group-item">
+      <thead>
+      <tr>
+        <th colspan="2">Name</th>
+        <th colspan="2">Description</th>
+      </tr>
+      </thead>
       <tr ng-repeat="g in groups">
-        <td>{{g}}</td>
+        <td>{{g.name}}</td>
         <td>
-          <button class="glyphicon glyphicon-pencil" tooltip="Rename {{g}} rule group."
+          <button class="glyphicon glyphicon-pencil" tooltip="Rename {{g.name}} rule group."
                   ng-click="editGroup(g)"></button>
         </td>
+        <td>{{g.desc}}</td>
         <td>
-          <button class="glyphicon glyphicon-remove" tooltip="Delete {{g}} rule group."
+          <button class="glyphicon glyphicon-pencil" tooltip="Edit rule group description."
+                  ng-click="editGroupDesc(g)"></button>
+        </td>
+        <td>
+          <button class="glyphicon glyphicon-remove" tooltip="Delete {{g.name}} rule group."
                   ng-click="removeGroup(g)"></button>
         </td>
       </tr>

@@ -99,6 +99,9 @@ angular.module('templateDesignerApp')
     $scope.getCell = function(row, col) {
         return $scope.template.grid.getCell(row, col);
     };
+    $scope.getCellGroup = function(row, col) {
+      return Groups.findGroup($scope.getCell(row, col).name);
+    };
     $scope.setCellName = function(row, col, name) {
       $scope.template.grid.setCell(row, col, name, $scope.getCell(row, col).color);
     };
@@ -210,18 +213,38 @@ angular.module('templateDesignerApp')
             return 'Rename Rule Group Name';
           },
           defaultName: function () {
-            return group;
+            return group.name;
           }
         }
       });
 
-      modalInstance.result.then(function (group) {
-        var index = Groups.changeGroup(oldGroup, group);
+      modalInstance.result.then(function (groupName) {
+        var index = Groups.changeGroup(oldGroup, new Group(groupName,oldGroup.desc)); // jshint ignore:line
         if (index > -1) {
-          Templates.updateGroupName(oldGroup, group);
+          Templates.updateGroupName(oldGroup.name, groupName);
         } else {
           $scope.showAlert($scope.groupAlert);
         }
+      });
+    };
+
+    $scope.editGroupDesc = function(group) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Rename Rule Group Description';
+          },
+          defaultName: function () {
+            return group.desc;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (groupDesc) {
+        group.desc = groupDesc;
       });
     };
 
@@ -240,8 +263,8 @@ angular.module('templateDesignerApp')
         }
       });
 
-      modalInstance.result.then(function (group) {
-          if (Groups.addGroup(group) === -1) {
+      modalInstance.result.then(function (groupName) {
+          if (Groups.addGroup(new Group(groupName, groupName)) === -1) { // jshint ignore:line
             $scope.showAlert($scope.groupAlert);
           }
       });
@@ -264,7 +287,7 @@ angular.module('templateDesignerApp')
       modalInstance.result.then(function () {
         var index = Groups.removeGroup(group);
         if (index > -1) {
-          Templates.updateGroupName(group, '');
+          Templates.updateGroupName(group.name, '');
         } else {
           $scope.showAlert($scope.groupAlert);
         }
