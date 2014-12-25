@@ -11,6 +11,7 @@
 angular.module('templateDesignerApp', [
     'TemplatesService',
     'GroupsService',
+    'LanguagesService',
     'rangeFilters',
     'mosSvcs.unsavedChanges',
     'ngAnimate',

@@ -14,5 +14,6 @@ describe('template designer homepage', function() {
     expect(element(by.id('project')).getText()).toEqual('Project []');
     expect(element(by.id('groups')).getText()).toEqual('Rule Groups [8]');
     expect(element(by.id('templates')).getText()).toEqual('Templates [3]');
+    expect(element(by.id('language')).getText()).toEqual('English US [en_US]');
   });
 });

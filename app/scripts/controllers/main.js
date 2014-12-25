@@ -8,7 +8,7 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges) {
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages) {
     $scope.projectData = {
       name: ''
     };
@@ -21,6 +21,11 @@ angular.module('templateDesignerApp')
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
     $scope.groups = Groups.getGroups();
+    $scope.languages = Languages.getLanguages();
+
+    $scope.setLanguage = function(language) {
+      $scope.language = language;
+    };
 
     $scope.setTemplate = function(template) {
       $scope.template = template;
@@ -306,6 +311,7 @@ angular.module('templateDesignerApp')
       unsavedChanges.fnAttachListener($scope, 'template-changes', $scope.templates);
       unsavedChanges.fnAttachListener($scope, 'project-changes', $scope.projectData);
       $scope.setTemplate($scope.templates[0]);
+      $scope.setLanguage($scope.languages[0]);
     };
 
     $scope.reset();

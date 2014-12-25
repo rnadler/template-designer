@@ -1,11 +1,30 @@
 <!--ng-include ref: http://stackoverflow.com/questions/13943471/angularjs-ng-include -->
 
+<table class="table-condensed">
+  <tr>
+    <td><strong>Language:</strong></td>
+    <td>
+      <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="language">
+          {{language.description()}}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="language">
+          <li role="presentation"><a role="menuitem" tabindex="-1"
+                                     ng-click="setLanguage(l)" ng-repeat="l in languages">{{l.description()}}</a>
+          </li>
+        </ul>
+      </div>
+    </td>
+  </tr>
+</table>
+<br/>
 <tabset>
   <tab>
     <tab-heading id="project">
       <strong>Project [{{projectData.name}}]</strong>
     </tab-heading>
-   <div ng-include src="'views/panels/projectPanel.html'"></div>
+    <div ng-include src="'views/panels/projectPanel.html'"></div>
   </tab>
   <tab>
     <tab-heading id="groups">
