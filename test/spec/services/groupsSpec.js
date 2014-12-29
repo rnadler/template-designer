@@ -3,19 +3,20 @@
 
 describe('services: groups', function() {
 
-  beforeEach(module('GroupsService'));
+  beforeEach(module('GroupsService', 'LanguagesService'));
 
   describe('Groups', function() {
 
     it('should manage an array of groups',
-      inject(function(Groups) {
+      inject(function(Groups, Languages) {
         var g = function(name) {
-          return new Group(name, name); // jshint ignore:line
-        };
+            return new Message(name, name); // jshint ignore:line
+          },
+          find = function(name) {
+            return Groups.findGroup(name);
+          },
+          defaultLanguage = Languages.getDefaultLanguage();
 
-        var find = function(name) {
-          return Groups.findGroup(name);
-        };
         expect(Groups.getGroups().length).toBe(8);
         // Remove a group
         expect(Groups.removeGroup(find('InCompliance'))).toBe(7);
@@ -25,7 +26,7 @@ describe('services: groups', function() {
         Groups.addGroup(g('xxxx'));
         expect(Groups.getGroups().length).toBe(8);
         expect(Groups.getGroups()[7].name).toBe('xxxx');
-        expect(Groups.getGroups()[7].desc).toBe('xxxx');
+        expect(Groups.getGroups()[7].getString(defaultLanguage)).toBe('xxxx');
         // Set groups
         Groups.setGroups([g('xxx'),g('yyy')], true);
         expect(Groups.getGroups().length).toBe(3); // adds Blank

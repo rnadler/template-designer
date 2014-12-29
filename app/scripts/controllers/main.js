@@ -224,7 +224,9 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (groupName) {
-        var index = Groups.changeGroup(oldGroup, new Group(groupName,oldGroup.desc)); // jshint ignore:line
+        var newGroup = Groups.dupGroup(oldGroup);
+        newGroup.name = groupName;
+        var index = Groups.changeGroup(oldGroup, newGroup);
         if (index > -1) {
           Templates.updateGroupName(oldGroup.name, groupName);
         } else {
@@ -240,16 +242,16 @@ angular.module('templateDesignerApp')
         size: 'sm',
         resolve: {
           message: function () {
-            return 'Rename Rule Group Description';
+            return 'Rename ' + $scope.language.description() + ' Rule Group Description';
           },
           defaultName: function () {
-            return group.desc;
+            return group.getString($scope.language);
           }
         }
       });
 
       modalInstance.result.then(function (groupDesc) {
-        group.desc = groupDesc;
+        group.addString(groupDesc, $scope.language);
       });
     };
 
@@ -269,7 +271,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (groupName) {
-          if (Groups.addGroup(new Group(groupName, groupName)) === -1) { // jshint ignore:line
+          if (Groups.addGroup(new Message(groupName, groupName)) === -1) { // jshint ignore:line
             $scope.showAlert($scope.groupAlert);
           }
       });
@@ -281,7 +283,7 @@ angular.module('templateDesignerApp')
         controller: 'ActionConfirmCtrl',
         resolve: {
           message: function () {
-            return 'Are you sure you want to delete the ' + group + ' rule group?';
+            return 'Are you sure you want to delete the ' + group.name + ' rule group?';
           },
           action: function() {
             return 'Yes, Delete';

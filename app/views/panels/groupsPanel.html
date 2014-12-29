@@ -11,7 +11,7 @@
       <thead>
       <tr>
         <th colspan="2">Name</th>
-        <th colspan="2">Description</th>
+        <th colspan="2">Description [{{language.code}}]</th>
       </tr>
       </thead>
       <tr ng-repeat="g in groups">
@@ -20,7 +20,7 @@
           <button class="glyphicon glyphicon-pencil" tooltip="Rename {{g.name}} rule group."
                   ng-click="editGroup(g)"></button>
         </td>
-        <td>{{g.desc}}</td>
+        <td>{{g.getString(language)}}</td>
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit rule group description."
                   ng-click="editGroupDesc(g)"></button>
