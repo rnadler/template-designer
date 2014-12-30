@@ -3,8 +3,8 @@
 var usEnglishCode = 'en_US';
 
 function Language(desc, code) {
-  this.desc = desc;
   this.code = code;
+  this.desc = desc;
   this.description = function() {
     return this.desc + ' [' + this.code + ']';
   };

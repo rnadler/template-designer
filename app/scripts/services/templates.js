@@ -61,7 +61,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
   this.getTemplates = function () {
       return templates;
   };
-  this.createTemplate = function(temp) {
+  this.dupTemplate = function (temp) {
     // The JSON version of the Template object needs to be reconstituted to include the prototypes.
     // There's probably a better way to do this, but this works for now...
     var c,
@@ -78,13 +78,13 @@ angular.module('TemplatesService', []).service('Templates', function () {
     if (replace) {
       templates = [];
       for (t in tmplts) {
-        templates.push(this.createTemplate(tmplts[t]));
+        templates.push(this.dupTemplate(tmplts[t]));
       }
     } else {
       for (t in tmplts) {
         var temp = tmplts[t];
-        if (!this.hasTemplate(temp.name)) {
-          templates.push(this.createTemplate(temp));
+        if (this.hasTemplate(temp.name) === false) {
+          templates.push(this.dupTemplate(temp));
         }
       }
 
@@ -92,7 +92,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
     return templates;
   };
   this.addTemplate = function(templateName, rows, columns) {
-    if (this.hasTemplate(templateName)) {
+    if (this.hasTemplate(templateName) === true) {
       return -1;
     }
     return templates.push(new Template(templateName, rows, columns));
