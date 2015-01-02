@@ -30,4 +30,8 @@ describe('Controller: MainCtrl', function () {
     scope.setCellName(2,2,'grid22');
     expect(scope.getCell(2,2).name).toBe('grid22');
   });
+  it('should attach languages to the scope', function () {
+    expect(scope.languages.length).toBe(7);
+    expect(scope.language.code).toBe('en_US');
+  });
 });

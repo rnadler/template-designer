@@ -1,6 +1,7 @@
 <alert type="success" ng-hide="projectLoadSuccessAlert.enabled == false">Sucessfully loaded project {{projectData.name}}!</alert>
 <alert type="success" ng-hide="projectSaveSuccessAlert.enabled == false">Sucessfully saved project {{projectData.name}}!</alert>
 <alert type="warning" ng-hide="projectChangesPendingAlert.enabled == false">Project changes have been made. Save project or reload page.</alert>
+<alert type="danger" ng-hide="projectVersionAlert.enabled == false">Can not load JSON data with version &lt; {{projectData.version}}!</alert>
 <div class="panel panel-default">
   <div class="panel-body">
     <table class="table-condensed">

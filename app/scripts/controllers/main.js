@@ -9,14 +9,17 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages) {
+    var jsonVersion = '2.0';
     $scope.projectData = {
-      name: ''
+      name: '',
+      version: jsonVersion
     };
     $scope.projectLoadSuccessAlert = {enabled: false};
     $scope.projectSaveSuccessAlert = {enabled: false};
     $scope.groupAlert = {enabled: false};
     $scope.templateAlert = {enabled: false};
     $scope.projectChangesPendingAlert = {enabled: false};
+    $scope.projectVersionAlert = {enabled: false};
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.templates = Templates.getTemplates();
@@ -49,6 +52,7 @@ angular.module('templateDesignerApp')
 
     $scope.writeJson = function(projectName) {
       var aggregate = {
+              version: jsonVersion,
               groups: $scope.groups,
               templates: $scope.templates
       };
@@ -80,6 +84,10 @@ angular.module('templateDesignerApp')
             reader = new $window.FileReader();
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
+          if (aggregate.version === undefined || aggregate.version < jsonVersion) {
+            $scope.showAlert($scope.projectVersionAlert);
+            return;
+          }
           $scope.$apply(function () {
             $scope.groups = Groups.setGroups(aggregate.groups, replace);
             $scope.templates = Templates.setTemplates(aggregate.templates, replace);
