@@ -1,0 +1,89 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <table class="table-condensed">
+      <tr>
+        <td>
+          <div ng-show="templates.length > 0">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="template">
+                {{template.getMessageString(language)}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="template">
+                <li role="presentation"><a role="menuitem" tabindex="-1"
+                                           ng-click="setTemplate(t)" ng-repeat="t in templates">{{t.getMessageString(language)}}</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<accordion close-others="oneAtATime">
+  <accordion-group heading="" is-open="status.open">
+    <accordion-heading>
+      Grid Size<i class="pull-right glyphicon"
+                  ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+    </accordion-heading>
+    <table class="table-condensed">
+      <tr>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="rowCount">
+              Rows: {{template.rows}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="rowCount">
+              <li role="presentation"><a role="menuitem" tabindex="-1"
+                                         ng-click="setRows(n + 1)" ng-repeat="n in [] | range:maxRows">{{n + 1}}</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="colCount">
+              Columns: {{template.getColumns()}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="colCount">
+              <li role="presentation"><a role="menuitem" tabindex="-1"
+                                         ng-click="setColumns(n + 1)" ng-repeat="n in [] | range:maxColumns">{{n +
+                1}}</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </accordion-group>
+</accordion>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Action View</h3>
+  </div>
+  <div class="panel-body">
+    <table class="table table-bordered">
+      <tr ng-repeat="row in [] | range:template.rows">
+        <td ng-repeat="col in [] | range:template.getColumns()" ng-style="{'width': cellWidth()}">
+          <div class="btn-group-vertical btnwrap" role="group">
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="cell{{row}}{{col}}">
+                {{getCellGroup(row, col).getString(language)}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
+                <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="setCellName(row, col, group.name)"
+                                           ng-repeat="group in groups">{{group.getString(language)}}</a></li>
+              </ul>
+            </div>
+            <button type="button" class="btn btn-default" ng-style="{'background': getCell(row, col).color}"
+                    ng-click="selectColor(row, col)"></button>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

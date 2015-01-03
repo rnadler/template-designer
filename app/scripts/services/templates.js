@@ -22,6 +22,9 @@ Template.prototype = {
   },
   getMessageString: function(language) {
     return this.message.getString(language);
+  },
+  addMessageString: function(string, language) {
+    this.message.addString(string, language);
   }
 };
 

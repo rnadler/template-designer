@@ -138,7 +138,7 @@ angular.module('templateDesignerApp')
 
     // ----------- Template management ---------------
 
-    $scope.editTemplate = function() {
+    $scope.editTemplate = function(template) {
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
@@ -148,7 +148,7 @@ angular.module('templateDesignerApp')
             return 'Rename Template Name';
           },
           defaultName: function () {
-            return $scope.template.getName();
+            return template.getName();
           },
           trim: function() {
             return true;
@@ -161,7 +161,30 @@ angular.module('templateDesignerApp')
           showAlert($scope.templateAlert);
           return;
         }
-        $scope.template.setName(templateName);
+        template.setName(templateName);
+      });
+    };
+
+    $scope.editTemplateDesc = function(template) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Rename ' + $scope.language.description() + ' Template Description';
+          },
+          defaultName: function () {
+            return template.getMessageString($scope.language);
+          },
+          trim: function() {
+            return false;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (templateDesc) {
+        template.addMessageString(templateDesc, $scope.language);
       });
     };
 
