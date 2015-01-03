@@ -7,12 +7,12 @@
           <div ng-show="templates.length > 0">
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle" type="button" id="template">
-                {{template.name}}
+                {{template.getMessageString(language)}}
                 <span class="caret"></span>
               </button>
               <ul class="dropdown-menu" role="menu" aria-labelledby="template">
                 <li role="presentation"><a role="menuitem" tabindex="-1"
-                                           ng-click="setTemplate(t)" ng-repeat="t in templates">{{t.name}}</a>
+                                           ng-click="setTemplate(t)" ng-repeat="t in templates">{{t.getMessageString(language)}}</a>
                 </li>
               </ul>
             </div>
@@ -20,13 +20,13 @@
         </td>
         <td>
           <div ng-show="templates.length > 0">
-            <button class="glyphicon glyphicon-pencil" tooltip="Rename {{template.name}} template."
+            <button class="glyphicon glyphicon-pencil" tooltip="Rename {{template.getName()}} template."
                     ng-click="editTemplate()"></button>
           </div>
         </td>
         <td>
           <div ng-show="templates.length > 0">
-            <button class="glyphicon glyphicon-remove" tooltip="Delete {{template.name}} template."
+            <button class="glyphicon glyphicon-remove" tooltip="Delete {{template.getName()}} template."
                     ng-click="removeTemplate(template)"></button>
           </div>
         </td>

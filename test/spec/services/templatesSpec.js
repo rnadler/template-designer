@@ -13,12 +13,12 @@ describe('services: templates', function() {
             },
             templateGrid = getT(0).grid;
         expect(Templates.getTemplates().length).toBe(3);
-        expect(getT(1).name).toBe('template-3x3');
+        expect(getT(1).getName()).toBe('template-3x3');
         // Add a template
         Templates.addTemplate('xxxx', 1, 1);
         expect(Templates.getTemplates().length).toBe(4);
         var template = getT(3);
-        expect(template.name).toBe('xxxx');
+        expect(template.getName()).toBe('xxxx');
         expect(template.rows).toBe(1);
         expect(template.getColumns()).toBe(1);
         // Remove a template
@@ -43,7 +43,7 @@ describe('services: templates', function() {
         expect(Templates.getTemplates().length).toBe(2);
         Templates.setTemplates(JSON.parse(templateJson), true);
         expect(Templates.getTemplates().length).toBe(3);
-        getT(1).name = getT(1).name + '-xxx'; // rename
+        getT(1).setName(getT(1).getName() + '-xxx'); // rename
         Templates.setTemplates(JSON.parse(templateJson), false);
         expect(Templates.getTemplates().length).toBe(4);
       }));

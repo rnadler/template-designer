@@ -9,7 +9,7 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages) {
-    var jsonVersion = '2.0',
+    var jsonVersion = '3.0',
         showAlert = function(alert) {
           alert.enabled = true;
           $timeout(function() {
@@ -148,7 +148,7 @@ angular.module('templateDesignerApp')
             return 'Rename Template Name';
           },
           defaultName: function () {
-            return $scope.template.name;
+            return $scope.template.getName();
           },
           trim: function() {
             return true;
@@ -161,7 +161,7 @@ angular.module('templateDesignerApp')
           showAlert($scope.templateAlert);
           return;
         }
-        $scope.template.name = templateName;
+        $scope.template.setName(templateName);
       });
     };
 
@@ -293,7 +293,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (groupName) {
-          if (Groups.addGroup(new Message(groupName, groupName)) === -1) { // jshint ignore:line
+          if (Groups.addGroup(new Message(groupName)) === -1) { // jshint ignore:line
             showAlert($scope.groupAlert);
           }
       });

@@ -1,37 +1,9 @@
 'use strict';
 
-var blank = '--- Blank ---';
-
-function Cell(name, color) {
-  this.name = name;
-  this.color = color;
-}
-var blankCell = new Cell(blank, '#ffffff');
-
-function Grid(columns) {
-  this.columns = columns;
-  this.cells = {};
-}
-Grid.prototype = {
-
-  ordinal: function (row, col) {
-    return (row * this.columns) + col;
-  },
-
-  setCell: function (row, col, name, color) {
-    this.cells[this.ordinal(row, col)] = new Cell(name, color);
-  },
-
-  getCell: function (row, col) {
-    var rv = this.cells[this.ordinal(row, col)];
-    return (rv === undefined) ? blankCell : rv;
-  }
-};
-
 function Template(name, rows, columns) {
-  this.name = name;
+  this.message = new Message(name); // jshint ignore:line
   this.rows = rows;
-  this.grid = new Grid(columns);
+  this.grid = new Grid(columns); // jshint ignore:line
 }
 Template.prototype = {
 
@@ -41,6 +13,15 @@ Template.prototype = {
 
   setColumns: function (columns) {
     this.grid.columns = columns;
+  },
+  setName: function(name) {
+    this.message.name = name;
+  },
+  getName: function() {
+    return this.message.name;
+  },
+  getMessageString: function(language) {
+    return this.message.getString(language);
   }
 };
 
@@ -52,7 +33,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
   ];
   this.hasTemplate = function(name) {
     for(var i = 0; i < templates.length; i++) {
-      if(templates[i].name === name) {
+      if(templates[i].message.name === name) {
         return true;
       }
     }
@@ -66,10 +47,10 @@ angular.module('TemplatesService', []).service('Templates', function () {
     // There's probably a better way to do this, but this works for now...
     var c,
         grid = temp.grid,
-        nt = new Template(temp.name, temp.rows, grid.columns);
+        nt = new Template(temp.message.name, temp.rows, grid.columns);
     for (c in grid.cells) {
       var cell = grid.cells[c];
-      nt.grid.cells[c] = new Cell(cell.name, cell.color);
+      nt.grid.cells[c] = new Cell(cell.name, cell.color); // jshint ignore:line
     }
     return nt;
   };
@@ -83,7 +64,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
     } else {
       for (t in tmplts) {
         var temp = tmplts[t];
-        if (this.hasTemplate(temp.name) === false) {
+        if (this.hasTemplate(temp.message.name) === false) {
           templates.push(this.dupTemplate(temp));
         }
       }
@@ -112,7 +93,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
       for (var c in grid.cells) {
         var cell = grid.cells[c];
         if (cell.name === oldGroup) {
-          cell.name = newGroup === '' ? blank : newGroup;
+          cell.name = newGroup === '' ? blank : newGroup; // jshint ignore:line
         }
       }
     }

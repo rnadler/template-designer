@@ -10,7 +10,7 @@ function LanguageString(string, code) {
 function Message(name, englishString) {
   this.name = name;
   this.strings = [
-    new LanguageString(englishString, usEnglishCode)
+    new LanguageString(englishString !== undefined ? englishString : name, usEnglishCode)
   ];
 }
 Message.prototype = {
