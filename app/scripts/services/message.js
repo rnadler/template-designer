@@ -35,6 +35,6 @@ Message.prototype = {
     this.strings.push(new LanguageString(string, language.code));
   },
   addStringCode: function(string, languageCode) {
-    this.addString(string, new Language(languageCode, languageCode)); // jshint ignore:line
+    this.addString(string, new Language(null, languageCode)); // jshint ignore:line
   }
 };

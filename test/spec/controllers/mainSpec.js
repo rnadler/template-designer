@@ -20,7 +20,7 @@ describe('Controller: MainCtrl', function () {
     expect(scope.groups.length).toBe(8);
   });
   it('should attach default template to the scope', function () {
-    expect(scope.template.message.name).toContain('template');
+    expect(scope.template.getName()).toContain('template');
     expect(scope.template.rows).toBe(4);
     expect(scope.template.getColumns()).toBe(4);
   });

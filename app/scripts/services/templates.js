@@ -48,6 +48,9 @@ angular.module('TemplatesService', []).service('Templates', function () {
     var c,
         grid = temp.grid,
         nt = new Template(temp.message.name, temp.rows, grid.columns);
+    for (var j = 0; j < temp.message.strings.length; j++) {
+      nt.message.addStringCode(temp.message.strings[j].string, temp.message.strings[j].code);
+    }
     for (c in grid.cells) {
       var cell = grid.cells[c];
       nt.grid.cells[c] = new Cell(cell.name, cell.color); // jshint ignore:line

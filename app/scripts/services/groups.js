@@ -31,7 +31,7 @@ angular.module('GroupsService', []).service('Groups', function () {
     groups.unshift(blankGroup); // jshint ignore:line
   };
   this.dupGroup = function(oldGroup) {
-    var message = new Message(oldGroup.name, oldGroup.name); // jshint ignore:line
+    var message = new Message(oldGroup.name); // jshint ignore:line
     for (var j = 0; j < oldGroup.strings.length; j++) {
       message.addStringCode(oldGroup.strings[j].string, oldGroup.strings[j].code);
     }
