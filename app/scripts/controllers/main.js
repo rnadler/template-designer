@@ -9,7 +9,13 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages) {
-    var jsonVersion = '2.0';
+    var jsonVersion = '2.0',
+        showAlert = function(alert) {
+          alert.enabled = true;
+          $timeout(function() {
+            alert.enabled = false;
+          }, 5000);
+        };
     $scope.projectData = {
       name: '',
       version: jsonVersion
@@ -41,13 +47,6 @@ angular.module('templateDesignerApp')
       $scope.template.setColumns(n);
     };
 
-    $scope.showAlert = function(alert) {
-      alert.enabled = true;
-      $timeout(function() {
-        alert.enabled = false;
-      }, 5000);
-    };
-
     // ------------- Project management -----------
 
     $scope.writeJson = function(projectName) {
@@ -59,7 +58,7 @@ angular.module('templateDesignerApp')
       var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, projectName + '.json'); // jshint ignore:line
       $scope.projectData.name = projectName;
-      $scope.showAlert($scope.projectSaveSuccessAlert);
+      showAlert($scope.projectSaveSuccessAlert);
       $scope.reset();
     };
 
@@ -70,7 +69,7 @@ angular.module('templateDesignerApp')
     $scope.loadFile = function()
     {
       if ($scope.changesArePending()) {
-        $scope.showAlert($scope.projectChangesPendingAlert);
+        showAlert($scope.projectChangesPendingAlert);
         return;
       }
       $('#loadJsonfile').click(); // jshint ignore:line
@@ -85,7 +84,7 @@ angular.module('templateDesignerApp')
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
           if (aggregate.version === undefined || aggregate.version < jsonVersion) {
-            $scope.showAlert($scope.projectVersionAlert);
+            showAlert($scope.projectVersionAlert);
             return;
           }
           $scope.$apply(function () {
@@ -95,7 +94,7 @@ angular.module('templateDesignerApp')
               $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
               $scope.reset();
             }
-            $scope.showAlert($scope.projectLoadSuccessAlert);
+            showAlert($scope.projectLoadSuccessAlert);
           });
         };
         reader.readAsText(jsonfile);
@@ -150,13 +149,16 @@ angular.module('templateDesignerApp')
           },
           defaultName: function () {
             return $scope.template.name;
+          },
+          trim: function() {
+            return true;
           }
         }
       });
 
       modalInstance.result.then(function (templateName) {
         if (Templates.hasTemplate(templateName)) {
-          $scope.showAlert($scope.templateAlert);
+          showAlert($scope.templateAlert);
           return;
         }
         $scope.template.name = templateName;
@@ -174,13 +176,16 @@ angular.module('templateDesignerApp')
           },
           defaultName: function () {
             return '';
+          },
+          trim: function() {
+            return true;
           }
         }
       });
 
       modalInstance.result.then(function (templateName) {
           if (Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns) === -1) {
-            $scope.showAlert($scope.templateAlert);
+            showAlert($scope.templateAlert);
             return;
           }
           $scope.setTemplate($scope.templates[$scope.templates.length - 1]);
@@ -227,6 +232,9 @@ angular.module('templateDesignerApp')
           },
           defaultName: function () {
             return group.name;
+          },
+          trim: function() {
+            return true;
           }
         }
       });
@@ -238,7 +246,7 @@ angular.module('templateDesignerApp')
         if (index > -1) {
           Templates.updateGroupName(oldGroup.name, groupName);
         } else {
-          $scope.showAlert($scope.groupAlert);
+          showAlert($scope.groupAlert);
         }
       });
     };
@@ -254,6 +262,9 @@ angular.module('templateDesignerApp')
           },
           defaultName: function () {
             return group.getString($scope.language);
+          },
+          trim: function() {
+            return false;
           }
         }
       });
@@ -274,13 +285,16 @@ angular.module('templateDesignerApp')
           },
           defaultName: function () {
             return '';
+          },
+          trim: function() {
+            return true;
           }
         }
       });
 
       modalInstance.result.then(function (groupName) {
           if (Groups.addGroup(new Message(groupName, groupName)) === -1) { // jshint ignore:line
-            $scope.showAlert($scope.groupAlert);
+            showAlert($scope.groupAlert);
           }
       });
     };
@@ -304,7 +318,7 @@ angular.module('templateDesignerApp')
         if (index > -1) {
           Templates.updateGroupName(group.name, '');
         } else {
-          $scope.showAlert($scope.groupAlert);
+          showAlert($scope.groupAlert);
         }
       });
     };
