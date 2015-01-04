@@ -1,5 +1,7 @@
 'use strict';
 
+var usEnglishCode = 'en_US';
+
 function Language(desc, code) {
   this.code = code;
   this.desc = desc;
@@ -10,7 +12,7 @@ function Language(desc, code) {
 
 angular.module('LanguagesService', []).service('Languages', function () {
   var languages = [
-    new Language('English US', usEnglishCode), // jshint ignore:line
+    new Language('English US', usEnglishCode),
     new Language('English (ROW)', 'en'),
     new Language('French (ROW)', 'fr'),
     new Language('French Canadian', 'fr_CA'),

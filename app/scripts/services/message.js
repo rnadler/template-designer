@@ -1,7 +1,5 @@
 'use strict';
 
-var usEnglishCode = 'en_US';
-
 function LanguageString(string, code) {
   this.string = string;
   this.code = code;
@@ -10,7 +8,7 @@ function LanguageString(string, code) {
 function Message(name, englishString) {
   this.name = name;
   this.strings = [
-    new LanguageString(englishString !== undefined ? englishString : name, usEnglishCode)
+    new LanguageString(englishString !== undefined ? englishString : name, usEnglishCode) // jshint ignore:line
   ];
 }
 Message.prototype = {
