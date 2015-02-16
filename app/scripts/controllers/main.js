@@ -8,8 +8,9 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages) {
-    var jsonVersion = '3.0',
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules) {
+    var jsonVersion = '4.0',
+        jsonVersionNoRules = '3.0',
         showAlert = function(alert) {
           alert.enabled = true;
           $timeout(function() {
@@ -23,6 +24,7 @@ angular.module('templateDesignerApp')
     $scope.projectLoadSuccessAlert = {enabled: false};
     $scope.projectSaveSuccessAlert = {enabled: false};
     $scope.groupAlert = {enabled: false};
+    $scope.ruleAlert = {enabled: false};
     $scope.templateAlert = {enabled: false};
     $scope.projectChangesPendingAlert = {enabled: false};
     $scope.projectVersionAlert = {enabled: false};
@@ -31,6 +33,7 @@ angular.module('templateDesignerApp')
     $scope.templates = Templates.getTemplates();
     $scope.groups = Groups.getGroups();
     $scope.languages = Languages.getLanguages();
+    $scope.rules = ComplianceRules.getRules();
 
     $scope.setLanguage = function(language) {
       $scope.language = language;
@@ -52,6 +55,7 @@ angular.module('templateDesignerApp')
     $scope.writeJson = function(projectName) {
       var aggregate = {
               version: jsonVersion,
+              complianceRules: $scope.rules,
               groups: $scope.groups,
               templates: $scope.templates
       };
@@ -83,11 +87,14 @@ angular.module('templateDesignerApp')
             reader = new $window.FileReader();
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
-          if (aggregate.version === undefined || aggregate.version < jsonVersion) {
+          if (aggregate.version === undefined || aggregate.version < jsonVersionNoRules) {
             showAlert($scope.projectVersionAlert);
             return;
           }
           $scope.$apply(function () {
+            if (aggregate.version === jsonVersion) {
+              $scope.rules = ComplianceRules.setRules(aggregate.complianceRules, replace);
+            }
             $scope.groups = Groups.setGroups(aggregate.groups, replace);
             $scope.templates = Templates.setTemplates(aggregate.templates, replace);
             if (replace) {
@@ -328,7 +335,7 @@ angular.module('templateDesignerApp')
         controller: 'ActionConfirmCtrl',
         resolve: {
           message: function () {
-            return 'Are you sure you want to delete the ' + group.name + ' rule group?';
+            return 'Are you sure you want to delete the ' + group.name + ' compliance rule?';
           },
           action: function() {
             return 'Yes, Delete';
@@ -346,14 +353,119 @@ angular.module('templateDesignerApp')
       });
     };
 
+    // ----------- Compliance Rule management ---------------
+
+    $scope.editRule = function(rule) {
+      var oldRule = rule;
+      var modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Rename Compliance Rule Name';
+          },
+          defaultName: function () {
+            return rule.name;
+          },
+          trim: function() {
+            return true;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (ruleName) {
+        var newRule = ComplianceRules.dupRule(oldRule);
+        newRule.name = ruleName;
+        var index = ComplianceRules.changeRule(oldRule, newRule);
+        if (index > -1) {
+          Templates.updateRuleName(oldRule.name, ruleName);
+        } else {
+          showAlert($scope.ruleAlert);
+        }
+      });
+    };
+
+    $scope.editRuleDesc = function(rule) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Rename ' + $scope.language.description() + ' Compliance Rule Description';
+          },
+          defaultName: function () {
+            return rule.getString($scope.language);
+          },
+          trim: function() {
+            return false;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (ruleDesc) {
+        rule.addString(ruleDesc, $scope.language);
+      });
+    };
+
+    $scope.addRule = function() {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Enter New Compliance Rule Name';
+          },
+          defaultName: function () {
+            return '';
+          },
+          trim: function() {
+            return true;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (ruleName) {
+        if (ComplianceRules.addRule(new Message(ruleName)) === -1) { // jshint ignore:line
+          showAlert($scope.ruleAlert);
+        }
+      });
+    };
+
+    $scope.removeRule = function(rule) {
+      var modalInstance = $modal.open({
+        templateUrl: 'views/templates/actionConfirm.html',
+        controller: 'ActionConfirmCtrl',
+        resolve: {
+          message: function () {
+            return 'Are you sure you want to delete the ' + rule.name + ' compliance rule?';
+          },
+          action: function() {
+            return 'Yes, Delete';
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+        var index = ComplianceRules.removeRule(rule);
+        if (index === -1) {
+          showAlert($scope.ruleAlert);
+        }
+      });
+    };
+
     $scope.changesArePending = function() {
-      return unsavedChanges.fnHasChanges('group-changes') ||
+      return unsavedChanges.fnHasChanges('rule-changes') ||
+             unsavedChanges.fnHasChanges('group-changes') ||
              unsavedChanges.fnHasChanges('template-changes') ||
              unsavedChanges.fnHasChanges('project-changes');
     };
 
     $scope.reset = function() {
       unsavedChanges.fnDetachListeners();
+      unsavedChanges.fnAttachListener($scope, 'rule-changes', $scope.rules);
       unsavedChanges.fnAttachListener($scope, 'group-changes', $scope.groups);
       unsavedChanges.fnAttachListener($scope, 'template-changes', $scope.templates);
       unsavedChanges.fnAttachListener($scope, 'project-changes', $scope.projectData);

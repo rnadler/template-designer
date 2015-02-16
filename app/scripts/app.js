@@ -10,6 +10,7 @@
  */
 angular.module('templateDesignerApp', [
     'TemplatesService',
+    'ComplianceRulesService',
     'GroupsService',
     'LanguagesService',
     'rangeFilters',

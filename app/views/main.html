@@ -27,6 +27,12 @@
     <div ng-include src="'views/panels/projectPanel.html'"></div>
   </tab>
   <tab>
+    <tab-heading id="rules">
+      <strong>Compliance Rules [{{rules.length}}]</strong>
+    </tab-heading>
+    <div ng-include src="'views/panels/complianceRulesPanel.html'"></div>
+  </tab>
+  <tab>
     <tab-heading id="groups">
       <strong>Rule Groups [{{groups.length}}]</strong>
     </tab-heading>

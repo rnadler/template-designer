@@ -1,0 +1,36 @@
+<alert type="warning" ng-hide="ruleAlert.enabled == false">Sorry, failed to add, delete, or change a compliance rule.</alert>
+<div class="panel panel-default">
+  <div class="panel-body list-group">
+    <div class="list-group-item">
+      <button class="btn btn-default" ng-click="addRule()" tooltip="Add a new compliance rule.">
+        <span class="glyphicon glyphicon-plus"></span>
+        Add a Compliance Rule
+      </button>
+    </div>
+    <table class="table-condensed table-bordered list-group-item">
+      <thead>
+      <tr>
+        <th colspan="2">Name</th>
+        <th colspan="2">Description [{{language.code}}]</th>
+      </tr>
+      </thead>
+      <tr ng-repeat="r in rules">
+        <td>{{r.name}}</td>
+        <td>
+          <button class="glyphicon glyphicon-pencil" tooltip="Rename {{r.name}} compliance rule."
+                  ng-click="editRule(r)"></button>
+        </td>
+        <td>{{r.getString(language)}}</td>
+        <td>
+          <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} [{{language.code}}] description."
+                  ng-click="editRuleDesc(r)"></button>
+        </td>
+        <td>
+          <button class="glyphicon glyphicon-remove" tooltip="Delete {{r.name}} compliance rule."
+                  ng-click="removeRule(r)"></button>
+        </td>
+      </tr>
+    </table>
+
+  </div>
+</div>
