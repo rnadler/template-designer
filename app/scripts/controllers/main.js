@@ -377,10 +377,7 @@ angular.module('templateDesignerApp')
       modalInstance.result.then(function (ruleName) {
         var newRule = ComplianceRules.dupRule(oldRule);
         newRule.name = ruleName;
-        var index = ComplianceRules.changeRule(oldRule, newRule);
-        if (index > -1) {
-          Templates.updateRuleName(oldRule.name, ruleName);
-        } else {
+        if (ComplianceRules.changeRule(oldRule, newRule) === -1) {
           showAlert($scope.ruleAlert);
         }
       });

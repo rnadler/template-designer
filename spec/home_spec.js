@@ -18,4 +18,9 @@ describe('template designer homepage', function() {
     expect(element(by.id('language')).getText()).toEqual('English US [en_US]');
     expect(element(by.id('actionview')).getText()).toEqual('Action View');
   });
+
+  it('should have language selections', function() {
+    expect(element(by.id('language')).getText()).toEqual('English US [en_US]');
+    expect(element.all(by.repeater('l in languages')).count()).toEqual(7);
+  });
 });
