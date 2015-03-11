@@ -5,13 +5,13 @@ function LanguageString(string, code) {
   this.code = code;
 }
 
-function Message(name, englishString) {
-  this.name = name;
-  this.strings = [
-    new LanguageString(englishString !== undefined ? englishString : name, usEnglishCode) // jshint ignore:line
-  ];
-}
-Message.prototype = {
+var Message = Class.create({ // jshint ignore:line
+  initialize: function(name, englishString) {
+    this.name = name;
+    this.strings = [
+      new LanguageString(englishString !== undefined ? englishString : name, usEnglishCode) // jshint ignore:line
+    ];
+  },
   getLanguageString: function(language) {
     for (var i = 0; i < this.strings.length; i++) {
       var languageString = this.strings[i];
@@ -35,4 +35,4 @@ Message.prototype = {
   addStringCode: function(string, languageCode) {
     this.addString(string, new Language(null, languageCode)); // jshint ignore:line
   }
-};
+});

@@ -1,10 +1,23 @@
 'use strict';
 
+var RuleType = Object.freeze({
+  INITIAL: 'initial',
+  ONGOING: 'ongoing'
+});
+
+var RuleDesc = Class.create(Message, { // jshint ignore:line
+  initialize: function($super, string, code, ruleType) {
+    $super(string, code);
+    this.ruleType = ruleType !== undefined ? ruleType : RuleType.INITIAL;
+  }
+});
+
 angular.module('ComplianceRulesService', []).service('ComplianceRules', function () {
 
   var rules = [
-        new Message('cms', 'US CMS Compliance'),  // jshint ignore:line
-        new Message('rolling', 'French Rolling Compliance')  // jshint ignore:line
+        new RuleDesc('cms', 'US CMS Compliance', RuleType.INITIAL),  // jshint ignore:line
+        new RuleDesc('rolling', 'French Rolling Compliance', RuleType.INITIAL),  // jshint ignore:line
+        new RuleDesc('mask', 'Mask Reimbursement', RuleType.ONGOING)  // jshint ignore:line
       ];
   this.hasRule = function(rule) {
     return this.findRule(rule.name) !== undefined;
@@ -14,7 +27,7 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
   };
 
   this.dupRule = function(oldRule) {
-    var message = new Message(oldRule.name); // jshint ignore:line
+    var message = new RuleDesc(oldRule.name, oldRule.name, oldRule.ruleType); // jshint ignore:line
     for (var j = 0; j < oldRule.strings.length; j++) {
       message.addStringCode(oldRule.strings[j].string, oldRule.strings[j].code);
     }

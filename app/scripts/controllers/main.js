@@ -68,7 +68,7 @@ angular.module('templateDesignerApp')
 
     $scope.addFile = function()
     {
-      $('#addJsonfile').click(); // jshint ignore:line
+      jQuery('#addJsonfile').click(); // jshint ignore:line
     };
     $scope.loadFile = function()
     {
@@ -76,7 +76,7 @@ angular.module('templateDesignerApp')
         showAlert($scope.projectChangesPendingAlert);
         return;
       }
-      $('#loadJsonfile').click(); // jshint ignore:line
+      jQuery('#loadJsonfile').click(); // jshint ignore:line
     };
     $scope.readJson = function(element, replace) {
       if (!element || !element.files || !element.files[0]) {
@@ -425,7 +425,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (ruleName) {
-        if (ComplianceRules.addRule(new Message(ruleName)) === -1) { // jshint ignore:line
+        if (ComplianceRules.addRule(new RuleDesc(ruleName)) === -1) { // jshint ignore:line
           showAlert($scope.ruleAlert);
         }
       });

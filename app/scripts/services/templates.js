@@ -61,20 +61,15 @@ angular.module('TemplatesService', []).service('Templates', function () {
     return nt;
   };
   this.setTemplates = function (tmplts, replace) {
-    var t;
+    var t, temp;
     if (replace) {
       templates = [];
-      for (t in tmplts) {
-        templates.push(this.dupTemplate(tmplts[t]));
+    }
+    for(t = 0; t < tmplts.length; t++) {
+      temp = tmplts[t];
+      if (replace || this.hasTemplate(temp.message.name) === false) {
+        templates.push(this.dupTemplate(temp));
       }
-    } else {
-      for (t in tmplts) {
-        var temp = tmplts[t];
-        if (this.hasTemplate(temp.message.name) === false) {
-          templates.push(this.dupTemplate(temp));
-        }
-      }
-
     }
     return templates;
   };
@@ -93,11 +88,11 @@ angular.module('TemplatesService', []).service('Templates', function () {
   };
   // Update cells with group name changes
   this.updateGroupName = function(oldGroup, newGroup) {
-    for (var t in templates) {
-      var temp = templates[t];
-      var grid = temp.grid;
-      for (var c in grid.cells) {
-        var cell = grid.cells[c];
+    var t, c,grid, cell;
+    for(t = 0; t < templates.length; t++) {
+      grid = templates[t].grid;
+      for (c in grid.cells) {
+        cell = grid.cells[c];
         if (cell.name === oldGroup) {
           cell.name = newGroup === '' ? blank : newGroup; // jshint ignore:line
         }
