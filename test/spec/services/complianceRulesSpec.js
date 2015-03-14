@@ -15,7 +15,8 @@ describe('services: complianceRules', function() {
           find = function(name) {
             return ComplianceRules.findRule(name);
           },
-          defaultLanguage = Languages.getDefaultLanguage();
+          defaultLanguage = Languages.getDefaultLanguage(),
+          ruleTypes = ComplianceRules.getRuleTypes();
 
         expect(ComplianceRules.getRules().length).toBe(3);
         // Remove a rule
@@ -35,6 +36,10 @@ describe('services: complianceRules', function() {
         expect(ComplianceRules.getRules().length).toBe(2);
         ComplianceRules.setRules([g('aaa'),g('bbb'), g('yyy')], false);
         expect(ComplianceRules.getRules().length).toBe(4);
+
+        // Rule types
+        expect(ruleTypes.length).toBe(2);
+        expect(ruleTypes[0]).toBe('initial');
       }));
   });
 });

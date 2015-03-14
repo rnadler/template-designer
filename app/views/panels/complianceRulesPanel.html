@@ -12,6 +12,7 @@
       <tr>
         <th colspan="2">Name</th>
         <th colspan="2">Description [{{language.code}}]</th>
+        <th>Rule Type</th>
       </tr>
       </thead>
       <tr ng-repeat="r in rules">
@@ -24,6 +25,19 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} [{{language.code}}] description."
                   ng-click="editRuleDesc(r)"></button>
+        </td>
+        <td>
+          <div class="dropdown">
+            <button class="btn btn-default dropdown-toggle" type="button" id="ruletype-{{r.name}}">
+              {{r.ruleType}}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" aria-labelledby="ruletype-{{r.name}}">
+              <li role="presentation"><a role="menuitem" tabindex="-1"
+                                         ng-click="r.ruleType = rt" ng-repeat="rt in ruleTypes">{{rt}}</a>
+              </li>
+            </ul>
+          </div>
         </td>
         <td>
           <button class="glyphicon glyphicon-remove" tooltip="Delete {{r.name}} compliance rule."

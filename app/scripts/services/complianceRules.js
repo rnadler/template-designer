@@ -25,7 +25,15 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
   this.getRules = function () {
       return rules;
   };
-
+  this.getRuleTypes = function() {
+    var rv = [];
+    for (var property in RuleType) {
+      if (RuleType.hasOwnProperty(property)) {
+        rv.push(RuleType[property]);
+      }
+    }
+    return rv;
+  };
   this.dupRule = function(oldRule) {
     var message = new RuleDesc(oldRule.name, oldRule.name, oldRule.ruleType); // jshint ignore:line
     for (var j = 0; j < oldRule.strings.length; j++) {

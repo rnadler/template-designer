@@ -34,6 +34,7 @@ angular.module('templateDesignerApp')
     $scope.groups = Groups.getGroups();
     $scope.languages = Languages.getLanguages();
     $scope.rules = ComplianceRules.getRules();
+    $scope.ruleTypes = ComplianceRules.getRuleTypes();
 
     $scope.setLanguage = function(language) {
       $scope.language = language;
