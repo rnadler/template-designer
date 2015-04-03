@@ -24,7 +24,7 @@ describe('services: templates', function() {
         // Remove a template
         expect(Templates.removeTemplate(template)).toBe(3);
         expect(Templates.getTemplates().length).toBe(3);
-        expect(Templates.removeTemplate(new Template(new Message('yyy'), 2, 2))).toBe(-1); // jshint ignore:line
+        expect(Templates.removeTemplate(new LayoutTemplate(new Message('yyy'), 2, 2))).toBe(-1); // jshint ignore:line
         // Test UpdateGroupName remove
         templateGrid.setCell(0,0,'cell00','#000000');
         expect(templateGrid.getCell(0,0).name).toBe('cell00');

@@ -232,7 +232,11 @@ module.exports = function (grunt) {
         }
       }
     },
-
+    uglify: {
+      options: {
+        mangle: false
+      }
+    },
     // Performs rewrites based on filerev and the useminPrepare configuration
     usemin: {
       html: ['<%= yeoman.dist %>/{,*/}*.html'],

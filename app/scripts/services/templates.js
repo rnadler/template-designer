@@ -1,11 +1,11 @@
 'use strict';
 
-function Template(message, rows, columns) {
+function LayoutTemplate(message, rows, columns) {
   this.message = message; // jshint ignore:line
   this.rows = rows;
   this.grid = new Grid(columns); // jshint ignore:line
 }
-Template.prototype = {
+LayoutTemplate.prototype = {
 
   getColumns: function () {
     return this.grid.columns;
@@ -30,9 +30,9 @@ Template.prototype = {
 
 angular.module('TemplatesService', []).service('Templates', function () {
   var templates = [
-    new Template(new Message('template-4x4','4x4 template'), 4, 4), // jshint ignore:line
-    new Template(new Message('template-3x3','3x3 template'), 3, 3), // jshint ignore:line
-    new Template(new Message('template-2x2','2x2 template'), 2, 2)  // jshint ignore:line
+    new LayoutTemplate(new Message('template-4x4','4x4 template'), 4, 4), // jshint ignore:line
+    new LayoutTemplate(new Message('template-3x3','3x3 template'), 3, 3), // jshint ignore:line
+    new LayoutTemplate(new Message('template-2x2','2x2 template'), 2, 2)  // jshint ignore:line
   ];
   this.hasTemplate = function(name) {
     for(var i = 0; i < templates.length; i++) {
@@ -50,7 +50,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
     // There's probably a better way to do this, but this works for now...
     var c,
         grid = temp.grid,
-        nt = new Template(new Message(temp.message.name), temp.rows, grid.columns); // jshint ignore:line
+        nt = new LayoutTemplate(new Message(temp.message.name), temp.rows, grid.columns); // jshint ignore:line
     for (var j = 0; j < temp.message.strings.length; j++) {
       nt.message.addStringCode(temp.message.strings[j].string, temp.message.strings[j].code);
     }
@@ -77,7 +77,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
     if (this.hasTemplate(templateName) === true) {
       return -1;
     }
-    return templates.push(new Template(new Message(templateName), rows, columns)); // jshint ignore:line
+    return templates.push(new LayoutTemplate(new Message(templateName), rows, columns)); // jshint ignore:line
   };
   this.removeTemplate = function(template) {
     var index = templates.indexOf(template);
