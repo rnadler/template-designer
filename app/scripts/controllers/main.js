@@ -9,8 +9,7 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules) {
-    var jsonVersion = '4.0',
-        jsonVersionNoRules = '3.0',
+    var jsonVersion = '5.0',
         showAlert = function(alert) {
           alert.enabled = true;
           $timeout(function() {
@@ -88,14 +87,12 @@ angular.module('templateDesignerApp')
             reader = new $window.FileReader();
         reader.onload = function (e) {
           var aggregate = JSON.parse(e.target.result);
-          if (aggregate.version === undefined || aggregate.version < jsonVersionNoRules) {
+          if (aggregate.version === undefined || aggregate.version !== jsonVersion) {
             showAlert($scope.projectVersionAlert);
             return;
           }
           $scope.$apply(function () {
-            if (aggregate.version === jsonVersion) {
-              $scope.rules = ComplianceRules.setRules(aggregate.complianceRules, replace);
-            }
+            $scope.rules = ComplianceRules.setRules(aggregate.complianceRules, replace);
             $scope.groups = Groups.setGroups(aggregate.groups, replace);
             $scope.templates = Templates.setTemplates(aggregate.templates, replace);
             if (replace) {
@@ -252,8 +249,8 @@ angular.module('templateDesignerApp')
     // ----------- Rule Group management ---------------
 
     $scope.editGroup = function(group) {
-      var oldGroup = group;
-      var modalInstance = $modal.open({
+      var oldGroup = group,
+          modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
@@ -283,13 +280,37 @@ angular.module('templateDesignerApp')
     };
 
     $scope.editGroupDesc = function(group) {
-      var modalInstance = $modal.open({
+      var oldGroupName = group.getString($scope.language),
+        modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
           message: function () {
             return 'Rename ' + $scope.language.description() + ' Rule Group Description';
+          },
+          defaultName: function () {
+            return group.getDesc($scope.language);
+          },
+          trim: function() {
+            return false;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (groupDesc) {
+        group.addString(oldGroupName, groupDesc, $scope.language);
+      });
+    };
+    $scope.editGroupName = function(group) {
+      var oldGroupDesc = group.getDesc($scope.language),
+        modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'sm',
+        resolve: {
+          message: function () {
+            return 'Rename ' + $scope.language.description() + ' Rule Group Name';
           },
           defaultName: function () {
             return group.getString($scope.language);
@@ -300,8 +321,8 @@ angular.module('templateDesignerApp')
         }
       });
 
-      modalInstance.result.then(function (groupDesc) {
-        group.addString(groupDesc, $scope.language);
+      modalInstance.result.then(function (groupName) {
+        group.addString(groupName, oldGroupDesc, $scope.language);
       });
     };
 

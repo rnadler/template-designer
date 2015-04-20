@@ -37,7 +37,7 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
   this.dupRule = function(oldRule) {
     var message = new RuleDesc(oldRule.name, oldRule.name, oldRule.ruleType); // jshint ignore:line
     for (var j = 0; j < oldRule.strings.length; j++) {
-      message.addStringCode(oldRule.strings[j].string, oldRule.strings[j].code);
+      message.addStringCode(oldRule.strings[j].string, oldRule.strings[j].desc, oldRule.strings[j].code);
     }
     return message;
   };

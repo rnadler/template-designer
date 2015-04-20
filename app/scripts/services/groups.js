@@ -9,10 +9,10 @@ angular.module('GroupsService', []).service('Groups', function () {
         new Message('7DaysAllPatients', '7 Days All Patients'),  // jshint ignore:line
         new Message('30DaysAllPatients', '30 Days All Patients'),  // jshint ignore:line
         new Message('90DaysAllPatients', '90 Days All Patients'),
-        new Message('NoData', 'No Data'),
-        new Message('7DaysAtRisk', '7 Days At Risk'),
-        new Message('30DaysAtRisk', '30 Days At Risk'),
-        new Message('InCompliance', 'Compliance Met')
+        new Message('NoData', 'No Data', 'No data has arrived for this patient.'),
+        new Message('7DaysAtRisk', '7 Days At Risk', 'Patient has not met usage and AHI thresholds for 7 days.'),
+        new Message('30DaysAtRisk', '30 Days At Risk', 'Patient has not met usage and AHI thresholds for 30 days.'),
+        new Message('InCompliance', 'Compliance Met', 'Patient has met compliance.')
         /* jshint ignore:end */
       ];
   this.hasGroup = function(group) {

@@ -21,21 +21,25 @@ describe('services: languages', function () {
           var message = new Message('message', 'english message'), // jshint ignore:line
               spanish = Languages.findLanguage('es'),
               german = Languages.findLanguage('de'),
-              defaultLanguage = Languages.getDefaultLanguage();
+              defaultLanguage = Languages.getDefaultLanguage(),
+              addStringToMessage = function(name, lang) {
+                message.addString(name, name + ' desc', lang);
+          }
 
           expect(message.getString(defaultLanguage)).toBe('english message');
-          message.addString('mensaje de Inglés', spanish);
+          addStringToMessage('mensaje de Inglés', spanish);
           expect(message.strings.length).toBe(2);
           expect(message.getString(spanish)).toBe('mensaje de Inglés');
-          message.addString('mensaje de Inglés 2', spanish);
+          addStringToMessage('mensaje de Inglés 2', spanish);
           expect(message.strings.length).toBe(2);
           expect(message.getString(spanish)).toBe('mensaje de Inglés 2');
-          message.addString('english message--2', defaultLanguage);
+          addStringToMessage('english message--2', defaultLanguage);
           expect(message.strings.length).toBe(2);
           expect(message.getString(german)).toBe('message');
-          message.addStringCode('Englisch Nachricht', 'de');
+          message.addStringCode('Englisch Nachricht', 'Englisch Nachricht desc', 'de');
           expect(message.strings.length).toBe(3);
           expect(message.getString(german)).toBe('Englisch Nachricht');
+          expect(message.getDesc(german)).toBe('Englisch Nachricht desc');
         }
       ));
   });

@@ -10,7 +10,8 @@
     <table class="table-condensed table-bordered list-group-item">
       <thead>
       <tr>
-        <th colspan="2">Name</th>
+        <th colspan="2">ID</th>
+        <th colspan="2">Name [{{language.code}}]</th>
         <th colspan="2">Description [{{language.code}}]</th>
       </tr>
       </thead>
@@ -21,6 +22,11 @@
                   ng-click="editGroup(g)"></button>
         </td>
         <td>{{g.getString(language)}}</td>
+        <td>
+          <button class="glyphicon glyphicon-pencil" tooltip="Edit {{g.name}} [{{language.code}}] name."
+                  ng-click="editGroupName(g)"></button>
+        </td>
+        <td>{{g.getDesc(language)}}</td>
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{g.name}} [{{language.code}}] description."
                   ng-click="editGroupDesc(g)"></button>

@@ -1,15 +1,16 @@
 'use strict';
 
-function LanguageString(string, code) {
+function LanguageString(string, desc, code) {
   this.string = string;
+  this.desc = desc;
   this.code = code;
 }
 
 var Message = Class.create({ // jshint ignore:line
-  initialize: function(name, englishString) {
+  initialize: function(name, englishString, englishDesc) {
     this.name = name;
     this.strings = [
-      new LanguageString(englishString !== undefined ? englishString : name, usEnglishCode) // jshint ignore:line
+      new LanguageString(englishString !== undefined ? englishString : name, englishDesc, usEnglishCode) // jshint ignore:line
     ];
   },
   getLanguageString: function(language) {
@@ -25,14 +26,18 @@ var Message = Class.create({ // jshint ignore:line
     var languageString = this.getLanguageString(language);
     return languageString === undefined ? this.name : languageString.string;
   },
-  addString: function(string, language) {
+  getDesc: function(language) {
+    var languageString = this.getLanguageString(language);
+    return languageString === undefined ? this.name : languageString.desc;
+  },
+  addString: function(name, desc, language) {
     var existing = this.getLanguageString(language);
     if (existing !== undefined) {
       this.strings.splice(this.strings.indexOf(existing),1);
     }
-    this.strings.push(new LanguageString(string, language.code));
+    this.strings.push(new LanguageString(name, desc, language.code));
   },
-  addStringCode: function(string, languageCode) {
-    this.addString(string, new Language(null, languageCode)); // jshint ignore:line
+  addStringCode: function(string, desc, languageCode) {
+    this.addString(string, desc, new Language(null, languageCode)); // jshint ignore:line
   }
 });
