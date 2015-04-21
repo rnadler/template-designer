@@ -10,7 +10,8 @@
     <table class="table-condensed table-bordered list-group-item">
       <thead>
       <tr>
-        <th colspan="2">Name</th>
+        <th colspan="2">ID</th>
+        <th colspan="2">Name [{{language.code}}]</th>
         <th colspan="2">Description [{{language.code}}]</th>
         <th>Rule Type</th>
       </tr>
@@ -22,6 +23,11 @@
                   ng-click="editRule(r)"></button>
         </td>
         <td>{{r.getString(language)}}</td>
+        <td>
+          <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} [{{language.code}}] name."
+                  ng-click="editRuleName(r)"></button>
+        </td>
+        <td>{{r.getDesc(language)}}</td>
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} [{{language.code}}] description."
                   ng-click="editRuleDesc(r)"></button>

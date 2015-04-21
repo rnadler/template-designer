@@ -284,7 +284,7 @@ angular.module('templateDesignerApp')
         modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
-        size: 'sm',
+        size: 'lg',
         resolve: {
           message: function () {
             return 'Rename ' + $scope.language.description() + ' Rule Group Description';
@@ -405,8 +405,9 @@ angular.module('templateDesignerApp')
       });
     };
 
-    $scope.editRuleDesc = function(rule) {
-      var modalInstance = $modal.open({
+    $scope.editRuleName = function(rule) {
+      var oldRuleDesc = rule.getDesc($scope.language),
+          modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
@@ -423,8 +424,32 @@ angular.module('templateDesignerApp')
         }
       });
 
+      modalInstance.result.then(function (ruleName) {
+        rule.addString(ruleName, oldRuleDesc, $scope.language);
+      });
+    };
+
+    $scope.editRuleDesc = function(rule) {
+      var oldRuleName = rule.getString($scope.language),
+          modalInstance = $modal.open({
+        templateUrl: 'views/templates/getNameDialog.html',
+        controller: 'GetNameDialogCtrl',
+        size: 'lg',
+        resolve: {
+          message: function () {
+            return 'Rename ' + $scope.language.description() + ' Compliance Rule Description';
+          },
+          defaultName: function () {
+            return rule.getDesc($scope.language);
+          },
+          trim: function() {
+            return false;
+          }
+        }
+      });
+
       modalInstance.result.then(function (ruleDesc) {
-        rule.addString(ruleDesc, $scope.language);
+        rule.addString(oldRuleName, ruleDesc, $scope.language);
       });
     };
 

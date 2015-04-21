@@ -6,8 +6,8 @@ var RuleType = Object.freeze({
 });
 
 var RuleDesc = Class.create(Message, { // jshint ignore:line
-  initialize: function($super, string, code, ruleType) {
-    $super(string, code);
+  initialize: function($super, string, code, desc, ruleType) {
+    $super(string, code, desc);
     this.ruleType = ruleType !== undefined ? ruleType : RuleType.INITIAL;
   }
 });
@@ -15,9 +15,9 @@ var RuleDesc = Class.create(Message, { // jshint ignore:line
 angular.module('ComplianceRulesService', []).service('ComplianceRules', function () {
 
   var rules = [
-        new RuleDesc('cms', 'US CMS Compliance', RuleType.INITIAL),  // jshint ignore:line
-        new RuleDesc('rolling', 'French Rolling Compliance', RuleType.INITIAL),  // jshint ignore:line
-        new RuleDesc('mask', 'Mask Reimbursement', RuleType.ONGOING)  // jshint ignore:line
+        new RuleDesc('cms', 'US CMS Compliance', '70% of any 30 day window in the first 90 days', RuleType.INITIAL),  // jshint ignore:line
+        new RuleDesc('rolling4', 'French 4 Hour Rolling Compliance 4 hour', 'Usage over a roling 28 day period, 4 hour threshold', RuleType.ONGOING),  // jshint ignore:line
+        new RuleDesc('rolling3', 'French 3 Hour Rolling Compliance', 'Usage over a roling 28 day period, 3 hour threshold', RuleType.ONGOING),  // jshint ignore:line
       ];
   this.hasRule = function(rule) {
     return this.findRule(rule.name) !== undefined;

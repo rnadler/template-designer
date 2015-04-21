@@ -24,7 +24,7 @@ describe('services: languages', function () {
               defaultLanguage = Languages.getDefaultLanguage(),
               addStringToMessage = function(name, lang) {
                 message.addString(name, name + ' desc', lang);
-          }
+          };
 
           expect(message.getString(defaultLanguage)).toBe('english message');
           addStringToMessage('mensaje de Inglés', spanish);
