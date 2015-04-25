@@ -2,17 +2,17 @@
 
 angular.module('GroupsService', []).service('Groups', function () {
 
-  var blankGroup = new Message(blank, blank), // jshint ignore:line
+  var blankGroup = new Message(blank, blank, blank), // jshint ignore:line
       groups = [
         blankGroup,
         /* jshint ignore:start */
-        new Message('7DaysAllPatients', '7 Days All Patients'),  // jshint ignore:line
-        new Message('30DaysAllPatients', '30 Days All Patients'),  // jshint ignore:line
-        new Message('90DaysAllPatients', '90 Days All Patients'),
-        new Message('NoData', 'No Data', 'No data has arrived for this patient.'),
-        new Message('7DaysAtRisk', '7 Days At Risk', 'Patient has not met usage and AHI thresholds for 7 days.'),
-        new Message('30DaysAtRisk', '30 Days At Risk', 'Patient has not met usage and AHI thresholds for 30 days.'),
-        new Message('InCompliance', 'Compliance Met', 'Patient has met compliance.')
+        new Message('7DaysAllPatients', '7 Days All Patients', 'Patients on therapy for 7 days'),  // jshint ignore:line
+        new Message('30DaysAllPatients', '30 Days All Patients', 'Patients on therapy for 30 days'),  // jshint ignore:line
+        new Message('90DaysAllPatients', '90 Days All Patients', 'Patients on therapy for 90 days'),
+        new Message('NoData', 'No Data', 'No data has arrived for these patients'),
+        new Message('7DaysAtRisk', '7 Days At Risk', 'Patients have not met leakage or AHI thresholds for 7 days'),
+        new Message('30DaysAtRisk', '30 Days At Risk', 'Patients have not met leakage or AHI thresholds for 30 days'),
+        new Message('InCompliance', 'Compliance Met', 'Patients have met compliance')
         /* jshint ignore:end */
       ];
   this.hasGroup = function(group) {
@@ -33,7 +33,7 @@ angular.module('GroupsService', []).service('Groups', function () {
   this.dupGroup = function(oldGroup) {
     var message = new Message(oldGroup.name); // jshint ignore:line
     for (var j = 0; j < oldGroup.strings.length; j++) {
-      message.addStringCode(oldGroup.strings[j].string, oldGroup.strings[j].code);
+      message.addStringCode(oldGroup.strings[j].string, oldGroup.strings[j].desc, oldGroup.strings[j].code);
     }
     return message;
   };

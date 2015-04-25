@@ -10,8 +10,8 @@
     <table class="table-condensed table-bordered list-group-item">
       <thead>
       <tr>
-        <th colspan="2">Name</th>
-        <th colspan="2">Description [{{language.code}}]</th>
+        <th colspan="2">ID</th>
+        <th colspan="2">Name [{{language.code}}]</th>
       </tr>
       </thead>
       <tr ng-repeat="t in templates">
@@ -22,8 +22,8 @@
         </td>
         <td>{{t.getMessageString(language)}}</td>
         <td>
-          <button class="glyphicon glyphicon-pencil" tooltip="Edit {{t.getName()}} [{{language.code}}] description."
-                  ng-click="editTemplateDesc(t)"></button>
+          <button class="glyphicon glyphicon-pencil" tooltip="Edit {{t.getName()}} [{{language.code}}] name."
+                  ng-click="editTemplateName(t)"></button>
         </td>
         <td>
           <button class="glyphicon glyphicon-remove" tooltip="Delete {{t.getName()}} template."

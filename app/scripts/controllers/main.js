@@ -162,22 +162,22 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (templateName) {
-        if (Templates.hasTemplate(templateName)) {
+        if (Templates.hasTemplate(templateName.trimmed)) {
           showAlert($scope.templateAlert);
           return;
         }
-        template.setName(templateName);
+        template.setName(templateName.trimmed);
       });
     };
 
-    $scope.editTemplateDesc = function(template) {
+    $scope.editTemplateName = function(template) {
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
         size: 'sm',
         resolve: {
           message: function () {
-            return 'Rename ' + $scope.language.description() + ' Template Description';
+            return 'Rename ' + $scope.language.description() + ' Template Name';
           },
           defaultName: function () {
             return template.getMessageString($scope.language);
@@ -188,8 +188,8 @@ angular.module('templateDesignerApp')
         }
       });
 
-      modalInstance.result.then(function (templateDesc) {
-        template.addMessageString(templateDesc, $scope.language);
+      modalInstance.result.then(function (templateName) {
+        template.addMessageString(templateName, $scope.language);
       });
     };
 
@@ -212,7 +212,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (templateName) {
-          if (Templates.addTemplate(templateName, $scope.maxRows, $scope.maxColumns) === -1) {
+          if (Templates.addTemplate(templateName.trimmed, $scope.maxRows, $scope.maxColumns, templateName.raw) === -1) {
             showAlert($scope.templateAlert);
             return;
           }
@@ -269,10 +269,10 @@ angular.module('templateDesignerApp')
 
       modalInstance.result.then(function (groupName) {
         var newGroup = Groups.dupGroup(oldGroup);
-        newGroup.name = groupName;
+        newGroup.name = groupName.trimmed;
         var index = Groups.changeGroup(oldGroup, newGroup);
         if (index > -1) {
-          Templates.updateGroupName(oldGroup.name, groupName);
+          Templates.updateGroupName(oldGroup.name, groupName.trimmed);
         } else {
           showAlert($scope.groupAlert);
         }
@@ -345,7 +345,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (groupName) {
-          if (Groups.addGroup(new Message(groupName)) === -1) { // jshint ignore:line
+          if (Groups.addGroup(new Message(groupName.trimmed, groupName.raw)) === -1) { // jshint ignore:line
             showAlert($scope.groupAlert);
           }
       });
@@ -398,7 +398,7 @@ angular.module('templateDesignerApp')
 
       modalInstance.result.then(function (ruleName) {
         var newRule = ComplianceRules.dupRule(oldRule);
-        newRule.name = ruleName;
+        newRule.name = ruleName.trimmed;
         if (ComplianceRules.changeRule(oldRule, newRule) === -1) {
           showAlert($scope.ruleAlert);
         }
@@ -472,7 +472,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (ruleName) {
-        if (ComplianceRules.addRule(new RuleDesc(ruleName)) === -1) { // jshint ignore:line
+        if (ComplianceRules.addRule(new RuleDesc(ruleName.trimmed, ruleName.raw)) === -1) { // jshint ignore:line
           showAlert($scope.ruleAlert);
         }
       });

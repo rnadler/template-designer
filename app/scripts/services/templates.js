@@ -24,7 +24,7 @@ LayoutTemplate.prototype = {
     return this.message.getString(language);
   },
   addMessageString: function(string, language) {
-    this.message.addString(string, language);
+    this.message.addString(string, undefined, language);
   }
 };
 
@@ -52,7 +52,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
         grid = temp.grid,
         nt = new LayoutTemplate(new Message(temp.message.name), temp.rows, grid.columns); // jshint ignore:line
     for (var j = 0; j < temp.message.strings.length; j++) {
-      nt.message.addStringCode(temp.message.strings[j].string, temp.message.strings[j].code);
+      nt.message.addStringCode(temp.message.strings[j].string, temp.message.strings[j].desc, temp.message.strings[j].code);
     }
     for (c in grid.cells) {
       var cell = grid.cells[c];
@@ -73,11 +73,11 @@ angular.module('TemplatesService', []).service('Templates', function () {
     }
     return templates;
   };
-  this.addTemplate = function(templateName, rows, columns) {
+  this.addTemplate = function(templateName, rows, columns, templateDesc) {
     if (this.hasTemplate(templateName) === true) {
       return -1;
     }
-    return templates.push(new LayoutTemplate(new Message(templateName), rows, columns)); // jshint ignore:line
+    return templates.push(new LayoutTemplate(new Message(templateName, templateDesc), rows, columns)); // jshint ignore:line
   };
   this.removeTemplate = function(template) {
     var index = templates.indexOf(template);

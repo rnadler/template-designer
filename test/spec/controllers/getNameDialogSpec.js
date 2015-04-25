@@ -7,7 +7,8 @@ describe('Controller: GetNameDialogCtrl', function () {
 
   it('should trim strings if trim is true',
     inject(function ($controller, $rootScope) {
-      var scope = $rootScope.$new();
+      var result,
+          scope = $rootScope.$new();
       $controller('GetNameDialogCtrl', {
         $scope: scope,
         $modalInstance: null,
@@ -15,7 +16,9 @@ describe('Controller: GetNameDialogCtrl', function () {
         defaultName: 'default name',
         trim: true
       });
-      expect(scope.removeWhiteSpace(' aaa BBB ccc ')).toBe('aaaBBBccc');
+      result = scope.removeWhiteSpace(' aaa BBB ccc ');
+      expect(result.trimmed).toBe('aaaBBBccc');
+      expect(result.raw).toBe(' aaa BBB ccc ');
     }));
 
   it('should not trim strings if trim is false',
