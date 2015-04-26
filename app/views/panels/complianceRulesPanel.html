@@ -14,6 +14,7 @@
         <th colspan="2">Name [{{language.code}}]</th>
         <th colspan="2">Description [{{language.code}}]</th>
         <th>Rule Type</th>
+        <th>Countries</th>
       </tr>
       </thead>
       <tr ng-repeat="r in rules">
@@ -46,6 +47,21 @@
           </div>
         </td>
         <td>
+          <tags-input ng-model="r.countries"
+                      display-property="code"
+                      min-length="2"
+                      placeholder="Add a Country"
+                      on-tag-adding="validateCountry($tag)">
+            <auto-complete source="loadCountries($query)"
+                           min-length="1"
+                           load-on-empty="true"
+                           load-on-focus="true"
+                           max-results-to-show="20"
+                           template="autocomplete-template">
+            </auto-complete>
+          </tags-input>
+        </td>
+        <td>
           <button class="glyphicon glyphicon-remove" tooltip="Delete {{r.name}} compliance rule."
                   ng-click="removeRule(r)"></button>
         </td>
@@ -54,3 +70,12 @@
 
   </div>
 </div>
+
+<script type="text/ng-template" id="autocomplete-template">
+  <div class="autocomplete-template">
+    <div class="right-panel">
+      <span ng-bind-html="$highlight($getDisplayText())"></span>
+      <span>({{data.desc}})</span>
+    </div>
+  </div>
+</script>

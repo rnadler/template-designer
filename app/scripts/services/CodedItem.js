@@ -29,6 +29,16 @@ var CodedItemList = Class.create({ // jshint ignore:line
       }
     }
     return undefined;
+  },
+  queryItemByCode: function(query) {
+    var result = [],
+        alwaysAdd = query === undefined || query.length === 0;
+    for (var i = 0; i < this.list.length; i++) {
+      if (alwaysAdd || this.list[i].code.toLowerCase().indexOf(query.toLowerCase()) !== -1) {
+        result.push(this.list[i]);
+      }
+    }
+    return result;
   }
 });
 

@@ -9,6 +9,7 @@ var RuleDesc = Class.create(Message, { // jshint ignore:line
   initialize: function($super, string, code, desc, ruleType) {
     $super(string, code, desc);
     this.ruleType = ruleType !== undefined ? ruleType : RuleType.INITIAL;
+    this.countries = [];
   }
 });
 
@@ -35,11 +36,15 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
     return rv;
   };
   this.dupRule = function(oldRule) {
-    var message = new RuleDesc(oldRule.name, oldRule.name, oldRule.ruleType); // jshint ignore:line
-    for (var j = 0; j < oldRule.strings.length; j++) {
-      message.addStringCode(oldRule.strings[j].string, oldRule.strings[j].desc, oldRule.strings[j].code);
+    var j,
+        ruleDesc = new RuleDesc(oldRule.name, oldRule.code, oldRule.desc, oldRule.ruleType); // jshint ignore:line
+    for (j = 0; j < oldRule.strings.length; j++) {
+      ruleDesc.addStringCode(oldRule.strings[j].string, oldRule.strings[j].desc, oldRule.strings[j].code);
     }
-    return message;
+    for (j = 0; j < oldRule.countries.length; j++) {
+      ruleDesc.countries.push(oldRule.countries[j]);
+    }
+    return ruleDesc;
   };
   this.setRules = function (grps, replace) {
     if (replace) {

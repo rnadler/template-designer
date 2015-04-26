@@ -36,6 +36,13 @@ angular.module('templateDesignerApp')
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
     $scope.countries = Countries.getCountries();
 
+    $scope.loadCountries = function(query) {
+      return Countries.queryCountries(query);
+    };
+    $scope.validateCountry = function(tag) {
+      return Countries.findCountry(tag.code) !== undefined;
+    };
+
     $scope.setLanguage = function(language) {
       $scope.language = language;
     };

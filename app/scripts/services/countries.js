@@ -24,7 +24,6 @@ angular.module('CountriesService', []).service('Countries', function () {
     .addItem(new Country('Italy', 'it'))
     .addItem(new Country('Benelux', 'bnl'))
     .addItem(new Country('Norway', 'no'))
-    .addItem(new Country('Benelux', 'bnl'))
     .addItem(new Country('Denmark', 'dk'));
 
   this.getCountries = function () {
@@ -35,5 +34,9 @@ angular.module('CountriesService', []).service('Countries', function () {
   };
   this.getDefaultCountry = function() {
     return countryList.findItem(usCountryCode);
+  };
+  this.queryCountries = function(query) {
+    return countryList.queryItemByCode(query);
+
   };
 });
