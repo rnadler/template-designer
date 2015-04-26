@@ -13,6 +13,7 @@ angular.module('templateDesignerApp', [
     'ComplianceRulesService',
     'GroupsService',
     'LanguagesService',
+    'CountriesService',
     'rangeFilters',
     'mosSvcs.unsavedChanges',
     'ngAnimate',

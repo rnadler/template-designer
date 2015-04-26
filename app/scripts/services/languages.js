@@ -2,37 +2,30 @@
 
 var usEnglishCode = 'en_US';
 
-function Language(desc, code) {
-  this.code = code;
-  this.desc = desc;
-  this.description = function() {
-    return this.desc + ' [' + this.code + ']';
-  };
-}
+var Language = Class.create(CodedItem, { // jshint ignore:line
+  initialize: function($super, desc, code) {
+    $super(desc, code);
+  }
+});
 
 angular.module('LanguagesService', []).service('Languages', function () {
-  var languages = [
-    new Language('English US', usEnglishCode),
-    new Language('English (ROW)', 'en'),
-    new Language('French (ROW)', 'fr'),
-    new Language('French Canadian', 'fr_CA'),
-    new Language('German', 'de'),
-    new Language('Spanish', 'es'),
-    new Language('Portuguese', 'pt')
-  ];
+  var languageList = new CodedItemList(); // jshint ignore:line
+  languageList
+    .addItem(new Language('English US', usEnglishCode))
+    .addItem(new Language('English (ROW)', 'en'))
+    .addItem(new Language('French (ROW)', 'fr'))
+    .addItem(new Language('French Canadian', 'fr_CA'))
+    .addItem(new Language('German', 'de'))
+    .addItem(new Language('Spanish', 'es'))
+    .addItem(new Language('Portuguese', 'pt'));
 
   this.getLanguages = function () {
-    return languages;
+    return languageList.getList();
   };
   this.findLanguage = function (code) {
-    for (var i = 0; i < languages.length; i++) {
-      if (languages[i].code === code) {
-        return languages[i];
-      }
-    }
-    return undefined;
+    return languageList.findItem(code);
   };
   this.getDefaultLanguage = function() {
-    return languages[0];
+    return languageList.getList()[0];
   };
 });

@@ -8,7 +8,7 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules) {
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries) {
     var jsonVersion = '5.0',
         showAlert = function(alert) {
           alert.enabled = true;
@@ -34,6 +34,7 @@ angular.module('templateDesignerApp')
     $scope.languages = Languages.getLanguages();
     $scope.rules = ComplianceRules.getRules();
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
+    $scope.countries = Countries.getCountries();
 
     $scope.setLanguage = function(language) {
       $scope.language = language;
