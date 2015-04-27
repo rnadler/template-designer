@@ -9,7 +9,7 @@ describe('services: countries', function () {
     it('should manage an array of countries',
       inject(function (Countries) {
 
-        expect(Countries.getCountries().length).toBe(14);
+        expect(Countries.getCountries().length).toBe(15);
         expect(Countries.getDefaultCountry().code).toBe('us');
         // Find a country by code
         expect(Countries.findCountry('es').description()).toBe('Spain [es]');

@@ -35,6 +35,6 @@ describe('Controller: MainCtrl', function () {
     expect(scope.language.code).toBe('en_US');
   });
   it('should attach countries to the scope', function () {
-    expect(scope.countries.length).toBe(14);
+    expect(scope.countries.length).toBe(15);
   });
 });

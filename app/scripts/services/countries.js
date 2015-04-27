@@ -11,20 +11,21 @@ var Country = Class.create(CodedItem, { // jshint ignore:line
 angular.module('CountriesService', []).service('Countries', function () {
   var countryList = new CodedItemList(); // jshint ignore:line
   countryList
-    .addItem(new Country('United States', usCountryCode))
-    .addItem(new Country('Canada', 'ca'))
     .addItem(new Country('Australia', 'au'))
+    .addItem(new Country('Benelux', 'bnl'))
+    .addItem(new Country('British Isles', 'bi'))
+    .addItem(new Country('Canada', 'ca'))
+    .addItem(new Country('Denmark', 'dk'))
+    .addItem(new Country('Finland', 'fi'))
     .addItem(new Country('France', 'fr'))
     .addItem(new Country('Germany', 'de'))
+    .addItem(new Country('Italy', 'it'))
+    .addItem(new Country('Norway', 'no'))
+    .addItem(new Country('Portugal','pt'))
     .addItem(new Country('Spain', 'es'))
-    .addItem(new Country('British Isles', 'bi'))
-    .addItem(new Country('Finland', 'fi'))
     .addItem(new Country('Sweden', 'se'))
     .addItem(new Country('Switzerland', 'ch'))
-    .addItem(new Country('Italy', 'it'))
-    .addItem(new Country('Benelux', 'bnl'))
-    .addItem(new Country('Norway', 'no'))
-    .addItem(new Country('Denmark', 'dk'));
+    .addItem(new Country('United States', usCountryCode));
 
   this.getCountries = function () {
     return countryList.getList();
@@ -38,5 +39,8 @@ angular.module('CountriesService', []).service('Countries', function () {
   this.queryCountries = function(query) {
     return countryList.queryItemByCode(query);
 
+  };
+  this.getCountriesFromCodes = function(codes) {
+    return countryList.getItemsFromCodes(codes);
   };
 });

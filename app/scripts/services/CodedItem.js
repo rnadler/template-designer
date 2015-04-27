@@ -39,6 +39,13 @@ var CodedItemList = Class.create({ // jshint ignore:line
       }
     }
     return result;
+  },
+  getItemsFromCodes: function(codes) {
+    var result = [];
+    for (var i = 0; i < codes.length; i++) {
+        result.push(this.findItem(codes[i]));
+    }
+    return result;
   }
 });
 

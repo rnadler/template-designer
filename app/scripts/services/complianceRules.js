@@ -6,19 +6,22 @@ var RuleType = Object.freeze({
 });
 
 var RuleDesc = Class.create(Message, { // jshint ignore:line
-  initialize: function($super, string, code, desc, ruleType) {
+  initialize: function($super, string, code, desc, ruleType, countries) {
     $super(string, code, desc);
     this.ruleType = ruleType !== undefined ? ruleType : RuleType.INITIAL;
-    this.countries = [];
+    this.countries = countries === undefined ? [] : countries;
   }
 });
 
-angular.module('ComplianceRulesService', []).service('ComplianceRules', function () {
+angular.module('ComplianceRulesService', []).service('ComplianceRules', function (Countries) {
 
   var rules = [
-        new RuleDesc('cms', 'US CMS Compliance', 'Usage above 4 hours for any 21 days in a 30 day window in the first 90 days', RuleType.INITIAL),  // jshint ignore:line
-        new RuleDesc('rolling4', 'French 4 Hour Rolling Compliance', 'Usage over a roling 28 day period, 4 hour threshold', RuleType.ONGOING),  // jshint ignore:line
-        new RuleDesc('rolling3', 'French 3 Hour Rolling Compliance', 'Usage over a roling 28 day period, 3 hour threshold', RuleType.ONGOING)  // jshint ignore:line
+        new RuleDesc('cms', 'US CMS Compliance', 'Usage above 4 hours for any 21 days in a 30 day window in the first 90 days', // jshint ignore:line
+          RuleType.INITIAL, Countries.getCountriesFromCodes(['us', 'ca', 'au'])),
+        new RuleDesc('rolling4', 'French 4 Hour Rolling Compliance', 'Usage over a roling 28 day period, 4 hour threshold', // jshint ignore:line
+          RuleType.ONGOING, Countries.getCountriesFromCodes(['bi', 'dk','fi','de','it','no','pt','es','se','ch'])),
+        new RuleDesc('rolling3', 'French 3 Hour Rolling Compliance', 'Usage over a roling 28 day period, 3 hour threshold', // jshint ignore:line
+          RuleType.ONGOING, Countries.getCountriesFromCodes(['fr', 'bnl']))
       ];
   this.hasRule = function(rule) {
     return this.findRule(rule.name) !== undefined;
