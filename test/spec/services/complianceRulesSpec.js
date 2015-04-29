@@ -3,12 +3,12 @@
 
 describe('services: complianceRules', function() {
 
-  beforeEach(module('ComplianceRulesService', 'LanguagesService', 'CountriesService'));
+  beforeEach(module('ComplianceRulesService', 'LanguagesService'));
 
   describe('Rules', function() {
 
     it('should manage an array of compliance rules',
-      inject(function(ComplianceRules, Languages, Countries) { // jshint ignore:line
+      inject(function(ComplianceRules, Languages) { // jshint ignore:line
         var g = function(name) {
             return new RuleDesc(name); // jshint ignore:line
           },

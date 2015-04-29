@@ -8,7 +8,7 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries) {
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries, $http) {
     var jsonVersion = '5.0',
         showAlert = function(alert) {
           alert.enabled = true;
@@ -29,10 +29,7 @@ angular.module('templateDesignerApp')
     $scope.projectVersionAlert = {enabled: false};
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
-    $scope.templates = Templates.getTemplates();
-    $scope.groups = Groups.getGroups();
     $scope.languages = Languages.getLanguages();
-    $scope.rules = ComplianceRules.getRules();
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
     $scope.countries = Countries.getCountries();
 
@@ -86,6 +83,30 @@ angular.module('templateDesignerApp')
       }
       jQuery('#loadJsonfile').click(); // jshint ignore:line
     };
+    var loadJsonData = function(aggregate, jsonfile, replace, doAlert) {
+      if (aggregate.version === undefined || aggregate.version !== jsonVersion) {
+        if (doAlert) {
+          showAlert($scope.projectVersionAlert);
+        }
+        return;
+      }
+      $timeout(function() {
+        $scope.$apply(function () {
+          $scope.rules = ComplianceRules.setRules(aggregate.complianceRules, replace);
+          $scope.groups = Groups.setGroups(aggregate.groups, replace);
+          $scope.templates = Templates.setTemplates(aggregate.templates, replace);
+          if (replace) {
+            if (jsonfile !== undefined) {
+              $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+            }
+            $scope.reset();
+          }
+          if (doAlert) {
+            showAlert($scope.projectLoadSuccessAlert);
+          }
+        });
+      });
+    };
     $scope.readJson = function(element, replace) {
       if (!element || !element.files || !element.files[0]) {
         return;
@@ -94,28 +115,22 @@ angular.module('templateDesignerApp')
         var jsonfile = element.files[0],
             reader = new $window.FileReader();
         reader.onload = function (e) {
-          var aggregate = JSON.parse(e.target.result);
-          if (aggregate.version === undefined || aggregate.version !== jsonVersion) {
-            showAlert($scope.projectVersionAlert);
-            return;
-          }
-          $scope.$apply(function () {
-            $scope.rules = ComplianceRules.setRules(aggregate.complianceRules, replace);
-            $scope.groups = Groups.setGroups(aggregate.groups, replace);
-            $scope.templates = Templates.setTemplates(aggregate.templates, replace);
-            if (replace) {
-              $scope.projectData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
-              $scope.reset();
-            }
-            showAlert($scope.projectLoadSuccessAlert);
-          });
+          loadJsonData(JSON.parse(e.target.result), jsonfile, replace, true);
         };
         reader.readAsText(jsonfile);
       } else {
         alert('Your browser does not support the File API!'); // jshint ignore:line
       }
     };
-
+    var loadDefaultJson = function () {
+      $http.get('json/default-data.json').
+        success(function (data) {
+          loadJsonData(data, undefined, true, false);
+        }).
+        error(function () {
+          console.error('Failed to load default JSON content!!');
+        });
+    };
     // ------------ Cell management ---------------
 
     $scope.cellWidth = function() {
@@ -525,6 +540,6 @@ angular.module('templateDesignerApp')
       $scope.setLanguage($scope.languages[0]);
     };
 
-    $scope.reset();
+    loadDefaultJson();
 
   });

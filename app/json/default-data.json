@@ -1,0 +1,326 @@
+{
+	"version": "5.0",
+	"complianceRules": [
+		{
+			"name": "cms",
+			"strings": [
+				{
+					"string": "US CMS Compliance",
+					"desc": "Usage above 4 hours for any 21 days in a 30 day window in the first 90 days",
+					"code": "en_US"
+				}
+			],
+			"ruleType": "initial",
+			"countries": [
+				{
+					"code": "us",
+					"desc": "United States"
+				},
+				{
+					"code": "ca",
+					"desc": "Canada"
+				},
+				{
+					"code": "au",
+					"desc": "Australia"
+				}
+			],
+			"$$hashKey": "0AS"
+		},
+		{
+			"name": "rolling4",
+			"strings": [
+				{
+					"string": "French 4 Hour Rolling Compliance",
+					"desc": "Usage over a roling 28 day period, 4 hour threshold",
+					"code": "en_US"
+				}
+			],
+			"ruleType": "ongoing",
+			"countries": [
+				{
+					"code": "bi",
+					"desc": "British Isles"
+				},
+				{
+					"code": "dk",
+					"desc": "Denmark"
+				},
+				{
+					"code": "fi",
+					"desc": "Finland"
+				},
+				{
+					"code": "de",
+					"desc": "Germany"
+				},
+				{
+					"code": "it",
+					"desc": "Italy"
+				},
+				{
+					"code": "no",
+					"desc": "Norway"
+				},
+				{
+					"code": "pt",
+					"desc": "Portugal"
+				},
+				{
+					"code": "es",
+					"desc": "Spain"
+				},
+				{
+					"code": "se",
+					"desc": "Sweden"
+				},
+				{
+					"code": "ch",
+					"desc": "Switzerland"
+				}
+			],
+			"$$hashKey": "0AT"
+		},
+		{
+			"name": "rolling3",
+			"strings": [
+				{
+					"string": "French 3 Hour Rolling Compliance",
+					"desc": "Usage over a roling 28 day period, 3 hour threshold",
+					"code": "en_US"
+				}
+			],
+			"ruleType": "ongoing",
+			"countries": [
+				{
+					"code": "fr",
+					"desc": "France"
+				},
+				{
+					"code": "bnl",
+					"desc": "Benelux"
+				}
+			],
+			"$$hashKey": "0AU"
+		}
+	],
+	"groups": [
+		{
+			"name": "--- Blank ---",
+			"strings": [
+				{
+					"string": "--- Blank ---",
+					"desc": "--- Blank ---",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "03T"
+		},
+		{
+			"name": "7DaysAllPatients",
+			"strings": [
+				{
+					"string": "7 Days All Patients",
+					"desc": "Patients on therapy for 7 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BS"
+		},
+		{
+			"name": "30DaysAllPatients",
+			"strings": [
+				{
+					"string": "30 Days All Patients",
+					"desc": "Patients on therapy for 30 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BT"
+		},
+		{
+			"name": "45DaysAllPatients",
+			"strings": [
+				{
+					"string": "45 Days All Patients",
+					"desc": "Patients on therapy for 45 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BU"
+		},
+		{
+			"name": "60DaysAllPatients",
+			"strings": [
+				{
+					"string": "60 Days All Patients",
+					"desc": "Patients on therapy for 60 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BV"
+		},
+		{
+			"name": "90DaysAllPatients",
+			"strings": [
+				{
+					"string": "90 Days All Patients",
+					"desc": "Patients on therapy for 90 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BW"
+		},
+		{
+			"name": "NoDataTransmitted",
+			"strings": [
+				{
+					"string": "No Data",
+					"desc": "No data has arrived for these patients",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BX"
+		},
+		{
+			"name": "7DaysAtRisk",
+			"strings": [
+				{
+					"string": "7 Days At Risk",
+					"desc": "Patients have not met leakage or AHI thresholds for 7 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BY"
+		},
+		{
+			"name": "14DaysAtRisk",
+			"strings": [
+				{
+					"string": "14 Days At Risk",
+					"desc": "Patients have not met leakage or AHI thresholds for 14 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0BZ"
+		},
+		{
+			"name": "PayorCompliance",
+			"strings": [
+				{
+					"string": "Payor Compliance Met",
+					"desc": "Patients have met Payor compliance",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0C0"
+		},
+		{
+			"name": "90DaysNotCompliant",
+			"strings": [
+				{
+					"string": "90 Days Not Compliant",
+					"desc": "Patients not compliant after 90 days",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0C1"
+		},
+		{
+			"name": "OngoingTherapyIssues",
+			"strings": [
+				{
+					"string": "Ongoing Therapy Issues",
+					"desc": "Patients having therapy issues",
+					"code": "en_US"
+				}
+			],
+			"$$hashKey": "0C2"
+		}
+	],
+	"templates": [
+		{
+			"message": {
+				"name": "USleepDashboard",
+				"strings": [
+					{
+						"string": "USleep Dashboard",
+						"code": "en_US"
+					}
+				]
+			},
+			"rows": 4,
+			"grid": {
+				"columns": 4,
+				"cells": {
+					"0": {
+						"name": "7DaysAllPatients",
+						"color": "#0000FF"
+					},
+					"1": {
+						"name": "30DaysAllPatients",
+						"color": "#0000FF"
+					},
+					"2": {
+						"name": "60DaysAllPatients",
+						"color": "#0000FF"
+					},
+					"3": {
+						"name": "90DaysAllPatients",
+						"color": "#0000FF"
+					},
+					"4": {
+						"name": "7DaysAtRisk",
+						"color": "#808000"
+					},
+					"5": {
+						"name": "14DaysAtRisk",
+						"color": "#808000"
+					},
+					"6": {
+						"name": "30DaysAllPatients",
+						"color": "#FF0000"
+					},
+					"7": {
+						"name": "45DaysAllPatients",
+						"color": "#FF0000"
+					},
+					"8": {
+						"name": "90DaysNotCompliant",
+						"color": "#FF0000"
+					},
+					"9": {
+						"name": "NoDataTransmitted",
+						"color": "#0000FF"
+					},
+					"10": {
+						"name": "OngoingTherapyIssues",
+						"color": "#800000"
+					},
+					"12": {
+						"name": "PayorCompliance",
+						"color": "#008000"
+					}
+				}
+			},
+			"$$hashKey": "0DM"
+		},
+		{
+			"message": {
+				"name": "template-3x3",
+				"strings": [
+					{
+						"string": "3x3 template",
+						"code": "en_US"
+					}
+				]
+			},
+			"rows": 3,
+			"grid": {
+				"columns": 3,
+				"cells": {}
+			},
+			"$$hashKey": "0DN"
+		}
+	]
+}
