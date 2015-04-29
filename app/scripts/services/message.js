@@ -39,5 +39,22 @@ var Message = Class.create({ // jshint ignore:line
   },
   addStringCode: function(string, desc, languageCode) {
     this.addString(string, desc, new Language(null, languageCode)); // jshint ignore:line
+  },
+  translateDescToLanguage: function($http, language) {
+    var self = this;
+    $http(
+      { url: 'http://api.mymemory.translated.net/get',
+        method: 'GET',
+        params:{
+          q: self.getDesc(new Language(null, usEnglishCode)), // jshint ignore:line
+          langpair: 'en|' + language.code.substring(0, 2)
+      }}).
+      success(function (data) {
+        if (data.matches.length > 0) {
+          self.addString(self.getString(language), data.matches[0].translation, language);
+        } else {
+          console.error(data);
+        }
+      });
   }
 });

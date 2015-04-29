@@ -30,6 +30,8 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{g.name}} [{{language.code}}] description."
                   ng-click="editGroupDesc(g)"></button>
+          <button class="glyphicon glyphicon-globe" tooltip="Translate {{g.name}} description to {{language.code}}"
+                  ng-click="translateGroupDesc(g)" ng-show="!language.code.startsWith('en')"></button>
         </td>
         <td>
           <button class="glyphicon glyphicon-remove" tooltip="Delete {{g.name}} rule group."

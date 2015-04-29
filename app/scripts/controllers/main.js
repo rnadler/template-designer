@@ -325,6 +325,9 @@ angular.module('templateDesignerApp')
         group.addString(oldGroupName, groupDesc, $scope.language);
       });
     };
+    $scope.translateGroupDesc = function(group) {
+      group.translateDescToLanguage($http, $scope.language);
+    };
     $scope.editGroupName = function(group) {
       var oldGroupDesc = group.getDesc($scope.language),
         modalInstance = $modal.open({
@@ -475,7 +478,9 @@ angular.module('templateDesignerApp')
         rule.addString(oldRuleName, ruleDesc, $scope.language);
       });
     };
-
+    $scope.translateRuleDesc = function(rule) {
+        rule.translateDescToLanguage($http, $scope.language);
+    };
     $scope.addRule = function() {
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',

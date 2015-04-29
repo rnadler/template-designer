@@ -32,6 +32,8 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} [{{language.code}}] description."
                   ng-click="editRuleDesc(r)"></button>
+          <button class="glyphicon glyphicon-globe" tooltip="Translate {{r.name}} description to {{language.code}}"
+                  ng-click="translateRuleDesc(r)" ng-show="!language.code.startsWith('en')"></button>
         </td>
         <td>
           <div class="dropdown">
