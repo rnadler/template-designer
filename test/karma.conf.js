@@ -28,6 +28,8 @@ module.exports = function(config) {
       'bower_components/angular-touch/angular-touch.js',
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/ng-tags-input/ng-tags-input.js',
+      'bower_components/spin.js/spin.js',
+      'bower_components/angular-spinner/angular-spinner.js',
       'app/scripts/vendors/prototype.js',
       'app/scripts/services/message.js',
       'app/scripts/**/*.js',

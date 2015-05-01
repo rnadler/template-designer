@@ -20,6 +20,8 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Rename {{g.name}} rule group."
                   ng-click="editGroup(g)"></button>
+          <button class="glyphicon glyphicon-globe" tooltip="Translate {{g.name}} Name and Description to {{language.desc}}"
+                  ng-click="getTranslations(g)" ng-show="showTranslation()"></button>
         </td>
         <td>{{g.getString(language)}}</td>
         <td>
@@ -30,8 +32,6 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{g.name}} [{{language.code}}] description."
                   ng-click="editGroupDesc(g)"></button>
-          <button class="glyphicon glyphicon-globe" tooltip="Translate {{g.name}} description to {{language.code}}"
-                  ng-click="translateGroupDesc(g)" ng-show="!language.code.startsWith('en')"></button>
         </td>
         <td>
           <button class="glyphicon glyphicon-remove" tooltip="Delete {{g.name}} rule group."

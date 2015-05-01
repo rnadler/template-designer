@@ -8,7 +8,7 @@
  * Controller of the templateDesignerApp
  */
 angular.module('templateDesignerApp')
-  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries, $http) {
+  .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries, $http, usSpinnerService) {
     var jsonVersion = '5.0',
         showAlert = function(alert) {
           alert.enabled = true;
@@ -27,6 +27,7 @@ angular.module('templateDesignerApp')
     $scope.templateAlert = {enabled: false};
     $scope.projectChangesPendingAlert = {enabled: false};
     $scope.projectVersionAlert = {enabled: false};
+    $scope.mainDivClass = undefined;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.languages = Languages.getLanguages();
@@ -54,7 +55,17 @@ angular.module('templateDesignerApp')
     $scope.setColumns = function(n) {
       $scope.template.setColumns(n);
     };
-
+    $scope.showTranslation = function() {
+      return $scope.language.code !== usEnglishCode; // jshint ignore:line
+    };
+    $scope.getTranslations = function(message) {
+      usSpinnerService.spin('spinner-main');
+      $scope.mainDivClass = 'pointer-events-none';
+      message.translateToLanguage($http, $scope.language, function() {
+        usSpinnerService.stop('spinner-main');
+        $scope.mainDivClass = undefined;
+      });
+    };
     // ------------- Project management -----------
 
     $scope.writeJson = function(projectName) {
@@ -325,9 +336,6 @@ angular.module('templateDesignerApp')
         group.addString(oldGroupName, groupDesc, $scope.language);
       });
     };
-    $scope.translateGroupDesc = function(group) {
-      group.translateDescToLanguage($http, $scope.language);
-    };
     $scope.editGroupName = function(group) {
       var oldGroupDesc = group.getDesc($scope.language),
         modalInstance = $modal.open({
@@ -477,9 +485,6 @@ angular.module('templateDesignerApp')
       modalInstance.result.then(function (ruleDesc) {
         rule.addString(oldRuleName, ruleDesc, $scope.language);
       });
-    };
-    $scope.translateRuleDesc = function(rule) {
-        rule.translateDescToLanguage($http, $scope.language);
     };
     $scope.addRule = function() {
       var modalInstance = $modal.open({

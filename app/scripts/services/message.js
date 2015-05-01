@@ -6,6 +6,8 @@ function LanguageString(string, desc, code) {
   this.code = code;
 }
 
+var translationUrl = 'http://api.mymemory.translated.net/get';
+
 var Message = Class.create({ // jshint ignore:line
   initialize: function(name, englishString, englishDesc) {
     this.name = name;
@@ -40,21 +42,40 @@ var Message = Class.create({ // jshint ignore:line
   addStringCode: function(string, desc, languageCode) {
     this.addString(string, desc, new Language(null, languageCode)); // jshint ignore:line
   },
-  translateDescToLanguage: function($http, language) {
-    var self = this;
+  getTranslation: function ($http, englishString, language, func) {
+    var langCode = language.code.substring(0, 2),
+        englishCode = 'en';
+    if (langCode === englishCode) {
+      func(englishString);
+      return;
+    }
     $http(
-      { url: 'http://api.mymemory.translated.net/get',
+      {
+        url: translationUrl,
         method: 'GET',
-        params:{
-          q: self.getDesc(new Language(null, usEnglishCode)), // jshint ignore:line
-          langpair: 'en|' + language.code.substring(0, 2)
-      }}).
+        params: {
+          q: englishString,
+          langpair: englishCode + '|' + langCode
+        }
+      }).
       success(function (data) {
         if (data.matches.length > 0) {
-          self.addString(self.getString(language), data.matches[0].translation, language);
+          func(data.matches[0].translation);
         } else {
           console.error(data);
+          func(undefined);
         }
       });
+  },
+  translateToLanguage: function ($http, language, completeFunc) {
+    var english = new Language(null, usEnglishCode), // jshint ignore:line
+        self = this;
+    self.getTranslation($http, self.getDesc(english), language, function (trans) {
+      var descTranslation = trans;
+      self.getTranslation($http, self.getString(english), language, function (trans) {
+        self.addString(trans, descTranslation, language);
+        completeFunc();
+      });
+    });
   }
 });

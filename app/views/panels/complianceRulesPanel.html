@@ -22,6 +22,8 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Rename {{r.name}} compliance rule."
                   ng-click="editRule(r)"></button>
+          <button class="glyphicon glyphicon-globe" tooltip="Translate {{r.name}} Name and Description to {{language.desc}}"
+                  ng-click="getTranslations(r)" ng-show="showTranslation()"></button>
         </td>
         <td>{{r.getString(language)}}</td>
         <td>
@@ -32,8 +34,6 @@
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} [{{language.code}}] description."
                   ng-click="editRuleDesc(r)"></button>
-          <button class="glyphicon glyphicon-globe" tooltip="Translate {{r.name}} description to {{language.code}}"
-                  ng-click="translateRuleDesc(r)" ng-show="!language.code.startsWith('en')"></button>
         </td>
         <td>
           <div class="dropdown">

@@ -96,3 +96,8 @@ body {
 .center {
   text-align: center;
 }
+.pointer-events-none {
+  pointer-events: none;
+  opacity:0.5;
+  filter:alpha(opacity=50); /* For IE8 and earlier */
+}
