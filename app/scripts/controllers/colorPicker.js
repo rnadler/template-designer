@@ -18,23 +18,83 @@ var colors = [
   {name: 'White', color: '#FFFFFF'},
   {name: 'Yellow', color: '#FFFF00'}
 ];
-angular.module('templateDesignerApp').controller('ColorPickerCtrl', function ($scope, $modalInstance, type) {
-
+angular.module('templateDesignerApp').controller('ColorPickerCtrl', function ($scope, $window, $timeout, $modalInstance, type, colorsData) {
+  var showAlert = function (alert) {
+      alert.enabled = true;
+      $timeout(function () {
+        alert.enabled = false;
+      }, 5000);
+    },
+    defaultColorsData = {
+      name: 'colors',
+      colors: colors
+    },
+    updateRows = function() {
+      var i, j,
+        index = 0,
+        maxCols = 6,
+        maxRows = 50;
+      $scope.rows = [];
+      for(i = 0 ; i < maxRows; i++){
+        $scope.rows.push([]);
+        for(j = 0 ; j < maxCols;j++) {
+          if (index >= $scope.colorsData.colors.length) {
+            return;
+          }
+          $scope.rows[i][j] = $scope.colorsData.colors[index++];
+        }
+      }
+    };
+  $scope.colorsLoadSuccessAlert = {enabled: false};
+  $scope.colorsSaveSuccessAlert = {enabled: false};
+  $scope.colorsData = colorsData === undefined ? defaultColorsData : colorsData;
+  updateRows();
   $scope.type = type;
-  // Color grid
-  $scope.colors = colors;
-  $scope.colorColumns = 4;
-  $scope.colorRows = colors.length/$scope.colorColumns;
-  $scope.getColor = function (row, col) {
-    return $scope.colors[(row * $scope.colorColumns) + col];
+
+  $scope.writeColorJson = function() {
+    var blob = new Blob([JSON.stringify(colors, null, '\t')], {type: 'text/plain;charset=utf-8'});
+    saveAs(blob, $scope.colorsData.name + '.json'); // jshint ignore:line
+    showAlert($scope.colorsSaveSuccessAlert);
   };
 
+  $scope.loadColorFile = function()
+  {
+    $timeout(function() {
+      jQuery('#loadColorsJsonfile').click(); // jshint ignore:line
+    });
+  };
 
+  $scope.readColorsJson = function(element) {
+    if (!element || !element.files || !element.files[0]) {
+      return;
+    }
+    if ($window.File && $window.FileList && $window.FileReader) {
+      var jsonfile = element.files[0],
+        reader = new $window.FileReader();
+      reader.onload = function (e) {
+        $timeout(function() {
+          $scope.$apply(function () {
+            $scope.colorsData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+            $scope.colorsData.colors = JSON.parse(e.target.result);
+            updateRows();
+            showAlert($scope.colorsLoadSuccessAlert);
+          });
+        });
+      };
+      reader.readAsText(jsonfile);
+    } else {
+      alert('Your browser does not support the File API!'); // jshint ignore:line
+    }
+  };
+  $scope.closeDialog = function(color) {
+    $scope.colorsData.color = color;
+    $modalInstance.close($scope.colorsData);
+  };
   $scope.ok = function (color) {
-    $modalInstance.close(color);
+    $scope.closeDialog(color);
   };
 
   $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
+    $scope.closeDialog();
   };
 });

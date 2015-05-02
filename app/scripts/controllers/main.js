@@ -55,6 +55,9 @@ angular.module('templateDesignerApp')
     $scope.setColumns = function(n) {
       $scope.template.setColumns(n);
     };
+
+    //region ------------- Translations -----------
+
     $scope.showTranslation = function() {
       return $scope.language.code !== usEnglishCode; // jshint ignore:line
     };
@@ -66,7 +69,9 @@ angular.module('templateDesignerApp')
         $scope.mainDivClass = undefined;
       });
     };
-    // ------------- Project management -----------
+    //endregion
+
+    //region ------------- Project management -----------
 
     $scope.writeJson = function(projectName) {
       var aggregate = {
@@ -142,7 +147,9 @@ angular.module('templateDesignerApp')
           console.error('Failed to load default JSON content!!');
         });
     };
-    // ------------ Cell management ---------------
+    //endregion
+
+    //region ------------- Cell management ---------------
 
     $scope.cellWidth = function() {
       return 100/$scope.template.getColumns() + '%';
@@ -163,19 +170,27 @@ angular.module('templateDesignerApp')
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/colorPicker.html',
         controller: 'ColorPickerCtrl',
+        size: 'lg',
         resolve: {
           type: function () {
             return $scope.getCell(row, col).name;
+          },
+          colorsData: function() {
+            return $scope.colorsData;
           }
         }
       });
 
-      modalInstance.result.then(function (color) {
-        $scope.setCellColor(row, col, color);
+      modalInstance.result.then(function (colorsData) {
+        $scope.colorsData = colorsData;
+        if (colorsData.color !== undefined) {
+          $scope.setCellColor(row, col, colorsData.color);
+        }
       });
     };
+    //endregion
 
-    // ----------- Template management ---------------
+    //region ------------- Template management ---------------
 
     $scope.editTemplate = function(template) {
       var modalInstance = $modal.open({
@@ -279,8 +294,9 @@ angular.module('templateDesignerApp')
         }
       });
     };
+    //endregion
 
-    // ----------- Rule Group management ---------------
+    //region ------------- Rule Group management ---------------
 
     $scope.editGroup = function(group) {
       var oldGroup = group,
@@ -408,8 +424,9 @@ angular.module('templateDesignerApp')
         }
       });
     };
+    //endregion
 
-    // ----------- Compliance Rule management ---------------
+    //region ------------- Compliance Rule management ---------------
 
     $scope.editRule = function(rule) {
       var oldRule = rule;
@@ -532,6 +549,7 @@ angular.module('templateDesignerApp')
         }
       });
     };
+    //endregion
 
     $scope.changesArePending = function() {
       return unsavedChanges.fnHasChanges('rule-changes') ||

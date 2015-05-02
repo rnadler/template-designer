@@ -1,15 +1,40 @@
 <div class="modal-body">
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <alert type="success" ng-hide="colorsLoadSuccessAlert.enabled == false">Sucessfully loaded {{colorsData.name}}!</alert>
+      <alert type="success" ng-hide="colorsSaveSuccessAlert.enabled == false">Sucessfully saved {{colorsData.name}}!</alert>
+      <table class="table-condensed">
+        <tr>
+          <td>
+            <button class="btn btn-default" ng-click="writeColorJson()" tooltip="Save Colors JSON file.">
+              <span class="glyphicon glyphicon-arrow-down"></span>
+              Save Colors JSON ({{colorsData.name}})
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-default" ng-click="loadColorFile()" tooltip="Load a Colors JSON file.">
+              <span class="glyphicon glyphicon-arrow-up"></span>
+              Load Colors JSON
+            </button>
+            <input onchange="angular.element(this).scope().readColorsJson(this)"
+                   style="display:none" id="loadColorsJsonfile" type="file" accept=".json"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
   <strong>Select color for {{type}}:</strong>
-
   <div class="panel panel-default">
     <div class="panel-body">
       <table class="table table-bordered">
-        <tr ng-repeat="col in [] | range:colorColumns">
-          <td ng-repeat="row in [] | range:colorRows">
-              <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="color{{row}}{{col}}"
-                      ng-style="{'background': getColor(row, col).color}" ng-click="ok(getColor(row, col).color)">
-                {{getColor(row, col).name}}
+        <tr ng-repeat="cols in rows">
+          <td ng-repeat = "col in cols">
+            <span ng-if="col !== undefined">
+              <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="{{col.name}}"
+                    ng-style="{'background': col.color}" ng-click="ok(col.color)">
+              {{col.name}}
               </button>
+            </span>
           </td>
         </tr>
       </table>
