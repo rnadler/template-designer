@@ -44,8 +44,10 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
     for (j = 0; j < oldRule.strings.length; j++) {
       ruleDesc.addStringCode(oldRule.strings[j].string, oldRule.strings[j].desc, oldRule.strings[j].code);
     }
-    for (j = 0; j < oldRule.countries.length; j++) {
-      ruleDesc.countries.push(oldRule.countries[j]);
+    if (oldRule.countries !== undefined) {
+      for (j = 0; j < oldRule.countries.length; j++) {
+        ruleDesc.countries.push(oldRule.countries[j]);
+      }
     }
     return ruleDesc;
   };
