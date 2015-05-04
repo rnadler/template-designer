@@ -80,7 +80,7 @@ angular.module('templateDesignerApp')
               groups: $scope.groups,
               templates: $scope.templates
       };
-      var blob = new Blob([JSON.stringify(aggregate, null, '\t')], {type: 'text/plain;charset=utf-8'});
+      var blob = new Blob([angular.toJson(aggregate, true)], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, projectName + '.json'); // jshint ignore:line
       $scope.projectData.name = projectName;
       showAlert($scope.projectSaveSuccessAlert);
@@ -131,7 +131,7 @@ angular.module('templateDesignerApp')
         var jsonfile = element.files[0],
             reader = new $window.FileReader();
         reader.onload = function (e) {
-          loadJsonData(JSON.parse(e.target.result), jsonfile, replace, true);
+          loadJsonData(angular.fromJson(e.target.result), jsonfile, replace, true);
         };
         reader.readAsText(jsonfile);
       } else {

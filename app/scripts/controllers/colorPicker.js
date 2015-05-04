@@ -52,7 +52,7 @@ angular.module('templateDesignerApp').controller('ColorPickerCtrl', function ($s
   $scope.type = type;
 
   $scope.writeColorJson = function() {
-    var blob = new Blob([JSON.stringify($scope.colorsData.colors, null, '\t')], {type: 'text/plain;charset=utf-8'});
+    var blob = new Blob([angular.toJson($scope.colorsData.colors, true)], {type: 'text/plain;charset=utf-8'});
     saveAs(blob, $scope.colorsData.name + '.json'); // jshint ignore:line
     showAlert($scope.colorsSaveSuccessAlert);
   };
@@ -75,7 +75,7 @@ angular.module('templateDesignerApp').controller('ColorPickerCtrl', function ($s
         $timeout(function() {
           $scope.$apply(function () {
             $scope.colorsData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
-            $scope.colorsData.colors = JSON.parse(e.target.result);
+            $scope.colorsData.colors = angular.fromJson(e.target.result);
             updateRows();
             showAlert($scope.colorsLoadSuccessAlert);
           });
