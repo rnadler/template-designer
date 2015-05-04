@@ -52,7 +52,7 @@ angular.module('templateDesignerApp').controller('ColorPickerCtrl', function ($s
   $scope.type = type;
 
   $scope.writeColorJson = function() {
-    var blob = new Blob([JSON.stringify(colors, null, '\t')], {type: 'text/plain;charset=utf-8'});
+    var blob = new Blob([JSON.stringify($scope.colorsData.colors, null, '\t')], {type: 'text/plain;charset=utf-8'});
     saveAs(blob, $scope.colorsData.name + '.json'); // jshint ignore:line
     showAlert($scope.colorsSaveSuccessAlert);
   };
