@@ -14,6 +14,15 @@ describe('services: countries', function () {
         // Find a country by code
         expect(Countries.findCountry('es').description()).toBe('Spain [es]');
         expect(Countries.findCountry('xx')).toBe(undefined);
+        // List from codes
+        var list = Countries.getCountriesFromCodes(['us', 'fr','xx']);
+        expect(list.length).toBe(3);
+        expect(list[1].code).toBe('fr');
+        expect(list[2]).toBe(undefined);
+        // Query
+        expect(Countries.queryCountries().length).toBe(15);
+        expect(Countries.queryCountries('').length).toBe(15);
+        expect(Countries.queryCountries('d').length).toBe(2);
       }));
   });
 });
