@@ -160,6 +160,20 @@ angular.module('templateDesignerApp')
     $scope.getCellGroup = function(row, col) {
       return Groups.findGroup($scope.getCell(row, col).name);
     };
+    $scope.getGroupDropDownName = function(group) {
+      var translated = group.getString($scope.language);
+      if (translated === group.name) {
+        return translated;
+      }
+      return translated + ' (' + group.name + ')';
+    };
+    $scope.getGroupDescText = function(group) {
+      var translated = group.getDesc($scope.language);
+      if (translated === group.name) {
+        return translated;
+      }
+      return translated + ' (' + group.name + ')';
+    };
     $scope.setCellName = function(row, col, name) {
       $scope.template.grid.setCell(row, col, name, $scope.getCell(row, col).color);
     };

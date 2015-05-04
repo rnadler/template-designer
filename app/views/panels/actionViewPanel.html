@@ -75,15 +75,16 @@
                 {{getCellGroup(row, col).getString(language)}}
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="cell{{row}}{{col}}">
+              <ul class="dropdown-menu dropdown-menu-max" role="menu" aria-labelledby="cell{{row}}{{col}}">
                 <li role="presentation"><a role="menuitem" tabindex="-1" ng-click="setCellName(row, col, group.name)"
-                                           ng-repeat="group in groups">{{group.getString(language)}}</a></li>
+                                           ng-repeat="group in groups">{{getGroupDropDownName(group)}}</a></li>
               </ul>
             </div>
             <button type="button" class="btn btn-default" ng-style="{'background': getCell(row, col).color}"
                     ng-click="selectColor(row, col)"></button>
           </div>
-          <span class="pull-right glyphicon glyphicon-info-sign" popover="{{getCellGroup(row, col).getDesc(language)}}" popover-trigger="mouseenter"></span>
+          <span class="pull-right glyphicon glyphicon-info-sign" popover="{{getGroupDescText(getCellGroup(row, col))}}"
+                popover-trigger="mouseenter"></span>
         </td>
       </tr>
     </table>
