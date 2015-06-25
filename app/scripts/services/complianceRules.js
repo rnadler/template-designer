@@ -6,10 +6,15 @@ var RuleType = Object.freeze({
 });
 
 var RuleDesc = Class.create(Message, { // jshint ignore:line
-  initialize: function($super, string, code, desc, ruleType, countries) {
+  initialize: function($super, string, code, desc, ruleType, countries,
+          rangeDays, windowDays, thresholdDays, thresholdHoursADay) {
     $super(string, code, desc);
     this.ruleType = ruleType !== undefined ? ruleType : RuleType.INITIAL;
     this.countries = countries === undefined ? [] : countries;
+    this.rangeDays = rangeDays;
+    this.windowDays = windowDays;
+    this.thresholdDays = thresholdDays;
+    this.thresholdHoursADay = thresholdHoursADay;
   }
 });
 
@@ -40,7 +45,8 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
   };
   this.dupRule = function(oldRule) {
     var j,
-        ruleDesc = new RuleDesc(oldRule.name, oldRule.code, oldRule.desc, oldRule.ruleType); // jshint ignore:line
+        ruleDesc = new RuleDesc(oldRule.name, oldRule.code, oldRule.desc, oldRule.ruleType, [],
+            oldRule.rangeDays, oldRule.windowDays, oldRule.thresholdDays, oldRule.thresholdHoursADay); // jshint ignore:line
     for (j = 0; j < oldRule.strings.length; j++) {
       ruleDesc.addStringCode(oldRule.strings[j].string, oldRule.strings[j].desc, oldRule.strings[j].code);
     }

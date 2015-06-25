@@ -9,7 +9,7 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries, $http, usSpinnerService) {
-    var jsonVersion = '5.0',
+    var jsonVersion = '6.0',
         showAlert = function(alert) {
           alert.enabled = true;
           $timeout(function() {
@@ -388,6 +388,10 @@ angular.module('templateDesignerApp')
       modalInstance.result.then(function (groupName) {
         group.addString(groupName, oldGroupDesc, $scope.language);
       });
+    };
+
+    $scope.editGroupParameters = function(group) {
+      alert(group.name + ': Sorry, this function is not yet implemented. Please check back later.'); // jshint ignore:line
     };
 
     $scope.addGroup = function() {

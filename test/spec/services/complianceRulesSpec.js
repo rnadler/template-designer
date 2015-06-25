@@ -10,7 +10,7 @@ describe('services: complianceRules', function() {
     it('should manage an array of compliance rules',
       inject(function(ComplianceRules, Languages) { // jshint ignore:line
         var g = function(name) {
-            return new RuleDesc(name); // jshint ignore:line
+            return new RuleDesc(name, undefined, undefined, RuleType.INITIAL, [], 90, 30, 21, 4); // jshint ignore:line
           },
           find = function(name) {
             return ComplianceRules.findRule(name);
@@ -31,6 +31,10 @@ describe('services: complianceRules', function() {
         expect(ComplianceRules.getRules()[2].name).toBe('xxxx');
         expect(ComplianceRules.getRules()[2].ruleType).toBe('initial');
         expect(ComplianceRules.getRules()[2].getString(defaultLanguage)).toBe('xxxx');
+        expect(ComplianceRules.getRules()[2].rangeDays).toBe(90);
+        expect(ComplianceRules.getRules()[2].windowDays).toBe(30);
+        expect(ComplianceRules.getRules()[2].thresholdDays).toBe(21);
+        expect(ComplianceRules.getRules()[2].thresholdHoursADay).toBe(4);
         // Set rules
         ComplianceRules.setRules([g('xxx'),g('yyy')], true);
         expect(ComplianceRules.getRules().length).toBe(2);

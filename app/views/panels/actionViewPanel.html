@@ -10,7 +10,7 @@
                 {{template.getMessageString(language)}}
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu" role="menu" aria-labelledby="template">
+              <ul class="dropdown-menu dropdown-menu-max" role="menu" aria-labelledby="template">
                 <li role="presentation"><a role="menuitem" tabindex="-1"
                                            ng-click="setTemplate(t)" ng-repeat="t in templates">{{t.getMessageString(language)}}</a>
                 </li>

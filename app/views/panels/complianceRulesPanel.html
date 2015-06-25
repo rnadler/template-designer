@@ -14,6 +14,7 @@
         <th colspan="2">Name [{{language.code}}]</th>
         <th colspan="2">Description [{{language.code}}]</th>
         <th>Rule Type</th>
+        <th colspan="2">Parameters</th>
         <th>Countries</th>
       </tr>
       </thead>
@@ -47,6 +48,13 @@
               </li>
             </ul>
           </div>
+        </td>
+        <td>
+          range={{r.rangeDays}} span={{r.windowDays}} threshDays={{r.thresholdDays}} Hr={{r.thresholdHoursADay}}
+        </td>
+        <td>
+          <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} parameters."
+                  ng-click="editGroupParameters(r)"></button>
         </td>
         <td>
           <tags-input ng-model="r.countries"
