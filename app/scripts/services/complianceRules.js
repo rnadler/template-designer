@@ -15,6 +15,12 @@ var RuleDesc = Class.create(Message, { // jshint ignore:line
     this.windowDays = windowDays;
     this.thresholdDays = thresholdDays;
     this.thresholdHoursADay = thresholdHoursADay;
+  },
+  setParametersFromRule: function(rule) {
+    this.rangeDays = rule.rangeDays;
+    this.windowsDays = rule.windowDays;
+    this.thresholdDays = rule.thresholdDays;
+    this.thresholdHoursADay = rule.thresholdHoursADay;
   }
 });
 

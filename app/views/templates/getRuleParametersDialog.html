@@ -1,0 +1,46 @@
+<div class="modal-body">
+  <strong>{{message}}:</strong>
+  <table class="table-condensed">
+    <tr>
+      <td>
+        Range Days:
+      </td>
+      <td>
+        <input type="text" ng-model="rule.rangeDays" class="form-control"
+               ng-keyup="$event.keyCode == 13 && OkIsActive() && ok()">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Window Days:
+      </td>
+      <td>
+        <input type="text" ng-model="rule.windowDays" class="form-control"
+               ng-keyup="$event.keyCode == 13 && OkIsActive() && ok()">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Threshold Days:
+      </td>
+      <td>
+        <input type="text" ng-model="rule.thresholdDays" class="form-control"
+               ng-keyup="$event.keyCode == 13 && OkIsActive() && ok()">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Threshold Hours:
+      </td>
+      <td>
+        <input type="text" ng-model="rule.thresholdHoursADay" class="form-control"
+               ng-keyup="$event.keyCode == 13 && OkIsActive() && ok()">
+      </td>
+    </tr>
+  </table>
+
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="ok()" ng-disabled="!OkIsActive()">OK</button>
+  <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+</div>

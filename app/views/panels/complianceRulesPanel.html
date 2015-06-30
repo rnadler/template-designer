@@ -50,11 +50,11 @@
           </div>
         </td>
         <td>
-          range={{r.rangeDays}} span={{r.windowDays}} threshDays={{r.thresholdDays}} Hr={{r.thresholdHoursADay}}
+          range={{r.rangeDays}}<br/>window={{r.windowDays}}<br/>threshhold={{r.thresholdDays}}<br/>TrHrs={{r.thresholdHoursADay}}
         </td>
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} parameters."
-                  ng-click="editGroupParameters(r)"></button>
+                  ng-click="editRuleParameters(r)"></button>
         </td>
         <td>
           <tags-input ng-model="r.countries"

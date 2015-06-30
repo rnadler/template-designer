@@ -390,10 +390,6 @@ angular.module('templateDesignerApp')
       });
     };
 
-    $scope.editGroupParameters = function(group) {
-      alert(group.name + ': Sorry, this function is not yet implemented. Please check back later.'); // jshint ignore:line
-    };
-
     $scope.addGroup = function() {
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
@@ -543,6 +539,30 @@ angular.module('templateDesignerApp')
         if (ComplianceRules.addRule(new RuleDesc(ruleName.trimmed, ruleName.raw)) === -1) { // jshint ignore:line
           showAlert($scope.ruleAlert);
         }
+      });
+    };
+
+    $scope.editRuleParameters = function(rule) {
+      var oldRule = rule,
+        modalInstance = $modal.open({
+          templateUrl: 'views/templates/getRuleParametersDialog.html',
+          controller: 'GetRuleParametersCtrl',
+          size: 'sm',
+          resolve: {
+            message: function () {
+              return 'Edit ' + rule.name + ' Parameters';
+            },
+            rule: function () {
+              return ComplianceRules.dupRule(rule);
+            },
+            trim: function() {
+              return false;
+            }
+          }
+        });
+
+      modalInstance.result.then(function (rule) {
+        oldRule.setParametersFromRule(rule);
       });
     };
 
