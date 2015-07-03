@@ -18,7 +18,7 @@ var RuleDesc = Class.create(Message, { // jshint ignore:line
   },
   setParametersFromRule: function(rule) {
     this.rangeDays = rule.rangeDays;
-    this.windowsDays = rule.windowDays;
+    this.windowDays = rule.windowDays;
     this.thresholdDays = rule.thresholdDays;
     this.thresholdHoursADay = rule.thresholdHoursADay;
   }

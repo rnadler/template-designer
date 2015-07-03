@@ -83,7 +83,6 @@
         }
       ],
       "windowDays": 28,
-      "thresholdDays": 21,
       "thresholdHoursADay": 4
     },
     {
@@ -107,7 +106,6 @@
         }
       ],
       "windowDays": 28,
-      "thresholdDays": 21,
       "thresholdHoursADay": 3
     }
   ],

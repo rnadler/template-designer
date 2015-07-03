@@ -1,0 +1,11 @@
+<div class="dropdown">
+  <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="rowCount">
+    {{title}}: {{value}}
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" role="menu" aria-labelledby="rowCount">
+    <li role="presentation"><a role="menuitem" tabindex="-1"
+                               ng-click="setValue(n + 1)" ng-repeat="n in [] | range:10">{{n + 1}}</a>
+    </li>
+  </ul>
+</div>
