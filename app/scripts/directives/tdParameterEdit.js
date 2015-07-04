@@ -5,7 +5,8 @@ angular.module('templateDesignerApp').directive('tdParameterEdit', function() {
     restrict: 'E',
     scope: {
       value: '=ngModel',
-      title: '@'
+      title: '@',
+      selection: '='
     },
     templateUrl: 'views/templates/parameterEditor.html',
     link: function(scope) {

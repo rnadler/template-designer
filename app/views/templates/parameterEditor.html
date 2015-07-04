@@ -5,7 +5,7 @@
   </button>
   <ul class="dropdown-menu" role="menu" aria-labelledby="rowCount">
     <li role="presentation"><a role="menuitem" tabindex="-1"
-                               ng-click="setValue(n + 1)" ng-repeat="n in [] | range:10">{{n + 1}}</a>
+                               ng-click="setValue(n)" ng-repeat="n in selection">{{n}}</a>
     </li>
   </ul>
 </div>
