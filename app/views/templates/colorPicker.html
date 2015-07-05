@@ -1,28 +1,4 @@
 <div class="modal-body">
-  <div class="panel panel-default">
-    <div class="panel-body">
-      <alert type="success" ng-hide="colorsLoadSuccessAlert.enabled == false">Sucessfully loaded {{colorsData.name}}!</alert>
-      <alert type="success" ng-hide="colorsSaveSuccessAlert.enabled == false">Sucessfully saved {{colorsData.name}}!</alert>
-      <table class="table-condensed">
-        <tr>
-          <td>
-            <button class="btn btn-default" ng-click="writeColorJson()" tooltip="Save Colors JSON file.">
-              <span class="glyphicon glyphicon-arrow-down"></span>
-              Save Colors JSON ({{colorsData.name}})
-            </button>
-          </td>
-          <td>
-            <button class="btn btn-default" ng-click="loadColorFile()" tooltip="Load a Colors JSON file.">
-              <span class="glyphicon glyphicon-arrow-up"></span>
-              Load Colors JSON
-            </button>
-            <input onchange="angular.element(this).scope().readColorsJson(this)"
-                   style="display:none" id="loadColorsJsonfile" type="file" accept=".json"/>
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
   <strong>Select color for {{type}}:</strong>
   <div class="panel panel-default">
     <div class="panel-body">

@@ -6,12 +6,33 @@ describe('Controller: ColorPickerCtrl', function () {
   beforeEach(module('templateDesignerApp'));
 
   var ColorPickerCtrl,
-    scope;
+    scope,
+    colorsData = {
+      name: 'colors',
+      colors:  [
+        {name: 'Aqua', color: '#00FFFF'},
+        {name: 'Black', color: '#000000'},
+        {name: 'Blue', color: '#0000FF'},
+        {name: 'Fuchsia', color: '#FF00FF'},
+        {name: 'Gray', color: '#808080'},
+        {name: 'Green', color: '#008000'},
+        {name: 'Lime', color: '#00FF00'},
+        {name: 'Maroon', color: '#800000'},
+        {name: 'Navy', color: '#000080'},
+        {name: 'Olive', color: '#808000'},
+        {name: 'Purple', color: '#800080'},
+        {name: 'Red', color: '#FF0000'},
+        {name: 'Silver', color: '#C0C0C0'},
+        {name: 'Teal', color: '#008080'},
+        {name: 'White', color: '#FFFFFF'},
+        {name: 'Yellow', color: '#FFFF00'}
+      ]
+    };
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    ColorPickerCtrl = $controller('ColorPickerCtrl', {$scope: scope, $modalInstance: null, type: 'mycolor', colorsData: undefined});
+    ColorPickerCtrl = $controller('ColorPickerCtrl', {$scope: scope, $modalInstance: null, type: 'mycolor', colorsData: colorsData});
   }));
 
   it('should attach the colors to the scope', function () {

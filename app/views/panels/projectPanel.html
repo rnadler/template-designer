@@ -2,7 +2,10 @@
 <alert type="success" ng-hide="projectSaveSuccessAlert.enabled == false">Sucessfully saved project {{projectData.name}}!</alert>
 <alert type="warning" ng-hide="projectChangesPendingAlert.enabled == false">Project changes have been made. Save project or reload page.</alert>
 <alert type="danger" ng-hide="projectVersionAlert.enabled == false">Can not load JSON data with version &lt; {{projectData.version}}!</alert>
+<alert type="success" ng-hide="configLoadSuccessAlert.enabled == false">Sucessfully loaded configuration {{configData.name}}!</alert>
+<alert type="success" ng-hide="configSaveSuccessAlert.enabled == false">Sucessfully saved configuration {{configData.name}}!</alert>
 <div class="panel panel-default">
+  <div class="panel-heading">Project Management</div>
   <div class="panel-body">
     <table class="table-condensed">
       <tr>
@@ -34,6 +37,31 @@
           </button>
           <input onchange="angular.element(this).scope().readJson(this, false)"
                  style="display:none" id="addJsonfile" type="file" accept=".json"/>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">Configuration Management</div>
+  <div class="panel-body">
+    <table class="table-condensed">
+      <tr>
+        <td>
+          <button class="btn btn-default" ng-click="writeConfigJson()" tooltip="Save configuration JSON file.">
+            <span class="glyphicon glyphicon-arrow-down"></span>
+            Save Configuration JSON [{{configData.name}}]
+          </button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <button class="btn btn-default" ng-click="loadConfigFile()" tooltip="Load a configuration JSON file.">
+            <span class="glyphicon glyphicon-arrow-up"></span>
+            Load Configuration JSON
+          </button>
+          <input onchange="angular.element(this).scope().readConfigJson(this)"
+                 style="display:none" id="loadConfigJsonfile" type="file" accept=".json"/>
         </td>
       </tr>
     </table>

@@ -27,12 +27,15 @@ angular.module('templateDesignerApp')
     $scope.templateAlert = {enabled: false};
     $scope.projectChangesPendingAlert = {enabled: false};
     $scope.projectVersionAlert = {enabled: false};
+    $scope.configLoadSuccessAlert = {enabled: false};
+    $scope.configSaveSuccessAlert = {enabled: false};
     $scope.mainDivClass = undefined;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
     $scope.languages = Languages.getLanguages();
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
     $scope.countries = Countries.getCountries();
+    $scope.configData  = {};
 
     $scope.loadCountries = function(query) {
       return Countries.queryCountries(query);
@@ -138,13 +141,71 @@ angular.module('templateDesignerApp')
         alert('Your browser does not support the File API!'); // jshint ignore:line
       }
     };
-    var loadDefaultJson = function () {
+    var loadDefaultDataJson = function () {
       $http.get('json/default-data.json').
         success(function (data) {
           loadJsonData(data, undefined, true, false);
         }).
         error(function () {
           console.error('Failed to load default JSON content!!');
+        });
+    };
+    //endregion
+
+    //region ------------- Configuration management ---------------
+
+    $scope.writeConfigJson = function() {
+      var data = {
+          selections: $scope.configData.selections,
+          colors: $scope.configData.colors
+        },
+        blob = new Blob([angular.toJson(data, true)], {type: 'text/plain;charset=utf-8'});
+      saveAs(blob, $scope.configData.name + '.json'); // jshint ignore:line
+      showAlert($scope.configSaveSuccessAlert);
+    };
+
+    $scope.loadConfigFile = function()
+    {
+      $timeout(function() {
+        jQuery('#loadConfigJsonfile').click(); // jshint ignore:line
+      });
+    };
+
+    var loadConfigJson = function(data, jsonfile, doAlert) {
+      $timeout(function() {
+        $scope.$apply(function () {
+          $scope.configData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+          $scope.configData.colors = data.colors;
+          $scope.configData.selections = data.selections;
+          if (doAlert) {
+            showAlert($scope.configLoadSuccessAlert);
+          }
+        });
+      });
+    };
+
+    $scope.readConfigJson = function(element) {
+      if (!element || !element.files || !element.files[0]) {
+        return;
+      }
+      if ($window.File && $window.FileList && $window.FileReader) {
+        var jsonfile = element.files[0],
+            reader = new $window.FileReader();
+        reader.onload = function (e) {
+          loadConfigJson(angular.fromJson(e.target.result), jsonfile, true);
+        };
+        reader.readAsText(jsonfile);
+      } else {
+        alert('Your browser does not support the File API!'); // jshint ignore:line
+      }
+    };
+    var loadDefaultConfigJson = function () {
+      $http.get('json/default-config.json').
+        success(function (data) {
+          loadConfigJson(data, { name: 'default.json'}, false);
+        }).
+        error(function () {
+          console.error('Failed to load default config JSON content!!');
         });
     };
     //endregion
@@ -190,15 +251,14 @@ angular.module('templateDesignerApp')
             return $scope.getCell(row, col).name;
           },
           colorsData: function() {
-            return $scope.colorsData;
+            return { colors: $scope.configData.colors };
           }
         }
       });
 
-      modalInstance.result.then(function (colorsData) {
-        $scope.colorsData = colorsData;
-        if (colorsData.color !== undefined) {
-          $scope.setCellColor(row, col, colorsData.color);
+      modalInstance.result.then(function (color) {
+        if (color !== undefined) {
+          $scope.setCellColor(row, col, color);
         }
       });
     };
@@ -555,6 +615,9 @@ angular.module('templateDesignerApp')
             rule: function () {
               return ComplianceRules.dupRule(rule);
             },
+            selections: function () {
+              return $scope.configData.selections;
+            },
             trim: function() {
               return false;
             }
@@ -606,6 +669,7 @@ angular.module('templateDesignerApp')
       $scope.setLanguage($scope.languages[0]);
     };
 
-    loadDefaultJson();
+    loadDefaultConfigJson();
+    loadDefaultDataJson();
 
   });
