@@ -1,28 +1,35 @@
 <div class="modal-body">
   <strong>{{message}}:</strong>
-  <table class="table-condensed">
-    <tr>
-      <td>
-        <td-parameter-edit ng-model="rule.rangeDays" title="Range Days" selection="selections.rangeDays"/>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <td-parameter-edit ng-model="rule.windowDays" title="Window Days" selection="selections.windowDays" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <td-parameter-edit ng-model="rule.thresholdDays" title="Threshold Days" selection="selections.thresholdDays" />
-      </td>
-    </tr>
-    <tr>
-      <td>
-        <td-parameter-edit ng-model="rule.thresholdHoursADay" title="Threshold Hours" selection="selections.thresholdHoursADay"/>
-      </td>
-    </tr>
-  </table>
-
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <table class="table-condensed">
+        <tr>
+          <td>
+            <td-parameter-edit ng-model="rule.rangeDays" title="Range Days"
+                               selection="selections.rangeDays"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <td-parameter-edit ng-model="rule.windowDays" title="Window Days"
+                               selection="selections.windowDays"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <td-parameter-edit ng-model="rule.thresholdDays" title="Threshold Days"
+                               selection="selections.thresholdDays"/>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <td-parameter-edit ng-model="rule.thresholdHoursADay" title="Threshold Hours"
+                               selection="selections.thresholdHoursADay"/>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
 </div>
 <div class="modal-footer">
   <button class="btn btn-primary" ng-click="ok()" ng-disabled="!OkIsActive()">OK</button>

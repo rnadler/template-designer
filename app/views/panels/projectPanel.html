@@ -4,6 +4,7 @@
 <alert type="danger" ng-hide="projectVersionAlert.enabled == false">Can not load JSON data with version &lt; {{projectData.version}}!</alert>
 <alert type="success" ng-hide="configLoadSuccessAlert.enabled == false">Sucessfully loaded configuration {{configData.name}}!</alert>
 <alert type="success" ng-hide="configSaveSuccessAlert.enabled == false">Sucessfully saved configuration {{configData.name}}!</alert>
+<alert type="danger" ng-hide="badJsonAlert.enabled == false">Failed to load JSON data! Reason: {{badJsonAlert.message}}</alert>
 <div class="panel panel-default">
   <div class="panel-heading">Project Management</div>
   <div class="panel-body">

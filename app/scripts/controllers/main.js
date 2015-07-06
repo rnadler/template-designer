@@ -10,9 +10,11 @@
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries, $http, usSpinnerService) {
     var jsonVersion = '6.0',
-        showAlert = function(alert) {
+        showAlert = function(alert, message) {
+          alert.message = message;
           alert.enabled = true;
           $timeout(function() {
+            alert.message = undefined;
             alert.enabled = false;
           }, 5000);
         };
@@ -29,6 +31,7 @@ angular.module('templateDesignerApp')
     $scope.projectVersionAlert = {enabled: false};
     $scope.configLoadSuccessAlert = {enabled: false};
     $scope.configSaveSuccessAlert = {enabled: false};
+    $scope.badJsonAlert = {enabled: false};
     $scope.mainDivClass = undefined;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
@@ -103,7 +106,14 @@ angular.module('templateDesignerApp')
       jQuery('#loadJsonfile').click(); // jshint ignore:line
     };
     var loadJsonData = function(aggregate, jsonfile, replace, doAlert) {
-      if (aggregate.version === undefined || aggregate.version !== jsonVersion) {
+      if (aggregate === undefined || aggregate.version === undefined || aggregate.complianceRules === undefined ||
+              aggregate.groups === undefined || aggregate.templates === undefined) {
+        if (doAlert) {
+          showAlert($scope.badJsonAlert, 'Incorrect JSON content.');
+        }
+        return;
+      }
+      if (aggregate.version !== jsonVersion) {
         if (doAlert) {
           showAlert($scope.projectVersionAlert);
         }
@@ -128,13 +138,18 @@ angular.module('templateDesignerApp')
     };
     $scope.readJson = function(element, replace) {
       if (!element || !element.files || !element.files[0]) {
+        showAlert($scope.badJsonAlert, 'Unable to load JSON file.');
         return;
       }
       if ($window.File && $window.FileList && $window.FileReader) {
         var jsonfile = element.files[0],
             reader = new $window.FileReader();
         reader.onload = function (e) {
-          loadJsonData(angular.fromJson(e.target.result), jsonfile, replace, true);
+          try {
+            loadJsonData(angular.fromJson(e.target.result), jsonfile, replace, true);
+          } catch (e) {
+            showAlert($scope.badJsonAlert, e.message);
+          }
         };
         reader.readAsText(jsonfile);
       } else {
@@ -147,7 +162,7 @@ angular.module('templateDesignerApp')
           loadJsonData(data, undefined, true, false);
         }).
         error(function () {
-          console.error('Failed to load default JSON content!!');
+          alert('Failed to load default JSON content!!'); // jshint ignore:line
         });
     };
     //endregion
@@ -172,6 +187,10 @@ angular.module('templateDesignerApp')
     };
 
     var loadConfigJson = function(data, jsonfile, doAlert) {
+      if (data === undefined || data.colors === undefined || data.selections === undefined) {
+        showAlert($scope.badJsonAlert, 'Incorrect JSON content.');
+        return;
+      }
       $timeout(function() {
         $scope.$apply(function () {
           $scope.configData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
@@ -186,13 +205,18 @@ angular.module('templateDesignerApp')
 
     $scope.readConfigJson = function(element) {
       if (!element || !element.files || !element.files[0]) {
+        showAlert($scope.badJsonAlert, 'Unable to load JSON file.');
         return;
       }
       if ($window.File && $window.FileList && $window.FileReader) {
         var jsonfile = element.files[0],
             reader = new $window.FileReader();
         reader.onload = function (e) {
-          loadConfigJson(angular.fromJson(e.target.result), jsonfile, true);
+          try {
+            loadConfigJson(angular.fromJson(e.target.result), jsonfile, true);
+          } catch (e) {
+            showAlert($scope.badJsonAlert, e.message);
+          }
         };
         reader.readAsText(jsonfile);
       } else {
@@ -205,7 +229,7 @@ angular.module('templateDesignerApp')
           loadConfigJson(data, { name: 'default.json'}, false);
         }).
         error(function () {
-          console.error('Failed to load default config JSON content!!');
+          alert('Failed to load default config JSON content!!'); // jshint ignore:line
         });
     };
     //endregion
