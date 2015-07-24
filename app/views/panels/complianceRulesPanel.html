@@ -7,7 +7,7 @@
         Add a Compliance Rule
       </button>
     </div>
-    <table class="table-condensed table-bordered list-group-item">
+    <table class="table-condensed table-bordered list-group-item top-align">
       <thead>
       <tr>
         <th colspan="2">ID</th>
@@ -50,7 +50,12 @@
           </div>
         </td>
         <td>
-          range={{r.rangeDays}}<br/>window={{r.windowDays}}<br/>threshhold={{r.thresholdDays}}<br/>tHours={{r.thresholdHoursADay}}
+          <table>
+            <tr><td>Range&nbsp;Days:</td><td  ng-hide="r.rangeDays === undefined"><span class="label label-default">{{r.rangeDays}}</span></td></tr>
+            <tr><td>Window&nbsp;Days:</td><td><span class="label label-default">{{r.windowDays}}</span></td></tr>
+            <tr><td>Threshhold&nbsp;Days:</td><td  ng-hide="r.thresholdDays === undefined"><span class="label label-default">{{r.thresholdDays}}</span></td></tr>
+            <tr><td>Threshhold&nbsp;Hours:</td><td><span class="label label-default">{{r.thresholdHoursADay}}</span></td></tr>
+          </table>
         </td>
         <td>
           <button class="glyphicon glyphicon-pencil" tooltip="Edit {{r.name}} parameters."
