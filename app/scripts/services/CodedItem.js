@@ -22,6 +22,13 @@ var CodedItemList = Class.create({ // jshint ignore:line
     this.list.push(item);
     return this;
   },
+  setItems: function(items) {
+    this.list = [];
+    for (var i = 0; i < items.length; i++) {
+      this.addItem(new CodedItem(items[i].desc, items[i].code));
+    }
+    return this.list;
+  },
   findItem: function (code) {
     for (var i = 0; i < this.list.length; i++) {
       if (this.list[i].code === code) {

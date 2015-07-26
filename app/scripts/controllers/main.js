@@ -35,9 +35,7 @@ angular.module('templateDesignerApp')
     $scope.mainDivClass = undefined;
     $scope.maxRows = 4;
     $scope.maxColumns = 4;
-    $scope.languages = Languages.getLanguages();
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
-    $scope.countries = Countries.getCountries();
     $scope.configData  = {};
 
     $scope.loadCountries = function(query) {
@@ -156,7 +154,7 @@ angular.module('templateDesignerApp')
         alert('Your browser does not support the File API!'); // jshint ignore:line
       }
     };
-    var loadDefaultDataJson = function () {
+    $scope.loadDefaultDataJson = function () {
       $http.get('json/default-data.json').
         success(function (data) {
           loadJsonData(data, undefined, true, false);
@@ -172,7 +170,9 @@ angular.module('templateDesignerApp')
     $scope.writeConfigJson = function() {
       var data = {
           selections: $scope.configData.selections,
-          colors: $scope.configData.colors
+          colors: $scope.configData.colors,
+          languages: $scope.languages,
+          countries: $scope.countries
         },
         blob = new Blob([angular.toJson(data, true)], {type: 'text/plain;charset=utf-8'});
       saveAs(blob, $scope.configData.name + '.json'); // jshint ignore:line
@@ -196,6 +196,8 @@ angular.module('templateDesignerApp')
           $scope.configData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
           $scope.configData.colors = data.colors;
           $scope.configData.selections = data.selections;
+          $scope.languages = Languages.setLanguages(data.languages);
+          $scope.countries = Countries.setCountries(data.countries);
           if (doAlert) {
             showAlert($scope.configLoadSuccessAlert);
           }
@@ -223,7 +225,7 @@ angular.module('templateDesignerApp')
         alert('Your browser does not support the File API!'); // jshint ignore:line
       }
     };
-    var loadDefaultConfigJson = function () {
+    $scope.loadDefaultConfigJson = function () {
       $http.get('json/default-config.json').
         success(function (data) {
           loadConfigJson(data, { name: 'default.json'}, false);
@@ -693,7 +695,7 @@ angular.module('templateDesignerApp')
       $scope.setLanguage($scope.languages[0]);
     };
 
-    loadDefaultConfigJson();
-    loadDefaultDataJson();
+    $scope.loadDefaultConfigJson();
+    $scope.loadDefaultDataJson();
 
   });

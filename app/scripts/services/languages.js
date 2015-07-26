@@ -1,6 +1,6 @@
 'use strict';
 
-var usEnglishCode = 'en_US';
+var usEnglishCode = 'en_US'; // jshint ignore:line
 
 var Language = Class.create(CodedItem, { // jshint ignore:line
   initialize: function($super, desc, code) {
@@ -10,15 +10,10 @@ var Language = Class.create(CodedItem, { // jshint ignore:line
 
 angular.module('LanguagesService', []).service('Languages', function () {
   var languageList = new CodedItemList(); // jshint ignore:line
-  languageList
-    .addItem(new Language('English US', usEnglishCode))
-    .addItem(new Language('English (ROW)', 'en'))
-    .addItem(new Language('French (ROW)', 'fr'))
-    .addItem(new Language('French Canadian', 'fr_CA'))
-    .addItem(new Language('German', 'de'))
-    .addItem(new Language('Spanish', 'es'))
-    .addItem(new Language('Portuguese', 'pt'));
 
+  this.setLanguages = function(languages) {
+    return languageList.setItems(languages);
+  };
   this.getLanguages = function () {
     return languageList.getList();
   };

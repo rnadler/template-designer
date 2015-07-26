@@ -97,5 +97,105 @@
       "name": "Yellow",
       "color": "#FFFF00"
     }
+  ],
+  "languages": [
+    {
+      "code": "en_US",
+      "desc": "English US"
+    },
+    {
+      "code": "en",
+      "desc": "English (ROW)"
+    },
+    {
+      "code": "fr",
+      "desc": "French (ROW)"
+    },
+    {
+      "code": "fr_CA",
+      "desc": "French Canadian"
+    },
+    {
+      "code": "de",
+      "desc": "German"
+    },
+    {
+      "code": "es",
+      "desc": "Spanish"
+    },
+    {
+      "code": "ja",
+      "desc": "Japanese"
+    },
+    {
+      "code": "pt",
+      "desc": "Portuguese"
+    }
+  ],
+  "countries": [
+    {
+      "code": "au",
+      "desc": "Australia"
+    },
+    {
+      "code": "bnl",
+      "desc": "Benelux"
+    },
+    {
+      "code": "bi",
+      "desc": "British Isles"
+    },
+    {
+      "code": "ca",
+      "desc": "Canada"
+    },
+    {
+      "code": "dk",
+      "desc": "Denmark"
+    },
+    {
+      "code": "fi",
+      "desc": "Finland"
+    },
+    {
+      "code": "fr",
+      "desc": "France"
+    },
+    {
+      "code": "de",
+      "desc": "Germany"
+    },
+    {
+      "code": "it",
+      "desc": "Italy"
+    },
+    {
+      "code": "jp",
+      "desc": "Japan"
+    },
+    {
+      "code": "no",
+      "desc": "Norway"
+    },
+    {
+      "code": "pt",
+      "desc": "Portugal"
+    },
+    {
+      "code": "es",
+      "desc": "Spain"
+    },
+    {
+      "code": "se",
+      "desc": "Sweden"
+    },
+    {
+      "code": "ch",
+      "desc": "Switzerland"
+    },
+    {
+      "code": "us",
+      "desc": "United States"
+    }
   ]
 }

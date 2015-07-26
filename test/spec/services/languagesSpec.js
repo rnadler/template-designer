@@ -1,5 +1,36 @@
 'use strict';
 
+var languages = [
+    {
+      code: 'en_US',
+      desc: 'English US'
+    },
+    {
+      code: 'en',
+      desc: 'English (ROW)'
+    },
+    {
+      code: 'fr',
+      desc: 'French (ROW)'
+    },
+    {
+      code: 'fr_CA',
+      desc: 'French Canadian'
+    },
+    {
+      code: 'de',
+      desc: 'German'
+    },
+    {
+      code: 'es',
+      desc: 'Spanish'
+    },
+    {
+      code: 'pt',
+      desc: 'Portuguese'
+    }
+  ];
+
 describe('services: languages', function () {
 
   beforeEach(module('LanguagesService'));
@@ -8,7 +39,7 @@ describe('services: languages', function () {
 
     it('should manage an array of languages',
       inject(function (Languages) {
-
+        Languages.setLanguages(languages);
         expect(Languages.getLanguages().length).toBe(7);
         expect(Languages.getDefaultLanguage().code).toBe('en_US');
         // Find a language by code
@@ -18,6 +49,7 @@ describe('services: languages', function () {
 
     it('should define a Message object',
       inject(function (Languages) {
+          Languages.setLanguages(languages);
           var message = new Message('message', 'english message'), // jshint ignore:line
               spanish = Languages.findLanguage('es'),
               german = Languages.findLanguage('de'),
