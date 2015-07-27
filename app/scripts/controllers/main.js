@@ -187,7 +187,8 @@ angular.module('templateDesignerApp')
     };
 
     var loadConfigJson = function(data, jsonfile, doAlert) {
-      if (data === undefined || data.colors === undefined || data.selections === undefined) {
+      if (data === undefined || data.colors === undefined || data.selections === undefined ||
+        data.languages === undefined || data.countries === undefined) {
         showAlert($scope.badJsonAlert, 'Incorrect JSON content.');
         return;
       }
