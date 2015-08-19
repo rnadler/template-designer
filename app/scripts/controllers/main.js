@@ -496,7 +496,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (groupName) {
-          if (Groups.addGroup(new Message(groupName.trimmed, groupName.raw)) === -1) { // jshint ignore:line
+          if (Groups.addGroup(new Message(groupName.trimmed, groupName.raw, groupName.raw)) === -1) { // jshint ignore:line
             showAlert($scope.groupAlert);
           }
       });
@@ -623,7 +623,7 @@ angular.module('templateDesignerApp')
       });
 
       modalInstance.result.then(function (ruleName) {
-        if (ComplianceRules.addRule(new RuleDesc(ruleName.trimmed, ruleName.raw)) === -1) { // jshint ignore:line
+        if (ComplianceRules.addRule(new RuleDesc(ruleName.trimmed, ruleName.raw, ruleName.raw)) === -1) { // jshint ignore:line
           showAlert($scope.ruleAlert);
         }
       });
