@@ -177,6 +177,11 @@
           "string": "No Data",
           "desc": "No data has arrived for these patients",
           "code": "en_US"
+        },
+        {
+          "string": "Aucunes Données",
+          "desc": "Aucune donnée n'est arrivé pour ces patients",
+          "code": "fr"
         }
       ]
     },
@@ -201,32 +206,142 @@
       ]
     },
     {
-      "name": "PayorCompliance",
+      "name": "ComplianceMet",
       "strings": [
         {
-          "string": "Payor Compliance Met",
+          "string": "Compliance Met",
           "desc": "Patients have met Payor compliance",
           "code": "en_US"
         }
       ]
     },
     {
-      "name": "90DaysNotCompliant",
+      "name": "ComplianceNotMet",
       "strings": [
         {
-          "string": "90 Days Not Compliant",
-          "desc": "Patients not compliant after 90 days",
+          "string": "Compliance Not Met",
+          "desc": "Patients not compliant",
+          "code": "en_US"
+        },
+        {
+          "string": "Ne pas rencontrée de conformité",
+          "desc": "Patients n'est pas conformes",
+          "code": "fr"
+        }
+      ]
+    },
+    {
+      "name": "TherapyIssues",
+      "strings": [
+        {
+          "string": "Therapy Issues",
+          "desc": "Patients having therapy issues",
+          "code": "en_US"
+        },
+        {
+          "string": "Questions de thérapie",
+          "desc": "Patients ayant des problèmes de la thérapie",
+          "code": "fr"
+        }
+      ]
+    },
+    {
+      "name": "Post90DayUsageMonitoring",
+      "strings": [
+        {
+          "string": "Post 90 Day Usage Monitoring",
+          "desc": "Post 90 Day Usage Monitoring",
           "code": "en_US"
         }
       ]
     },
     {
-      "name": "OngoingTherapyIssues",
+      "name": "30DaysAtRisk",
       "strings": [
         {
-          "string": "Ongoing Therapy Issues",
-          "desc": "Patients having therapy issues",
+          "string": "30 Days At Risk",
+          "desc": "30 Days At Risk",
           "code": "en_US"
+        }
+      ]
+    },
+    {
+      "name": "45DaysAtRisk",
+      "strings": [
+        {
+          "string": "45 Days At Risk",
+          "desc": "45 Days At Risk",
+          "code": "en_US"
+        }
+      ]
+    },
+    {
+      "name": "HighCAI",
+      "strings": [
+        {
+          "string": "High CAI",
+          "desc": "High CAI",
+          "code": "en_US"
+        }
+      ]
+    },
+    {
+      "name": "28daysallpatients",
+      "strings": [
+        {
+          "string": "28 days all patients",
+          "desc": "28 days all patients",
+          "code": "en_US"
+        },
+        {
+          "string": "28 jours tous les patients",
+          "desc": "28 jours tous les patients",
+          "code": "fr"
+        }
+      ]
+    },
+    {
+      "name": "LowUsage7Days",
+      "strings": [
+        {
+          "string": "Low Usage 7 Days",
+          "desc": "Low Usage 7 Days",
+          "code": "en_US"
+        },
+        {
+          "string": "Faible utilisation 7 jours",
+          "desc": "Faible utilisation 7 jours",
+          "code": "fr"
+        }
+      ]
+    },
+    {
+      "name": "LowUsage14Days",
+      "strings": [
+        {
+          "string": "Low Usage 14 Days",
+          "desc": "Low Usage 14 Days",
+          "code": "en_US"
+        },
+        {
+          "string": "Faible utilisation 14 jours",
+          "desc": "Faible utilisation 14 jours",
+          "code": "fr"
+        }
+      ]
+    },
+    {
+      "name": "LeakIssues",
+      "strings": [
+        {
+          "string": "Leak Issues",
+          "desc": "Leak Issues",
+          "code": "en_US"
+        },
+        {
+          "string": "Problèmes de fuite",
+          "desc": "Problèmes de fuite",
+          "code": "fr"
         }
       ]
     }
@@ -234,10 +349,10 @@
   "templates": [
     {
       "message": {
-        "name": "USleepDashboard",
+        "name": "USPrimary",
         "strings": [
           {
-            "string": "USleep Dashboard",
+            "string": "US Primary",
             "code": "en_US"
           }
         ]
@@ -247,62 +362,54 @@
         "columns": 4,
         "cells": {
           "0": {
-            "name": "7DaysAllPatients",
+            "name": "7DaysAtRisk",
             "color": "#0000FF"
           },
           "1": {
-            "name": "30DaysAllPatients",
+            "name": "14DaysAtRisk",
             "color": "#0000FF"
           },
           "2": {
-            "name": "60DaysAllPatients",
+            "name": "30DaysAtRisk",
             "color": "#0000FF"
           },
           "3": {
-            "name": "90DaysAllPatients",
+            "name": "45DaysAtRisk",
             "color": "#0000FF"
           },
           "4": {
-            "name": "7DaysAtRisk",
-            "color": "#808000"
+            "name": "TherapyIssues",
+            "color": "#FF0000"
           },
           "5": {
-            "name": "14DaysAtRisk",
-            "color": "#808000"
+            "name": "HighCAI",
+            "color": "#FF0000"
           },
           "6": {
-            "name": "30DaysAllPatients",
+            "name": "Post90DayUsageMonitoring",
             "color": "#FF0000"
           },
           "7": {
-            "name": "45DaysAllPatients",
+            "name": "NoDataTransmitted",
             "color": "#FF0000"
           },
           "8": {
-            "name": "90DaysNotCompliant",
-            "color": "#FF0000"
+            "name": "ComplianceMet",
+            "color": "#008000"
           },
           "9": {
-            "name": "NoDataTransmitted",
-            "color": "#0000FF"
-          },
-          "10": {
-            "name": "OngoingTherapyIssues",
-            "color": "#800000"
-          },
-          "12": {
-            "name": "PayorCompliance",
-            "color": "#008000"
+            "name": "ComplianceNotMet",
+            "color": "#FFFF00"
           }
         }
       }
     },
     {
       "message": {
-        "name": "template-3x3",
+        "name": "FrancePrimary",
         "strings": [
           {
-            "string": "3x3 template",
+            "string": "France Primary",
             "code": "en_US"
           }
         ]
@@ -310,7 +417,36 @@
       "rows": 3,
       "grid": {
         "columns": 3,
-        "cells": {}
+        "cells": {
+          "0": {
+            "name": "28daysallpatients",
+            "color": "#0000FF"
+          },
+          "1": {
+            "name": "LowUsage7Days",
+            "color": "#FFFF00"
+          },
+          "2": {
+            "name": "LowUsage14Days",
+            "color": "#FFFF00"
+          },
+          "3": {
+            "name": "LeakIssues",
+            "color": "#FF0000"
+          },
+          "4": {
+            "name": "TherapyIssues",
+            "color": "#FF0000"
+          },
+          "5": {
+            "name": "NoDataTransmitted",
+            "color": "#FF00FF"
+          },
+          "6": {
+            "name": "ComplianceNotMet",
+            "color": "#FFFF00"
+          }
+        }
       }
     }
   ]
