@@ -29,14 +29,20 @@ describe('services: templates', function() {
         templateGrid.setCell(0,0,'cell00','#000000');
         expect(templateGrid.getCell(0,0).name).toBe('cell00');
         expect(templateGrid.getCell(0,0).color).toBe('#000000');
-        Templates.updateGroupName('cell00', '');
+        Templates.updateGroupName('cell00', '');  // cell will be deleted
         expect(templateGrid.getCell(0,0).name).toBe('--- Blank ---');
-        expect(templateGrid.getCell(0,0).color).toBe('#000000'); // color unchanged
+        expect(templateGrid.getCell(0,0).color).toBe('#ffffff');
         // Test UpdateGroupName rename
         templateGrid.setCell(2,2,'cell22','');
         expect(templateGrid.getCell(2,2).name).toBe('cell22');
         Templates.updateGroupName('cell22', 'xxxcell22xxx');
         expect(templateGrid.getCell(2,2).name).toBe('xxxcell22xxx');
+        // Test clearCell
+        expect(Object.keys(templateGrid.cells).length).toBe(1);
+        templateGrid.clearCell(1,1);
+        expect(Object.keys(templateGrid.cells).length).toBe(1);
+        templateGrid.clearCell(2,2);
+        expect(Object.keys(templateGrid.cells).length).toBe(0);
         // Set Template
         var templateJson = JSON.stringify(Templates.getTemplates(), null, '\t');
         Templates.removeTemplate(getT(1));

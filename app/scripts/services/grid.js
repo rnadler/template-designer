@@ -19,7 +19,15 @@ Grid.prototype = {
   },
 
   setCell: function (row, col, name, color) {
+    if (name === blank) {
+      this.clearCell(row, col);
+      return;
+    }
     this.cells[this.ordinal(row, col)] = new Cell(name, color);
+  },
+
+  clearCell: function(row, col) {
+    delete this.cells[this.ordinal(row, col)];
   },
 
   getCell: function (row, col) {

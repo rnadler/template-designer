@@ -94,7 +94,11 @@ angular.module('TemplatesService', []).service('Templates', function () {
       for (c in grid.cells) {
         cell = grid.cells[c];
         if (cell.name === oldGroup) {
-          cell.name = newGroup === '' ? blank : newGroup; // jshint ignore:line
+          if (newGroup === '') {
+            delete grid.cells[c];
+          } else {
+            cell.name = newGroup;
+          }
         }
       }
     }
