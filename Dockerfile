@@ -1,4 +1,7 @@
 # Build Template Manager server Docker container
-FROM coreos/apache
+FROM alpine:latest
 MAINTAINER Bob Nadler <robert.nadler@gmail.com>
-COPY dist /var/www/
+RUN apk --update add apache2 && rm -rf /var/cache/apk/*
+ENTRYPOINT ["httpd"] 
+CMD ["-D", "FOREGROUND"]
+COPY dist /var/www/localhost/htdocs
