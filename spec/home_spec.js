@@ -21,6 +21,6 @@ describe('template designer homepage', function() {
 
   it('should have language selections', function() {
     expect(element(by.id('language')).getText()).toEqual('English US [en_US]');
-    expect(element.all(by.repeater('l in languages')).count()).toEqual(8);
+    expect(element.all(by.repeater('l in languages')).count()).toEqual(9);
   });
 });
