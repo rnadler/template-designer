@@ -37,6 +37,7 @@ angular.module('templateDesignerApp')
     $scope.maxColumns = 4;
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
     $scope.configData  = {};
+    $scope.groupQuickAdd = {text: undefined};
 
     $scope.loadCountries = function(query) {
       return Countries.queryCountries(query);
@@ -478,6 +479,27 @@ angular.module('templateDesignerApp')
     };
 
     $scope.addGroup = function() {
+      if ($scope.groupQuickAdd.text !== undefined) {
+        var saved = 0,
+            lines = $scope.groupQuickAdd.text.split(/\r\n|\r|\n/g);
+        $scope.groupQuickAdd.text = undefined;
+        if (lines.length > 0) {
+          var i;
+          for (i = 0; i < lines.length; i++) {
+            var tokens = lines[i].split('\t'); // Name/Desc<tab>GroupName
+            if (tokens.length === 2) {
+              if (Groups.addGroup(new Message(tokens[1], tokens[0], tokens[0])) === -1) { // jshint ignore:line
+                showAlert($scope.groupAlert);
+              } else {
+                saved = saved + 1;
+              }
+            }
+          }
+          if (saved > 0) {
+            return;
+          }
+        }
+      }
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',
