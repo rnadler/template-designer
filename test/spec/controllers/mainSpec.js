@@ -23,7 +23,8 @@ describe('Controller: MainCtrl', function () {
   it('should fetch configuration and default data', function() {
     httpBackend.expectGET('json/default-config.json').respond({selections: {}, colors: [],
       languages: [{code: 'en_US', desc: 'English US'}],
-      countries: [{code: 'us', desc: 'United States'}]});
+      countries: [{code: 'us', desc: 'United States'}],
+      quickAdd: { lineRegex: '\\t|,', groupMap: [1, 0], ruleMap: [2, 0, 1]}});
     httpBackend.whenGET('json/default-data.json').respond({version: '6.0', complianceRules: [],
       groups: [{
         name: '7DaysAllPatients',

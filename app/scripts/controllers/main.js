@@ -38,6 +38,7 @@ angular.module('templateDesignerApp')
     $scope.ruleTypes = ComplianceRules.getRuleTypes();
     $scope.configData  = {};
     $scope.groupQuickAdd = {text: undefined};
+    $scope.ruleQuickAdd = {text: undefined};
 
     $scope.loadCountries = function(query) {
       return Countries.queryCountries(query);
@@ -59,6 +60,27 @@ angular.module('templateDesignerApp')
     };
     $scope.setColumns = function(n) {
       $scope.template.setColumns(n);
+    };
+
+    var quickAdd = function (userText, configData, map, callback) {
+      if (userText.text === undefined) {
+        return 0;
+      }
+      var saved = 0,
+        lines = userText.text.split(/\r\n|\r|\n/g);
+      userText.text = undefined;
+      if (lines.length > 0) {
+        var i;
+        for (i = 0; i < lines.length; i++) {
+          var tokens = lines[i].split(configData.quickAddLineRegex);
+          if (tokens.length === map.length) {
+            if (callback(tokens, map)) {
+              saved = saved + 1;
+            }
+          }
+        }
+      }
+      return saved;
     };
 
     //region ------------- Translations -----------
@@ -196,6 +218,8 @@ angular.module('templateDesignerApp')
       $timeout(function() {
         $scope.$apply(function () {
           $scope.configData.name = jsonfile.name.replace(/\.[^/.]+$/, ''); // strip extension
+          $scope.configData.quickAdd = data.quickAdd;
+          $scope.configData.quickAddLineRegex = new RegExp($scope.configData.quickAdd.lineRegex);
           $scope.configData.colors = data.colors;
           $scope.configData.selections = data.selections;
           $scope.languages = Languages.setLanguages(data.languages);
@@ -479,26 +503,15 @@ angular.module('templateDesignerApp')
     };
 
     $scope.addGroup = function() {
-      if ($scope.groupQuickAdd.text !== undefined) {
-        var saved = 0,
-            lines = $scope.groupQuickAdd.text.split(/\r\n|\r|\n/g);
-        $scope.groupQuickAdd.text = undefined;
-        if (lines.length > 0) {
-          var i;
-          for (i = 0; i < lines.length; i++) {
-            var tokens = lines[i].split('\t'); // Name/Desc<tab>GroupName
-            if (tokens.length === 2) {
-              if (Groups.addGroup(new Message(tokens[1], tokens[0], tokens[0])) === -1) { // jshint ignore:line
-                showAlert($scope.groupAlert);
-              } else {
-                saved = saved + 1;
-              }
-            }
+      if (quickAdd($scope.groupQuickAdd, $scope.configData, $scope.configData.quickAdd.groupMap, function (tokens, groupMap) {
+          if (Groups.addGroup(new Message(tokens[groupMap[0]], tokens[groupMap[1]], tokens[groupMap[1]])) === -1) { // jshint ignore:line
+            showAlert($scope.groupAlert);
+            return false;
+          } else {
+            return true;
           }
-          if (saved > 0) {
-            return;
-          }
-        }
+        }) > 0) {
+        return;
       }
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
@@ -627,6 +640,16 @@ angular.module('templateDesignerApp')
       });
     };
     $scope.addRule = function() {
+      if (quickAdd($scope.ruleQuickAdd, $scope.configData, $scope.configData.quickAdd.ruleMap, function(tokens, ruleMap) {
+        if (ComplianceRules.addRule(new RuleDesc(tokens[ruleMap[0]], tokens[ruleMap[1]], tokens[ruleMap[1]], tokens[ruleMap[2]].toLowerCase())) === -1) { // jshint ignore:line
+          showAlert($scope.ruleAlert);
+          return false;
+        } else {
+          return true;
+        }
+      }) > 0) {
+        return;
+      }
       var modalInstance = $modal.open({
         templateUrl: 'views/templates/getNameDialog.html',
         controller: 'GetNameDialogCtrl',

@@ -1,4 +1,9 @@
 {
+  "quickAdd" : {
+    "lineRegex" : "\\t|,",
+    "groupMap" : [1, 0],
+    "ruleMap": [2, 0, 1]
+  },
   "selections": {
     "rangeDays": [
       15,
