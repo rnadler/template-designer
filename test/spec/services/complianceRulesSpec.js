@@ -35,6 +35,16 @@ describe('services: complianceRules', function() {
         expect(ComplianceRules.getRules()[2].windowDays).toBe(30);
         expect(ComplianceRules.getRules()[2].thresholdDays).toBe(21);
         expect(ComplianceRules.getRules()[2].thresholdHoursADay).toBe(4);
+        // Test defaults
+        ComplianceRules.addRule(new RuleDesc('default')); // jshint ignore:line
+        expect(ComplianceRules.getRules().length).toBe(4);
+        expect(ComplianceRules.getRules()[3].name).toBe('default');
+        expect(ComplianceRules.getRules()[3].ruleType).toBe('initial');
+        expect(ComplianceRules.getRules()[3].getString(defaultLanguage)).toBe('default');
+        expect(ComplianceRules.getRules()[3].rangeDays).toBe(undefined);
+        expect(ComplianceRules.getRules()[3].windowDays).toBe(30);
+        expect(ComplianceRules.getRules()[3].thresholdDays).toBe(undefined);
+        expect(ComplianceRules.getRules()[3].thresholdHoursADay).toBe(4);
         // Set rules
         ComplianceRules.setRules([g('xxx'),g('yyy')], true);
         expect(ComplianceRules.getRules().length).toBe(2);

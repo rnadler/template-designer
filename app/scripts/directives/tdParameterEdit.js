@@ -11,7 +11,7 @@ angular.module('templateDesignerApp').directive('tdParameterEdit', function() {
     templateUrl: 'views/templates/parameterEditor.html',
     link: function(scope) {
       scope.setValue = function(val) {
-        scope.value = val;
+        scope.value = val === null || val === 'clear' ? undefined : val;
       };
     }
   };

@@ -12,9 +12,9 @@ var RuleDesc = Class.create(Message, { // jshint ignore:line
     this.ruleType = ruleType !== undefined ? ruleType : RuleType.INITIAL;
     this.countries = countries === undefined ? [] : countries;
     this.rangeDays = rangeDays;
-    this.windowDays = windowDays;
+    this.windowDays = windowDays === undefined ? 30 : windowDays;
     this.thresholdDays = thresholdDays;
-    this.thresholdHoursADay = thresholdHoursADay;
+    this.thresholdHoursADay = thresholdHoursADay === undefined  ? 4 : thresholdHoursADay;
   },
   setParametersFromRule: function(rule) {
     this.rangeDays = rule.rangeDays;

@@ -6,6 +6,7 @@
   },
   "selections": {
     "rangeDays": [
+      "clear",
       15,
       30,
       60,
@@ -23,6 +24,7 @@
       365
     ],
     "thresholdDays": [
+      "clear",
       10,
       21,
       42,
