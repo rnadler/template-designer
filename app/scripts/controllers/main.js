@@ -641,22 +641,11 @@ angular.module('templateDesignerApp')
     };
     $scope.addRule = function() {
       if (quickAdd($scope.ruleQuickAdd, $scope.configData, $scope.configData.quickAdd.ruleMap, function(tokens, ruleMap) {
-        var id = tokens[ruleMap[0]],
-            ruleName = tokens[ruleMap[1]],
-            type = tokens[ruleMap[2]].toLowerCase(),
-            hours = ruleName.match(/(\d+) hours/i);
-          if (hours === null || hours.length !== 2) {
-            console.error('Failed to find hours in ' + ruleName);
+        var rv = ComplianceRules.addFromText(tokens, ruleMap);
+          if (!rv) {
             showAlert($scope.ruleAlert);
-            return false;
           }
-          if (ComplianceRules.addRule(new RuleDesc(id, ruleName, ruleName, type, // jshint ignore:line
-                         [], undefined, undefined, undefined, hours[1])) === -1) {
-            showAlert($scope.ruleAlert);
-            return false;
-          } else {
-            return true;
-          }
+          return rv;
       }) > 0) {
         return;
       }

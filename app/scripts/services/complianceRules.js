@@ -103,4 +103,20 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
     }
     return undefined;
   };
+  this.addFromText = function (tokens, ruleMap) {
+    var id = tokens[ruleMap[0]],
+      ruleName = tokens[ruleMap[1]],
+      type = tokens[ruleMap[2]].toLowerCase(),
+      hours = ruleName.match(/(\d+) hours/i);
+    if (hours === null || hours.length !== 2) {
+      console.error('Failed to find hours in ' + ruleName);
+      return false;
+    }
+    if (this.addRule(new RuleDesc(id, ruleName, ruleName, type, // jshint ignore:line
+        [], undefined, undefined, undefined, parseInt(hours[1]))) === -1) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 });
