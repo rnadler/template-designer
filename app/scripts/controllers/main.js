@@ -80,6 +80,7 @@ angular.module('templateDesignerApp')
           }
         }
       }
+      console.log('quickAdd: Added ' + saved + ' entries from ' + lines.length + ' text lines.');
       return saved;
     };
 

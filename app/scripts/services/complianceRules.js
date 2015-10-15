@@ -103,17 +103,58 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
     }
     return undefined;
   };
+  this.extractIntValue = function(name, regex) {
+    var val = name.match(regex);
+    if (val === null || val.length !== 2) {
+      return undefined;
+    }
+    return parseInt(val[1]);
+  };
   this.addFromText = function (tokens, ruleMap) {
     var id = tokens[ruleMap[0]],
       ruleName = tokens[ruleMap[1]],
       type = tokens[ruleMap[2]].toLowerCase(),
-      hours = ruleName.match(/(\d+) hours/i);
-    if (hours === null || hours.length !== 2) {
+      hours = this.extractIntValue(ruleName, /(\d+) hours/i),
+      windowDays = this.extractIntValue(ruleName, /(\d+) consecutive day/i),
+      windowWeeks = this.extractIntValue(ruleName, /(\d+) consecutive week/i),
+      months = this.extractIntValue(ruleName, /(\d+) month/i),
+      years = this.extractIntValue(ruleName, /(\d+) year/i),
+      weeks = this.extractIntValue(ruleName, /(\d+) week/i),
+      rangeDays = this.extractIntValue(ruleName, /(\d+) day/i);
+    if (hours === undefined) {
       console.error('Failed to find hours in ' + ruleName);
       return false;
     }
+    if (windowDays === undefined) {
+      if (windowWeeks !== undefined) {
+        windowDays = windowWeeks * 7;
+      }
+      if (months !== undefined) {
+        windowDays = months * 30;
+      }
+      if (years !== undefined) {
+        windowDays = years * 365;
+      }
+    }
+    if (windowDays === undefined && rangeDays === undefined) {
+      console.error('Failed to find range/window days in ' + ruleName);
+      return false;
+    }
+    if (windowDays === undefined) {
+      windowDays = rangeDays;
+    }
+    if (rangeDays === undefined) {
+      if (weeks !== undefined) {
+        rangeDays = weeks * 7;
+      } else {
+        rangeDays = windowDays;
+      }
+    }
+    if (type === 'ongoing') {
+      rangeDays = undefined;
+    }
     if (this.addRule(new RuleDesc(id, ruleName, ruleName, type, // jshint ignore:line
-        [], undefined, undefined, undefined, parseInt(hours[1]))) === -1) {
+        [], rangeDays, windowDays, undefined, hours)) === -1) {
       return false;
     } else {
       return true;
