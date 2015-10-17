@@ -642,7 +642,7 @@ angular.module('templateDesignerApp')
     };
     $scope.addRule = function() {
       if (quickAdd($scope.ruleQuickAdd, $scope.configData, $scope.configData.quickAdd.ruleMap, function(tokens, ruleMap) {
-        var rv = ComplianceRules.addFromText(tokens, ruleMap);
+        var rv = ComplianceRules.addFromText(tokens, ruleMap, $scope.countries);
           if (!rv) {
             showAlert($scope.ruleAlert);
           }

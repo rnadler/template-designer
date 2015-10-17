@@ -103,6 +103,38 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
     }
     return undefined;
   };
+  this.findCountry = function(allCountries, desc) {
+    if (!desc || desc.length === 0) {
+      return undefined;
+    }
+    if (desc === 'US') {
+      desc = 'United States';
+    }
+    for (var i = 0; i < allCountries.length; i++) {
+      if (allCountries[i].desc === desc) {
+        return allCountries[i];
+      }
+    }
+    console.error('Unable to find country for ' + desc);
+    return undefined;
+  };
+  this.extractCountries = function(countryText, allCountries) {
+    if (countryText === undefined) {
+      return [];
+    }
+    var countries = countryText.split(/,/);
+    if (countries === null) {
+      return [];
+    }
+    var i,rv = [];
+    for (i = 0; i < countries.length; i++) {
+      var country = this.findCountry(allCountries, countries[i].trim());
+      if (country !== undefined) {
+        rv.push(country);
+      }
+    }
+    return rv;
+  };
   this.extractIntValue = function(name, regex) {
     var val = name.match(regex);
     if (val === null || val.length !== 2) {
@@ -110,7 +142,7 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
     }
     return parseInt(val[1]);
   };
-  this.addFromText = function (tokens, ruleMap) {
+  this.addFromText = function (tokens, ruleMap, allCountries) {
     var id = tokens[ruleMap[0]],
       ruleName = tokens[ruleMap[1]],
       type = tokens[ruleMap[2]].toLowerCase(),
@@ -120,7 +152,8 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
       months = this.extractIntValue(ruleName, /(\d+) month/i),
       years = this.extractIntValue(ruleName, /(\d+) year/i),
       weeks = this.extractIntValue(ruleName, /(\d+) week/i),
-      rangeDays = this.extractIntValue(ruleName, /(\d+) day/i);
+      rangeDays = this.extractIntValue(ruleName, /(\d+) day/i),
+      countries = this.extractCountries(tokens[ruleMap[5]], allCountries);
     if (hours === undefined) {
       console.error('Failed to find hours in ' + ruleName);
       return false;
@@ -154,7 +187,7 @@ angular.module('ComplianceRulesService', []).service('ComplianceRules', function
       rangeDays = undefined;
     }
     if (this.addRule(new RuleDesc(id, ruleName, ruleName, type, // jshint ignore:line
-        [], rangeDays, windowDays, undefined, hours)) === -1) {
+        countries, rangeDays, windowDays, undefined, hours)) === -1) {
       return false;
     } else {
       return true;
