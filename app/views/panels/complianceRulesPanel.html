@@ -13,15 +13,15 @@
         </td></tr>
       </table>
     </div>
-    <table class="table-condensed table-bordered list-group-item top-align">
+    <table class="table-condensed table-bordered list-group-item top-align table-hover table-hover">
       <thead>
       <tr>
-        <th colspan="2">ID</th>
-        <th colspan="2">Name [{{language.code}}]</th>
-        <th colspan="2">Description [{{language.code}}]</th>
-        <th>Rule Type</th>
-        <th colspan="2">Parameters</th>
-        <th>Countries</th>
+        <th class="col-md-1" colspan="2">ID</th>
+        <th class="col-md-3" colspan="2">Name [{{language.code}}]</th>
+        <th class="col-md-3" colspan="2">Description [{{language.code}}]</th>
+        <th class="col-md-1">Rule Type</th>
+        <th class="col-md-2" colspan="2">Parameters</th>
+        <th class="col-md-2">Countries</th>
       </tr>
       </thead>
       <tr ng-repeat="r in rules">

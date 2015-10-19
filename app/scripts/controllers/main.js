@@ -40,6 +40,8 @@ angular.module('templateDesignerApp')
     $scope.groupQuickAdd = {text: undefined};
     $scope.ruleQuickAdd = {text: undefined};
 
+    //region ------------- Helper functions -----------
+
     $scope.loadCountries = function(query) {
       return Countries.queryCountries(query);
     };
@@ -83,6 +85,7 @@ angular.module('templateDesignerApp')
       console.log('quickAdd: Added ' + saved + ' entries from ' + lines.length + ' text lines.');
       return saved;
     };
+    //endregion
 
     //region ------------- Translations -----------
 
