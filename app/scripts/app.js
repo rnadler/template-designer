@@ -24,7 +24,10 @@ angular.module('templateDesignerApp', [
     'ngTouch',
     'ui.bootstrap',
     'ngTagsInput',
-    'angularSpinner'
+    'angularSpinner',
+    'ui.grid',
+    'ui.grid.resizeColumns',
+    'perfect_scrollbar'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -147,6 +147,7 @@ angular.module('templateDesignerApp')
       $timeout(function() {
         $scope.$apply(function () {
           $scope.rules = ComplianceRules.setRules(aggregate.complianceRules, replace);
+          $scope.complinaceRulesGridOptions.data = $scope.rules;
           $scope.groups = Groups.setGroups(aggregate.groups, replace);
           $scope.templates = Templates.setTemplates(aggregate.templates, replace);
           if (replace) {
@@ -567,6 +568,27 @@ angular.module('templateDesignerApp')
     //endregion
 
     //region ------------- Compliance Rule management ---------------
+
+    $scope.complinaceRulesGridOptions = {
+      //enableSorting: true,
+      rowHeight: 115,
+      enableColumnResize : true,
+      enableColumnMenus: false,
+      enableSorting: false,
+      columnDefs: [
+        { name:'ID', cellTemplate: 'cell-id' },
+        { name: 'Name',
+          headerCellTemplate: '<div class="ui-grid-cell-contents">Name [{{grid.appScope.language.code}}]</div>',
+          cellTemplate: 'cell-rule-name'},
+        { name:'Description',
+          headerCellTemplate: '<div class="ui-grid-cell-contents">Description [{{grid.appScope.language.code}}]</div>',
+          cellTemplate: 'cell-rule-desc'},
+        { name:'Type', cellTemplate: 'cell-ruletype', width: 100},
+        { name:'Parameters', cellTemplate: 'cell-parameters' },
+        { name:'Countries', cellTemplate: 'cell-countries' },
+        { name:'X', cellTemplate: 'cell-delete', headerTooltip: 'Delete compliance rule', width: 40 }
+      ]
+    };
 
     $scope.editRule = function(rule) {
       var oldRule = rule;

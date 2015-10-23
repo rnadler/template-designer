@@ -112,3 +112,15 @@ body {
   }
 }
 
+.complianceRulesGrid {
+  width: 1100px;
+  height: 750px;
+}
+
+.scroller {
+  white-space: pre-line;
+  height: 115px;
+  overflow-y: hidden;
+  position: relative;
+}
+
