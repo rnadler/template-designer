@@ -29,12 +29,14 @@ describe('services: templates', function() {
         templateGrid.setCell(0,0,'cell00','#000000');
         expect(templateGrid.getCell(0,0).name).toBe('cell00');
         expect(templateGrid.getCell(0,0).color).toBe('#000000');
+        expect(templateGrid.getCell(0,0).size).toBe(CellSize.REGULAR); // jshint ignore:line
         Templates.updateGroupName('cell00', '');  // cell will be deleted
         expect(templateGrid.getCell(0,0).name).toBe('--- Blank ---');
         expect(templateGrid.getCell(0,0).color).toBe('#ffffff');
         // Test UpdateGroupName rename
-        templateGrid.setCell(2,2,'cell22','');
+        templateGrid.setCell(2,2,'cell22','', CellSize.LARGE); // jshint ignore:line
         expect(templateGrid.getCell(2,2).name).toBe('cell22');
+        expect(templateGrid.getCell(2,2).size).toBe(CellSize.LARGE); // jshint ignore:line
         Templates.updateGroupName('cell22', 'xxxcell22xxx');
         expect(templateGrid.getCell(2,2).name).toBe('xxxcell22xxx');
         // Test clearCell

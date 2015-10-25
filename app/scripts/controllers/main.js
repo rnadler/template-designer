@@ -9,7 +9,8 @@
  */
 angular.module('templateDesignerApp')
   .controller('MainCtrl', function ($scope, $window, $timeout, Templates, Groups, $modal, unsavedChanges, Languages, ComplianceRules, Countries, $http, usSpinnerService) {
-    var jsonVersion = '6.0',
+    var supportedJsonVersion = '6.0',
+        jsonVersion = '7.0',
         showAlert = function(alert, message) {
           alert.message = message;
           alert.enabled = true;
@@ -39,6 +40,7 @@ angular.module('templateDesignerApp')
     $scope.configData  = {};
     $scope.groupQuickAdd = {text: undefined};
     $scope.ruleQuickAdd = {text: undefined};
+    $scope.cellSizes = Templates.getCellSizes();
 
     //region ------------- Helper functions -----------
 
@@ -138,7 +140,7 @@ angular.module('templateDesignerApp')
         }
         return;
       }
-      if (aggregate.version !== jsonVersion) {
+      if (aggregate.version < supportedJsonVersion) {
         if (doAlert) {
           showAlert($scope.projectVersionAlert);
         }
@@ -292,11 +294,20 @@ angular.module('templateDesignerApp')
       }
       return translated + ' (' + group.name + ')';
     };
+    $scope.getCellHeight = function(row, col) {
+      return $scope.template.grid.getCell(row, col).size === CellSize.REGULAR ? 20 : 140; // jshint ignore:line
+    };
+    $scope.showCellInfo = function(row, col) {
+      return $scope.getCellGroup(row, col).name !== blank; // jshint ignore:line
+    };
     $scope.setCellName = function(row, col, name) {
-      $scope.template.grid.setCell(row, col, name, $scope.getCell(row, col).color);
+      $scope.template.grid.setCell(row, col, name, $scope.getCell(row, col).color, $scope.getCell(row, col).size);
     };
     $scope.setCellColor = function(row, col, color) {
-      $scope.template.grid.setCell(row, col, $scope.getCell(row, col).name, color);
+      $scope.template.grid.setCell(row, col, $scope.getCell(row, col).name, color, $scope.getCell(row, col).size);
+    };
+    $scope.setCellSize = function(row, col, size) {
+      $scope.template.grid.setCell(row, col, $scope.getCell(row, col).name, $scope.getCell(row, col).color, size);
     };
     $scope.selectColor = function(row, col) {
       var modalInstance = $modal.open({

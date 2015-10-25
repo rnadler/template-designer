@@ -56,7 +56,7 @@ angular.module('TemplatesService', []).service('Templates', function () {
     }
     for (c in grid.cells) {
       var cell = grid.cells[c];
-      nt.grid.cells[c] = new Cell(cell.name, cell.color); // jshint ignore:line
+      nt.grid.cells[c] = new Cell(cell.name, cell.color, cell.size); // jshint ignore:line
     }
     return nt;
   };
@@ -102,5 +102,14 @@ angular.module('TemplatesService', []).service('Templates', function () {
         }
       }
     }
+  };
+  this.getCellSizes = function() {
+    var rv = [];
+    for (var property in CellSize) { // jshint ignore:line
+      if (CellSize.hasOwnProperty(property)) { // jshint ignore:line
+        rv.push(CellSize[property]); // jshint ignore:line
+      }
+    }
+    return rv;
   };
 });

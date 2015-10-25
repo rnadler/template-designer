@@ -67,7 +67,7 @@
   <div class="panel-body">
     <table class="table table-bordered">
       <tr ng-repeat="row in [] | range:template.rows">
-        <td ng-repeat="col in [] | range:template.getColumns()" ng-style="{'width': cellWidth()}">
+        <td ng-repeat="col in [] | range:template.getColumns()" ng-style="{'width': cellWidth(), 'height': getCellHeight(row,col)}">
           <div class="btn-group-vertical btnwrap" role="group">
             <div class="dropdown">
               <button class="btn btn-default dropdown-toggle btnwrap" type="button" id="cell{{row}}{{col}}">
@@ -79,11 +79,26 @@
                                            ng-repeat="group in groups">{{getGroupDropDownName(group)}}</a></li>
               </ul>
             </div>
-            <button type="button" class="btn btn-default" ng-style="{'background': getCell(row, col).color}"
+            <button type="button" class="btn btn-default" ng-style="{'background': getCell(row, col).color}" ng-show="showCellInfo(row, col)"
                     ng-click="selectColor(row, col)"></button>
           </div>
-          <span class="pull-right glyphicon glyphicon-info-sign" popover="{{getGroupDescText(getCellGroup(row, col))}}"
-                popover-trigger="mouseenter"></span>
+          <table width="100%" ng-show="showCellInfo(row, col)" ><tr>
+            <td><div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="cell-size-{{row}}{{col}}">
+                {{getCell(row, col).size}}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="cell-size-{{row}}{{col}}">
+                <li role="presentation"><a role="menuitem" tabindex="-1"
+                                           ng-click="setCellSize(row, col, sz)" ng-repeat="sz in cellSizes">{{sz}}</a>
+                </li>
+              </ul>
+            </div>
+            </td><td>
+              <span class="pull-right glyphicon glyphicon-info-sign" popover="{{getGroupDescText(getCellGroup(row, col))}}"
+                      popover-trigger="mouseenter"></span>
+            </td>
+          </tr></table>
         </td>
       </tr>
     </table>

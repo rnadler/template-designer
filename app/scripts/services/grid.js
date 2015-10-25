@@ -2,9 +2,15 @@
 
 var blank = '--- Blank ---';
 
-function Cell(name, color) {
+var CellSize = Object.freeze({
+  REGULAR: 'regular',
+  LARGE: 'large'
+});
+
+function Cell(name, color, size) {
   this.name = name;
   this.color = color;
+  this.size = size === undefined ? CellSize.REGULAR : size;
 }
 var blankCell = new Cell(blank, '#ffffff');
 
@@ -18,12 +24,12 @@ Grid.prototype = {
     return (row * this.columns) + col;
   },
 
-  setCell: function (row, col, name, color) {
+  setCell: function (row, col, name, color, size) {
     if (name === blank) {
       this.clearCell(row, col);
       return;
     }
-    this.cells[this.ordinal(row, col)] = new Cell(name, color);
+    this.cells[this.ordinal(row, col)] = new Cell(name, color, size);
   },
 
   clearCell: function(row, col) {
