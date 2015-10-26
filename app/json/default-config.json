@@ -50,11 +50,15 @@
     },
     {
       "name": "Blue",
-      "color": "#3391CE"
+      "color": "#0000FF"
+    },
+    {
+      "name": "Fuchsia",
+      "color": "#FF00FF"
     },
     {
       "name": "Purple",
-      "color": "#A97FBE"
+      "color": "#800080"
     },
     {
       "name": "Gray",
@@ -62,7 +66,7 @@
     },
     {
       "name": "Green",
-      "color": "#6CB454"
+      "color": "#008000"
     },
     {
       "name": "Lime",
@@ -102,6 +106,22 @@
     },
     {
       "name": "Yellow",
+      "color": "#FFFF00"
+    },
+    {
+      "name": "ResMed Blue",
+      "color": "#3391CE"
+    },
+    {
+      "name": "ResMed Purple",
+      "color": "#A97FBE"
+    },
+    {
+      "name": "ResMed Green",
+      "color": "#6CB454"
+    },
+    {
+      "name": "ResMed Yellow",
       "color": "#D9B041"
     }
   ],
