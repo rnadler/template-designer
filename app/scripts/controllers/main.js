@@ -295,7 +295,7 @@ angular.module('templateDesignerApp')
       return translated + ' (' + group.name + ')';
     };
     $scope.getCellHeight = function(row, col) {
-      return $scope.template.grid.getCell(row, col).size === CellSize.REGULAR ? 20 : 140; // jshint ignore:line
+      return $scope.template.grid.getCell(row, col).size === CellSize.REGULAR ? 20 : 40; // jshint ignore:line
     };
     $scope.showCellInfo = function(row, col) {
       return $scope.getCellGroup(row, col).name !== blank; // jshint ignore:line

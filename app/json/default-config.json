@@ -50,11 +50,11 @@
     },
     {
       "name": "Blue",
-      "color": "#0000FF"
+      "color": "#3391CE"
     },
     {
-      "name": "Fuchsia",
-      "color": "#FF00FF"
+      "name": "Purple",
+      "color": "#A97FBE"
     },
     {
       "name": "Gray",
@@ -62,7 +62,7 @@
     },
     {
       "name": "Green",
-      "color": "#008000"
+      "color": "#6CB454"
     },
     {
       "name": "Lime",
@@ -102,7 +102,7 @@
     },
     {
       "name": "Yellow",
-      "color": "#FFFF00"
+      "color": "#D9B041"
     }
   ],
   "languages": [

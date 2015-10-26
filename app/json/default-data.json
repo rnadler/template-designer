@@ -357,58 +357,58 @@
           }
         ]
       },
-      "rows": 4,
+      "rows": 3,
       "grid": {
         "columns": 4,
         "cells": {
           "0": {
             "name": "7DaysAtRisk",
-            "color": "#0000FF",
+            "color": "#3391CE",
             "size": "large"
           },
           "1": {
             "name": "14DaysAtRisk",
-            "color": "#0000FF",
+            "color": "#3391CE",
             "size": "large"
           },
           "2": {
             "name": "30DaysAtRisk",
-            "color": "#0000FF",
+            "color": "#3391CE",
             "size": "large"
           },
           "3": {
             "name": "45DaysAtRisk",
-            "color": "#0000FF",
+            "color": "#3391CE",
             "size": "large"
           },
           "4": {
             "name": "TherapyIssues",
-            "color": "#FF0000",
+            "color": "#A97FBE",
             "size": "regular"
           },
           "5": {
             "name": "HighCAI",
-            "color": "#FF0000",
+            "color": "#A97FBE",
             "size": "regular"
           },
           "6": {
             "name": "Post90DayUsageMonitoring",
-            "color": "#FF0000",
+            "color": "#A97FBE",
             "size": "regular"
           },
           "7": {
             "name": "NoDataTransmitted",
-            "color": "#FF0000",
+            "color": "#A97FBE",
             "size": "regular"
           },
           "8": {
             "name": "ComplianceMet",
-            "color": "#008000",
+            "color": "#6CB454",
             "size": "regular"
           },
           "9": {
             "name": "ComplianceNotMet",
-            "color": "#FFFF00",
+            "color": "#D9B041",
             "size": "regular"
           }
         }
@@ -430,37 +430,37 @@
         "cells": {
           "0": {
             "name": "28daysallpatients",
-            "color": "#0000FF",
+            "color": "#3391CE",
             "size": "regular"
           },
           "1": {
             "name": "LowUsage7Days",
-            "color": "#FFFF00",
+            "color": "#D9B041",
             "size": "regular"
           },
           "2": {
             "name": "LowUsage14Days",
-            "color": "#FFFF00",
+            "color": "#D9B041",
             "size": "regular"
           },
           "3": {
             "name": "LeakIssues",
-            "color": "#FF0000",
+            "color": "#A97FBE",
             "size": "large"
           },
           "4": {
             "name": "TherapyIssues",
-            "color": "#FF0000",
+            "color": "#A97FBE",
             "size": "large"
           },
           "5": {
             "name": "NoDataTransmitted",
-            "color": "#FF00FF",
+            "color": "#A97FBE",
             "size": "large"
           },
           "6": {
             "name": "ComplianceNotMet",
-            "color": "#FFFF00",
+            "color": "#D9B041",
             "size": "regular"
           }
         }
